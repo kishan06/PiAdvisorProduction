@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="103.169" viewBox="0 0 88 103.169">
+  <g id="Group_5543" data-name="Group 5543" transform="translate(-127.747 -368)">
+    <g id="Group_5228" data-name="Group 5228" transform="translate(129 368)">
+      <text id="PI_Advisor" data-name="PI Advisor" transform="translate(42.747 97.169)" fill="#8f8f8f" font-size="19" font-family="DMSans-Regular, DM Sans"><tspan x="-43" y="0">PI Advisor</tspan></text>
+      <g id="Group_5227" data-name="Group 5227" transform="translate(10.091 0)">
+        <g id="Group_5227-2" data-name="Group 5227" transform="translate(0)">
+          <path id="Path_4962" data-name="Path 4962" d="M-304.251,128.994v28.965s-4.4,20.971-16.916,24.562-17.611,2.549-17.611,2.549V170.356s18.654,1.274,19.349-12.165c.348-14.135-.463-29.2-.463-29.2Z" transform="translate(339.185 -116.053)" fill="#008083"/>
+          <path id="Path_4961" data-name="Path 4961" d="M-340.338,95.5h55.13l19.156-14.946h-60.325S-340.511,82.287-340.338,95.5Z" transform="translate(340.339 -80.237)" fill="#008083"/>
+          <path id="Path_4963" data-name="Path 4963" d="M-154.614,79.355V94.494s-12.822,1.081-18.074,13.131,8.342,27.961,18.074,25.8V148.51s-22.4.516-32.286-23.274S-172.533,79.046-154.614,79.355Z" transform="translate(228.592 -79.352)" fill="#008083"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

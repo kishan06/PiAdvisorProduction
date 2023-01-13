@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="131.722" height="30" viewBox="0 0 131.722 30">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#034698"/>
+      <stop offset="1" stop-color="#014421"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_5232" data-name="Group 5232" transform="translate(-53.848 -62)">
+    <text id="PI_Advisor" data-name="PI Advisor" transform="translate(132.57 85)" fill="#8f8f8f" font-size="23" font-family="DMSans-Regular, DM Sans"><tspan x="-52.394" y="0">PI Advisor</tspan></text>
+    <g id="Group_5231" data-name="Group 5231" transform="translate(53.848 67.851)">
+      <g id="Group_5227" data-name="Group 5227" transform="translate(0)">
+        <g id="Group_5227-2" data-name="Group 5227" transform="translate(0)">
+          <path id="Path_4962" data-name="Path 4962" d="M-329.69,128.994v7.624s-1.159,5.52-4.453,6.465-4.636.671-4.636.671v-3.873s4.91.335,5.093-3.2c.092-3.721-.122-7.685-.122-7.685Z" transform="translate(338.885 -125.588)" fill="url(#linear-gradient)"/>
+          <path id="Path_4961" data-name="Path 4961" d="M-340.339,84.483h14.512l5.042-3.934h-15.879S-340.384,81.006-340.339,84.483Z" transform="translate(340.339 -80.467)" fill="url(#linear-gradient)"/>
+          <path id="Path_4963" data-name="Path 4963" d="M-180.088,79.353v3.985a6.055,6.055,0,0,0-4.758,3.456c-1.383,3.172,2.2,7.36,4.758,6.791v3.971a9.445,9.445,0,0,1-8.5-6.126C-191.189,85.168-184.805,79.271-180.088,79.353Z" transform="translate(199.561 -79.352)" fill="url(#linear-gradient)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

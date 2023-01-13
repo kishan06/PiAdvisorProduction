@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "58945220167",
+    "project_id": "pi-advisors-785e1",
+    "storage_bucket": "pi-advisors-785e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58945220167:android:1c8487447d1e1518e20b62",
+        "android_client_info": {
+          "package_name": "com.example.piadvisory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58945220167-ihh2tae2g378nh9oa9gnqi5vg92clall.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS9kr0xNTrdvgQUdDIdKeUsn-3Vo5SxAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58945220167-ihh2tae2g378nh9oa9gnqi5vg92clall.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58945220167:android:2524670123d3135de20b62",
+        "android_client_info": {
+          "package_name": "com.piadvisors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58945220167-ihh2tae2g378nh9oa9gnqi5vg92clall.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS9kr0xNTrdvgQUdDIdKeUsn-3Vo5SxAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58945220167-ihh2tae2g378nh9oa9gnqi5vg92clall.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="266" height="215.097" viewBox="0 0 266 215.097">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" y1="-0.082" x2="0.534" y2="2.372" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e8f4f4"/>
+      <stop offset="1" stop-color="#747a7a" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_5953" data-name="Group 5953" transform="translate(-69 -314.903)">
+    <circle id="Ellipse_427" data-name="Ellipse 427" cx="91.5" cy="91.5" r="91.5" transform="translate(104 317)" opacity="0.5" fill="url(#linear-gradient)"/>
+    <path id="Path_5908" data-name="Path 5908" d="M0,6.372H266V91H0Z" transform="translate(69 439)" fill="#fff"/>
+    <path id="Path_5907" data-name="Path 5907" d="M10740.576,629.239h-71.066s-9.945,1.45-9.531,11.81,0,51.8,0,51.8l44.132,1.036,37.709-52.834Z" transform="translate(-10515 -257)" fill="#fff"/>
+    <path id="Path_5906" data-name="Path 5906" d="M10674.723,692.949l56.218-62.726h21.025l6.631,4.818,1.035,56.977Z" transform="translate(-10515 -257)" fill="#d7ebeb"/>
+    <g id="Group_5933" data-name="Group 5933" transform="translate(-13.638 157.903)">
+      <path id="Path_5905" data-name="Path 5905" d="M283.105,177.064H276.51V163.046A4.046,4.046,0,0,0,272.464,159H258.191a4.046,4.046,0,0,0-4.046,4.046v14.018h-7.168s-5.735-.573-2.294,5.161l17.2,21.792s2.867,6.308,8.6-2.294S284.826,182.8,284.826,182.8,289.987,177.064,283.105,177.064Z" transform="translate(-56.977)" fill="#fff" stroke="#008083" stroke-width="4"/>
+      <rect id="Rectangle_2175" data-name="Rectangle 2175" width="99.211" height="76.846" rx="10.907" transform="translate(159.032 214.34)" fill="none" stroke="#008083" stroke-width="4"/>
+      <g id="Group_5950" data-name="Group 5950" transform="translate(177.766 249.937)">
+        <rect id="Rectangle_2176" data-name="Rectangle 2176" width="62" height="13" rx="6.5" transform="translate(-0.129 0.16)" fill="#fff" stroke="#008083" stroke-width="4"/>
+        <line id="Line_416" data-name="Line 416" y2="14" transform="translate(41.871 0.16)" fill="none" stroke="#008083" stroke-width="4"/>
+      </g>
+      <line id="Line_417" data-name="Line 417" x2="100" transform="translate(158.638 278.097)" fill="none" stroke="#008083" stroke-width="4"/>
+      <path id="Rectangle_2177" data-name="Rectangle 2177" d="M4.5,0H34.759A5.241,5.241,0,0,1,40,5.241V8a0,0,0,0,1,0,0H0A0,0,0,0,1,0,8V4.5A4.5,4.5,0,0,1,4.5,0Z" transform="translate(188.638 301.097)" fill="#fff" stroke="#008083" stroke-width="4"/>
+      <line id="Line_418" data-name="Line 418" y2="9" transform="translate(219.638 291.097)" fill="none" stroke="#008083" stroke-width="4"/>
+      <line id="Line_419" data-name="Line 419" y2="10" transform="translate(197.638 291.097)" fill="none" stroke="#008083" stroke-width="4"/>
+      <g id="Group_5951" data-name="Group 5951" transform="translate(110 286.832)">
+        <line id="Line_420" data-name="Line 420" x2="39" transform="translate(10.638 0.265)" fill="none" stroke="#008083" stroke-width="4"/>
+        <line id="Line_421" data-name="Line 421" x2="8" transform="translate(-0.362 0.265)" fill="none" stroke="#008083" stroke-width="4"/>
+      </g>
+      <g id="Group_5952" data-name="Group 5952" transform="translate(257.58 286.832)">
+        <line id="Line_422" data-name="Line 422" x1="39" transform="translate(0.058 0.265)" fill="none" stroke="#008083" stroke-width="4"/>
+        <line id="Line_423" data-name="Line 423" x1="8" transform="translate(42.058 0.265)" fill="none" stroke="#008083" stroke-width="4"/>
+      </g>
+      <ellipse id="Ellipse_428" data-name="Ellipse 428" cx="2" cy="2.5" rx="2" ry="2.5" transform="translate(206.638 282.097)" fill="#008083" stroke="#008083" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

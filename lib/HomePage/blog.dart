@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -657,7 +658,7 @@ class ScrollableCards extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                         title,
                         style: TextStyle(
                           fontSize: 15.sm,
                           fontWeight: FontWeight.w600,
@@ -668,14 +669,14 @@ class ScrollableCards extends StatelessWidget {
                         height: 8,
                       ),
                       Flexible(
-                        child: Text(
-                          subtitle,
-                          style: TextStyle(
-                            color: Get.isDarkMode
-                                ? Colors.white
-                                : Color(0xFF444444),
-                            fontSize: 14.sm,
-                          ),
+                        child: Html(
+                        data:  subtitle,
+                          //  style: TextStyle(
+                          //   color: Get.isDarkMode
+                          //       ? Colors.white
+                          //       : Color(0xFF444444),
+                          //   fontSize: 14.sm,
+                          // ),
                         ),
                       ),
                       SizedBox(

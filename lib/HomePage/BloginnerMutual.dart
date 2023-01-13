@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:piadvisory/HomePage/Blog%20Repository/Model/BlogModel.dart';
 import 'package:piadvisory/HomePage/Blog%20Repository/blogrepo.dart';
 import 'package:piadvisory/Utils/Constants.dart';
@@ -82,15 +83,14 @@ class _BlogInnerMutualState extends State<BlogInnerMutual> {
                 color: Color(0xFFF6FFFF),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Text(
-                    blogs.blog1![widget.allBlogIndex].discription!.replaceAll(exp, ''),
-                    style: TextStyle(
-                      color: Color(0xFF6B6B6B),
-                      fontSize: 15,
-                    ),
+                  child: Html(
+                   data: blogs.blog1![widget.allBlogIndex].discription!),
+                    // style: TextStyle(
+                    //   color: Color(0xFF6B6B6B),
+                    //   fontSize: 15,
+                    // ),
                   ),
                 ),
-              ),
               // SizedBox(
               //   height: 20,
               // ),

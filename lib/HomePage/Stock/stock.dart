@@ -945,6 +945,12 @@ class _FirstTabState extends State<FirstTab> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
+                                          SystemChannels.textInput
+                                              .invokeMethod('TextInput.hide');
+                                          searchController.clear();
+                                          setState(() {
+                                            searchingStarted = false;
+                                          });
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -1056,6 +1062,13 @@ class _FirstTabState extends State<FirstTab> {
                                         children: [
                                           GestureDetector(
                                             onTap: () {
+                                              SystemChannels.textInput
+                                                  .invokeMethod(
+                                                      'TextInput.hide');
+                                              searchController.clear();
+                                              setState(() {
+                                                searchingStarted = false;
+                                              });
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -1133,6 +1146,12 @@ class _FirstTabState extends State<FirstTab> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
+                                            SystemChannels.textInput
+                                                .invokeMethod('TextInput.hide');
+                                            searchController.clear();
+                                            setState(() {
+                                              searchingStarted = false;
+                                            });
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -1201,6 +1220,12 @@ class _FirstTabState extends State<FirstTab> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
+                                            SystemChannels.textInput
+                                                .invokeMethod('TextInput.hide');
+                                            searchController.clear();
+                                            setState(() {
+                                              searchingStarted = false;
+                                            });
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -1270,6 +1295,12 @@ class _FirstTabState extends State<FirstTab> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
+                                            SystemChannels.textInput
+                                                .invokeMethod('TextInput.hide');
+                                            searchController.clear();
+                                            setState(() {
+                                              searchingStarted = false;
+                                            });
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -1617,6 +1648,8 @@ class TopGainer extends StatefulWidget {
 class _TopGainerState extends State<TopGainer> {
   StreamController<TopGainersLosers> topGainerLoserController =
       StreamController();
+   final searchController = TextEditingController();
+  bool searchingStarted = false;
 
   @override
   void dispose() {
@@ -1722,6 +1755,11 @@ class _TopGainerState extends State<TopGainer> {
 
               return GestureDetector(
                 onTap: () {
+                  SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  searchController.clear();
+                  setState(() {
+                    searchingStarted = false;
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -1779,6 +1817,8 @@ class TopLoser extends StatefulWidget {
 class _TopLoserState extends State<TopLoser> {
   StreamController<TopGainersLosers> topGainerLoserController =
       StreamController();
+  final searchController = TextEditingController();
+  bool searchingStarted = false;
 
   @override
   void dispose() {
@@ -1883,6 +1923,11 @@ class _TopLoserState extends State<TopLoser> {
 
               return GestureDetector(
                 onTap: () {
+                   SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  searchController.clear();
+                  setState(() {
+                    searchingStarted = false;
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -1940,6 +1985,8 @@ class ActiveByValue extends StatefulWidget {
 class _ActiveByValueState extends State<ActiveByValue> {
   StreamController<ActiveByValueModel> topGainerLoserController =
       StreamController();
+  final searchController = TextEditingController();
+  bool searchingStarted = false;
 
   @override
   void dispose() {
@@ -2043,6 +2090,11 @@ class _ActiveByValueState extends State<ActiveByValue> {
 
               return GestureDetector(
                 onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  searchController.clear();
+                  setState(() {
+                    searchingStarted = false;
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -2099,6 +2151,8 @@ class ActiveByVolume extends StatefulWidget {
 class _ActiveByVolumeState extends State<ActiveByVolume> {
   StreamController<ActiveByValueModel> topGainerLoserController =
       StreamController();
+        final searchController = TextEditingController();
+  bool searchingStarted = false;
 
   @override
   void dispose() {
@@ -2202,6 +2256,11 @@ class _ActiveByVolumeState extends State<ActiveByVolume> {
 
               return GestureDetector(
                 onTap: () {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  searchController.clear();
+                  setState(() {
+                    searchingStarted = false;
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -2257,7 +2316,8 @@ class Week52 extends StatefulWidget {
 
 class _Week52State extends State<Week52> {
   StreamController<Week52Model> topGainerLoserController = StreamController();
-
+        final searchController = TextEditingController();
+  bool searchingStarted = false;
   @override
   void dispose() {
     topGainerLoserController.close();
@@ -2359,6 +2419,11 @@ class _Week52State extends State<Week52> {
 
               return GestureDetector(
                 onTap: () {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  searchController.clear();
+                  setState(() {
+                    searchingStarted = false;
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -2414,7 +2479,8 @@ class Week52Low extends StatefulWidget {
 
 class _Week52LowState extends State<Week52Low> {
   StreamController<Week52Model> topGainerLoserController = StreamController();
-
+      final searchController = TextEditingController();
+  bool searchingStarted = false;
   @override
   void dispose() {
     topGainerLoserController.close();
@@ -2516,6 +2582,11 @@ class _Week52LowState extends State<Week52Low> {
 
               return GestureDetector(
                 onTap: () {
+                         SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  searchController.clear();
+                  setState(() {
+                    searchingStarted = false;
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -2572,6 +2643,8 @@ class OnlyBuyers extends StatefulWidget {
 class _OnlyBuyersState extends State<OnlyBuyers> {
   StreamController<OnlyBuyersModel> topGainerLoserController =
       StreamController();
+  final searchController = TextEditingController();
+  bool searchingStarted = false;
 
   @override
   void dispose() {
@@ -2674,6 +2747,11 @@ class _OnlyBuyersState extends State<OnlyBuyers> {
 
               return GestureDetector(
                 onTap: () {
+                                 SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  searchController.clear();
+                  setState(() {
+                    searchingStarted = false;
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -2730,6 +2808,8 @@ class OnlySellers extends StatefulWidget {
 class _OnlySellersState extends State<OnlySellers> {
   StreamController<OnlyBuyersModel> topGainerLoserController =
       StreamController();
+       final searchController = TextEditingController();
+  bool searchingStarted = false;
 
   @override
   void dispose() {
@@ -2832,6 +2912,11 @@ class _OnlySellersState extends State<OnlySellers> {
 
               return GestureDetector(
                 onTap: () {
+                  SystemChannels.textInput.invokeMethod('TextInput.hide');
+                  searchController.clear();
+                  setState(() {
+                    searchingStarted = false;
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(

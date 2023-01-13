@@ -193,12 +193,13 @@ class _MysubscriptionState extends State<Mysubscription> {
             child: FloatingActionButton(
               backgroundColor: Color(0xFFF78104),
               heroTag: "tag1",
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const Mysubscription())));
-              },
+              onPressed: null,
+              //  () {
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: ((context) => const Mysubscription())));
+              // },
               tooltip: 'Subscribe',
               elevation: 2.0,
               child: SvgPicture.asset(

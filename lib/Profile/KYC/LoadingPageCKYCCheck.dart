@@ -5,6 +5,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Profile/KYC/Repository/CKYCMethods.dart';
 import 'package:piadvisory/Profile/KYC/Repository/KYCDigilocker.dart';
+import 'package:piadvisory/Utils/database.dart';
 import '/Common/CustomNextButton.dart';
 import '/Common/app_bar.dart';
 import '/Profile/KYC/FamilyDetails.dart';
@@ -21,11 +22,19 @@ class LoadingPageCKYCCheck extends StatefulWidget {
 }
 
 class _LoadingPageCKYCCheckState extends State<LoadingPageCKYCCheck> {
+  Map<String, dynamic>? idno = {};
+  @override
+  void initState() {
+    Map<String, dynamic> updata = Database().restorePanAndDob();
+    idno = {"id_no": updata['pan_no']};
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: CKYCMethods().CkycCheck(updata),
+        future: CKYCMethods().CkycCheck(idno!),
         builder: (ctx, snapshot) {
           if (snapshot.data == null) {
             return Column(
@@ -52,12 +61,11 @@ class _LoadingPageCKYCCheckState extends State<LoadingPageCKYCCheck> {
                 ),
               );
             }
-            if (kycStatus['status'] == "approval_pending") {
-              Future.microtask(() => Get.offAllNamed('/familydetails'));
-            } else if (kycStatus['status'] == "requested") {
-              Future.microtask(() => Get.offAllNamed('/profile'));
+            if (CkycStatus!['status']) {
+              Future.microtask(() => Get.offAllNamed('/digi_locker',
+                  arguments: {"kra_ckyc_verified": true}));
             } else {
-              Future.microtask(() => Get.offAllNamed('/familydetails'));
+              Future.microtask(() => Get.offAllNamed('/digi_locker_start'));
             }
           }
           return _buildbody(

@@ -65,12 +65,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  
+
   late final Future myFuture;
   DateTime timebackPressed = DateTime.now();
 
   FutureGroup futureGroup = FutureGroup();
-  
+
   @override
   void initState() {
     super.initState();
@@ -431,90 +431,59 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Positioned(
-              bottom: 80,
-              left: 20,
-              child: Visibility(
-                  visible: !userHasSubscription,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    //height: 52.h,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => Mysubscription())));
-                      },
-                      child: Image.asset(
-                        "assets/images/BannerNew.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                  // Container(
-                  //   decoration: const BoxDecoration(
-                  //       gradient: LinearGradient(
-                  //     begin: Alignment.topLeft,
-                  //     end: Alignment.bottomRight,
-                  //     colors: [
-                  //       Color(0xFF000000),
-                  //       Color(0xFF009A9E),
-                  //       Color(0xFF000000),
-                  //     ],
-                  //   )),
-                  //   width: MediaQuery.of(context).size.width * 0.9,
-                  //   height: 52.h,
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: [
-                  //       Text.rich(
-                  //         TextSpan(children: [
-                  //           TextSpan(
-                  //             text: "Get Started @ ",
-                  //           ),
-                  //           TextSpan(
-                  //               text: "₹199/-",
-                  //               style: TextStyle(
-                  //                 decorationColor: Colors.red,
-                  //                 decoration: TextDecoration.lineThrough,
-                  //               )),
-                  //           TextSpan(
-                  //               text: " FREE",
-                  //               style: TextStyle(color: Colors.red)),
-                  //         ]),
-                  //         // "Get Started @ 199/- only ",
-                  //         style:
-                  //             blackStyle(context).copyWith(color: Colors.white),
-                  //       ),
-                  //       Container(
-                  //         padding: const EdgeInsets.all(8),
-                  //         decoration: BoxDecoration(
-                  //           border: Border.all(
-                  //             color: Colors.white,
-                  //           ),
-                  //           borderRadius: BorderRadius.circular(25),
-                  //         ),
-                  //         child: GestureDetector(
-                  //           onTap: () {
-                  //             Navigator.push(
-                  //                 context,
-                  //                 MaterialPageRoute(
-                  //                     builder: ((context) => Mysubscription())));
-                  //           },
-                  //           child: Text(
-                  //             "Book Now",
-                  //             style: blackStyle(context)
-                  //                 .copyWith(color: Colors.white, fontSize: 12.sm),
-                  //           ),
-                  //         ),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
-                  ),
-            ),
+            FutureBuilder(
+                future: getSubscriptionWithDetails().getsubsDetail(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.data == null) {
+                    // return Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
+                    //     Center(
+                    //       child: Lottie.asset(
+                    //         "assets/images/lf30_editor_jc6n8oqe.json",
+                    //         repeat: true,
+                    //         height: 150.h,
+                    //         width: 150.w,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // );
+                  }
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          '${snapshot.error} occured',
+                          style: TextStyle(fontSize: 18.sm),
+                        ),
+                      );
+                    }
+                  }
+                  return Positioned(
+                    bottom: 80,
+                    left: 20,
+                    child: Visibility(
+                        visible: !userHasSubscription,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          //height: 52.h,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          Mysubscription())));
+                            },
+                            child: Image.asset(
+                              "assets/images/BannerNew.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )),
+                  );
+                }),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(

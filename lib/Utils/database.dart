@@ -79,4 +79,18 @@ class Database extends GetxController {
 
     return updata;
   }
+
+  storePanAndDob(Map<String, dynamic> value) {
+    box.write('pan_no', value['pan_no']);
+    box.write('dob', value['dob']);
+  }
+
+  restorePanAndDob() {
+    Map<String, dynamic> updata = {
+      'pan_no': box.read('pan_no'),
+      'dob': box.read('dob'),
+    };
+
+    return updata;
+  }
 }

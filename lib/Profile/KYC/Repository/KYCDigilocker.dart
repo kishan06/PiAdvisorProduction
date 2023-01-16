@@ -31,7 +31,8 @@ class KYCDigilocker {
     Database().storeLink(link);
   }
 
-  Future<ResponseData> generateRequestID() async {
+  Future<ResponseData> generateRequestID(
+      {required bool kra_ckyc_verfied}) async {
     Response response;
     Map<String, dynamic> userdata = Database().restoreUserDetails();
     print("reached to generate req id");
@@ -47,7 +48,7 @@ class KYCDigilocker {
             "customer_identifier": globalEmailID,
             "customer_name": userdata['fullname'],
             "reference_id": UtilsMethods().getRandomString(20),
-            "template_name": "PI-TEST",
+            "template_name": kra_ckyc_verfied ? "CKYC FLOW" : "PI-TEST",
             "notify_customer": true,
             "request_details": {},
             "transaction_id": UtilsMethods().getRandomString(20),

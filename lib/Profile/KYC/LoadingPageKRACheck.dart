@@ -5,6 +5,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Profile/KYC/Repository/CKYCMethods.dart';
 import 'package:piadvisory/Profile/KYC/Repository/KYCDigilocker.dart';
+import 'package:piadvisory/Utils/database.dart';
 import '/Common/CustomNextButton.dart';
 import '/Common/app_bar.dart';
 import '/Profile/KYC/FamilyDetails.dart';
@@ -21,11 +22,18 @@ class LoadingPageKRACheck extends StatefulWidget {
 }
 
 class _LoadingPageKRACheckState extends State<LoadingPageKRACheck> {
+  Map<String, dynamic>? updata = {};
+  @override
+  void initState() {
+    updata = Database().restorePanAndDob();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: CKYCMethods().KRACheck(updata),
+        future: CKYCMethods().KRACheck(updata!),
         builder: (ctx, snapshot) {
           if (snapshot.data == null) {
             return Column(
@@ -52,12 +60,10 @@ class _LoadingPageKRACheckState extends State<LoadingPageKRACheck> {
                 ),
               );
             }
-            if (kycStatus['status'] == "approval_pending") {
-              Future.microtask(() => Get.offAllNamed('/familydetails'));
-            } else if (kycStatus['status'] == "requested") {
-              Future.microtask(() => Get.offAllNamed('/profile'));
+            if (kraStatus!['status'] == "KRA Verified") {
+              Future.microtask(() => Get.offAllNamed('/digi_locker'));
             } else {
-              Future.microtask(() => Get.offAllNamed('/familydetails'));
+              Future.microtask(() => Get.offAllNamed('/loading_ckyc'));
             }
           }
           return _buildbody(

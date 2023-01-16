@@ -11,12 +11,13 @@ import 'package:piadvisory/Utils/utils.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-late Map<String, dynamic> CkycStatus;
+Map<String, dynamic>? CkycStatus;
+Map<String, dynamic>? kraStatus;
 
 class CKYCMethods {
   Dio dio = new Dio();
 
-  Future<ResponseData> KRACheck(updata) async {
+  Future<ResponseData> KRACheck(Map<String, dynamic> updata) async {
     Response response;
     try {
       response = await dio.post(
@@ -34,7 +35,7 @@ class CKYCMethods {
     if (response.statusCode == 200) {
       Map<String, dynamic> res = response.data;
 
-      CkycStatus = {
+      kraStatus = {
         "status": res['status'],
       };
 
@@ -55,12 +56,12 @@ class CKYCMethods {
     }
   }
 
-  Future<ResponseData> CkycCheck(updata) async {
+  Future<ResponseData> CkycCheck(Map<String, dynamic> idno) async {
     Response response;
     try {
       response =
           await dio.post("https://ext.digio.in:444/v3/client/kyc/ckyc/search",
-              data: updata,
+              data: idno,
               options: Options(headers: {
                 "authorization":
                     "Basic QUlERjg5SVFTMlRMVFM2T0ZQMUxOUDdXOVlGSDJYR1I6WDE4UlcxRFhIT0xETENBUTJKMTgySkVWR1JKTjlUM0c=",

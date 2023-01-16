@@ -35,6 +35,8 @@ class _NavDrawerState extends State<NavDrawer> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.remove('token');
     await preferences.remove('video');
+    await preferences.remove('pinenabled');
+
     //  Database().deleteStorage();
     // setState(() {
     //   Get.isDarkMode ? ThemeServices().switchTheme() : null;

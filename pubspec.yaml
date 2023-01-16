@@ -93,7 +93,7 @@ dependencies:
   flutter_html: any
   permission_handler: ^10.2.0
   timer_button: ^2.0.0
-
+  connectivity_plus: ^3.0.2
 
 
 dev_dependencies:

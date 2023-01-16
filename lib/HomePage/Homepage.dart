@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,9 +8,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/VideoYoutube.dart';
+//import 'package:piadvisory/Common/network.dart';
 import 'package:piadvisory/HomePage/Blog%20Repository/blogrepo.dart';
 import 'package:piadvisory/HomePage/CaseStudy.dart';
 import 'package:piadvisory/HomePage/HomepageRepository/Homepagerepository.dart';
@@ -25,9 +29,11 @@ import 'package:piadvisory/SideMenu/Subscribe/Repository/getSubscriptionWithDeta
 import 'package:piadvisory/SideMenu/Subscribe/SubscriptionPlanModel.dart';
 import 'package:piadvisory/SideMenu/about.dart';
 import 'package:piadvisory/Utils/Constants.dart';
-import 'package:piadvisory/getx/connection_manager.dart';
+import 'package:piadvisory/no-internet.dart';
 import 'package:piadvisory/smallcase_api_methods.dart';
 import 'package:scgateway_flutter_plugin/scgateway_flutter_plugin.dart';
+
+
 import 'package:async/src/future_group.dart';
 // import 'package:piadvisory/HomePage/Blog.dart';
 
@@ -83,21 +89,46 @@ class _HomePageState extends State<HomePage> {
   DateTime timebackPressed = DateTime.now();
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  bool _networkcheck = false;
+  //bool _networkcheck = false;
   int _selectedIndex = 0;
+
+  late StreamSubscription subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
 
   @override
   void initState() {
-    super.initState();
+    //super.initState();
     futureGroup.add(getBlogs().getBlogsandNews());
     futureGroup.add(GetHomepagePopup().getHomepagePopup());
     futureGroup.add(Storegoalsdetails().getGoals());
     futureGroup.add(getSubscriptionWithDetails().getsubsDetail());
     futureGroup.close();
+
+    getConnectivity();
     //getVideoStatus();
     //_fetchfutures();
     //myFuture = getBlogs().getBlogsandNews();
     super.initState();
+  }
+
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            print("no internet called");
+            //showDialogBox();
+            Get.to(() => No_internet());
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
 
   void replaceBannerWithLoader() {
@@ -765,8 +796,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final ConnectionManagerController _controller =
-        Get.find<ConnectionManagerController>();
     return WillPopScope(
       //onWillPop: () => Future.value(false),
       onWillPop: () async {
@@ -1060,18 +1089,10 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
                 return Center(
-                  child: Obx(() => Text(
-                        _controller.connectionType.value == 1
-                            ? "Wifi Connected"
-                            : _controller.connectionType.value == 2
-                                ? 'Mobile Data Connected'
-                                : 'No Internet',
-                        style: const TextStyle(fontSize: 20),
-                      )),
-                  // Text(
-                  //   '${snapshot.error} occured',
-                  //   style: TextStyle(fontSize: 18.sm),
-                  // ),
+                  child: Text(
+                    '${snapshot.error} occured',
+                    style: TextStyle(fontSize: 18.sm),
+                  ),
                 );
               }
             }
@@ -1083,6 +1104,28 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  // showDialogBox() => showCupertinoDialog<String>(
+  //   context: context,
+  //    builder: (BuildContext context) => CupertinoAlertDialog(
+  //     title: Text("No Connection"),
+  //     content: Text("Please check your internet connectivity"),
+  //     actions: <Widget>[
+  //       TextButton(
+  //         onPressed: () async{
+  //           Navigator.pop(context, "Cancel");
+  //           setState (() => isAlertSet = false);
+  //           isDeviceConnected = await InternetConnectionChecker().hasConnection;
+  //           if (!isDeviceConnected) {
+  //             showDialogBox();
+  //             setState(() => isAlertSet = true);
+  //           }
+  //         },
+  //          child: Text("Retry"),
+  //          )
+  //     ],
+  //    ),
+  //    );
 }
 
 class BottomCards extends StatelessWidget {

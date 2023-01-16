@@ -44,7 +44,6 @@ import 'package:piadvisory/Profile/add-goal.dart';
 import 'package:piadvisory/SideMenu/CartPi.dart';
 import 'package:piadvisory/SideMenu/CartPi2.dart';
 import 'package:piadvisory/Utils/database.dart';
-import 'package:piadvisory/getx/controller_binding.dart';
 import 'package:piadvisory/payment-failed.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
@@ -162,7 +161,6 @@ class _MyAppState extends State<MyApp> {
         ],
         // darkTheme: AppTheme.dark(),
         // themeMode: ThemeServices().theme,
-        initialBinding: ControllerBinding(),
         theme: AppTheme.light(),
         debugShowCheckedModeBanner: false,
         title: 'PI Advisor',

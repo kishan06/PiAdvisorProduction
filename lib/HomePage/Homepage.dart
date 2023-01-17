@@ -1,14 +1,19 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/VideoYoutube.dart';
+//import 'package:piadvisory/Common/network.dart';
 import 'package:piadvisory/HomePage/Blog%20Repository/blogrepo.dart';
 import 'package:piadvisory/HomePage/CaseStudy.dart';
 import 'package:piadvisory/HomePage/HomepageRepository/Homepagerepository.dart';
@@ -24,8 +29,11 @@ import 'package:piadvisory/SideMenu/Subscribe/Repository/getSubscriptionWithDeta
 import 'package:piadvisory/SideMenu/Subscribe/SubscriptionPlanModel.dart';
 import 'package:piadvisory/SideMenu/about.dart';
 import 'package:piadvisory/Utils/Constants.dart';
+import 'package:piadvisory/no-internet.dart';
 import 'package:piadvisory/smallcase_api_methods.dart';
 import 'package:scgateway_flutter_plugin/scgateway_flutter_plugin.dart';
+
+
 import 'package:async/src/future_group.dart';
 // import 'package:piadvisory/HomePage/Blog.dart';
 
@@ -64,27 +72,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  
-  late final Future myFuture;
-  DateTime timebackPressed = DateTime.now();
-
   FutureGroup futureGroup = FutureGroup();
-  
-  @override
-  void initState() {
-    super.initState();
-    futureGroup.add(getBlogs().getBlogsandNews());
-    futureGroup.add(GetHomepagePopup().getHomepagePopup());
-    futureGroup.add(Storegoalsdetails().getGoals());
-    futureGroup.add(getSubscriptionWithDetails().getsubsDetail());
-    futureGroup.close();
-    //getVideoStatus();
-    //_fetchfutures();
-    //myFuture = getBlogs().getBlogsandNews();
-    super.initState();
-  }
-
+  late final Future myFuture;
   // void _fetchfutures() async {
   //   await Future.wait([
   //     GetHomepagePopup().getHomepagePopup(),
@@ -95,7 +84,52 @@ class _HomePageState extends State<HomePage> {
   // }
 
   bool showBanner = false;
+
   bool showBannerLoader = true;
+  DateTime timebackPressed = DateTime.now();
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  //bool _networkcheck = false;
+  int _selectedIndex = 0;
+
+  late StreamSubscription subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet = false;
+
+  @override
+  void initState() {
+    //super.initState();
+    futureGroup.add(getBlogs().getBlogsandNews());
+    futureGroup.add(GetHomepagePopup().getHomepagePopup());
+    futureGroup.add(Storegoalsdetails().getGoals());
+    futureGroup.add(getSubscriptionWithDetails().getsubsDetail());
+    futureGroup.close();
+
+    getConnectivity();
+    //getVideoStatus();
+    //_fetchfutures();
+    //myFuture = getBlogs().getBlogsandNews();
+    super.initState();
+  }
+
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+        (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            print("no internet called");
+            //showDialogBox();
+            Get.to(() => No_internet());
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
 
   void replaceBannerWithLoader() {
     setState(() {
@@ -108,81 +142,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       showBanner = true;
       showBannerLoader = false;
-    });
-  }
-
-  // getVideoStatus() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   bool isonce = prefs.getBool('video') ?? false;
-  //   return Timer(Duration(seconds: 1), () {
-  //     isonce
-  //         ? null
-  //         : widget.showVideo ?? false
-  //             ? Future.delayed(const Duration(milliseconds: 500), () {
-  //                 buildVideoDialog();
-  //                 _saveOptions();
-  //               })
-  //             : _saveOptions();
-  //   });
-  // }
-
-  _saveOptions() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('video', true);
-    setState(() {});
-  }
-
-  // ignore: unused_element
-  void _selectedTab(int index) {
-    setState(() {
-      // _lastSelected = 'TAB: $index';
-      // print(_lastSelected);
-
-      switch (index) {
-        case 0:
-          {
-            // Navigator.push(
-            //     context, MaterialPageRoute(builder: ((context) => HomePage())));
-          }
-          break;
-
-        case 1:
-          {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: ((context) => Stocks(
-                          selectedPage: 0,
-                        ))));
-          }
-          break;
-
-        case 2:
-          {
-            Navigator.push(context,
-                MaterialPageRoute(builder: ((context) => Mysubscription())));
-          }
-          break;
-        case 3:
-          {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: ((context) => SchduleAppointment())));
-          }
-          break;
-        case 4:
-          {
-            openDashboardPage(context);
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: ((context) => PortfolioMainUI())));
-          }
-          break;
-        default:
-          {
-            throw Error();
-          }
-      }
     });
   }
 
@@ -351,7 +310,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
   buildsmallcase() {
     ScgatewayFlutterPlugin.setConfigEnvironment(GatewayEnvironment.PRODUCTION,
         "moneycontrol", true, ["moneycontrol"]).then((value) {
@@ -378,303 +336,79 @@ class _HomePageState extends State<HomePage> {
     // //ScgatewayFlutterPlugin.logoutUser();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      //onWillPop: () => Future.value(false),
-      onWillPop: () async {
-        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-        final difference = DateTime.now().difference(timebackPressed);
-        final isExitWarning = difference >= Duration(seconds: 2);
+  // getVideoStatus() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool isonce = prefs.getBool('video') ?? false;
+  //   return Timer(Duration(seconds: 1), () {
+  //     isonce
+  //         ? null
+  //         : widget.showVideo ?? false
+  //             ? Future.delayed(const Duration(milliseconds: 500), () {
+  //                 buildVideoDialog();
+  //                 _saveOptions();
+  //               })
+  //             : _saveOptions();
+  //   });
+  // }
 
-        timebackPressed = DateTime.now();
+  _saveOptions() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('video', true);
+    setState(() {});
+  }
 
-        if (isExitWarning) {
-          final message = "Press back again to exit";
-          print("reached here");
-          Fluttertoast.showToast(
-            msg: message,
-            fontSize: 18,
-          );
+  // ignore: unused_element
+  void _selectedTab(int index) {
+    setState(() {
+      // _lastSelected = 'TAB: $index';
+      // print(_lastSelected);
 
-          return false;
-        } else {
-          Fluttertoast.cancel();
+      switch (index) {
+        case 0:
+          {
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: ((context) => HomePage())));
+          }
+          break;
 
-          SystemNavigator.pop();
-          return true;
-        }
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        key: _key,
-        drawer: NavDrawer(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Stack(
-          children: [
-            Positioned(
-              bottom: 22,
-              right: MediaQuery.of(context).size.width * 0.43,
-              child: FloatingActionButton(
-                backgroundColor: Color(0xFFF78104),
-                heroTag: "tag1",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => const Mysubscription())));
-                },
-                tooltip: 'Subscribe',
-                elevation: 2.0,
-                child: SvgPicture.asset(
-                  "assets/images/product sans logo wh.svg",
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 80,
-              left: 20,
-              child: Visibility(
-                  visible: !userHasSubscription,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    //height: 52.h,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => Mysubscription())));
-                      },
-                      child: Image.asset(
-                        "assets/images/BannerNew.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                  // Container(
-                  //   decoration: const BoxDecoration(
-                  //       gradient: LinearGradient(
-                  //     begin: Alignment.topLeft,
-                  //     end: Alignment.bottomRight,
-                  //     colors: [
-                  //       Color(0xFF000000),
-                  //       Color(0xFF009A9E),
-                  //       Color(0xFF000000),
-                  //     ],
-                  //   )),
-                  //   width: MediaQuery.of(context).size.width * 0.9,
-                  //   height: 52.h,
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: [
-                  //       Text.rich(
-                  //         TextSpan(children: [
-                  //           TextSpan(
-                  //             text: "Get Started @ ",
-                  //           ),
-                  //           TextSpan(
-                  //               text: "₹199/-",
-                  //               style: TextStyle(
-                  //                 decorationColor: Colors.red,
-                  //                 decoration: TextDecoration.lineThrough,
-                  //               )),
-                  //           TextSpan(
-                  //               text: " FREE",
-                  //               style: TextStyle(color: Colors.red)),
-                  //         ]),
-                  //         // "Get Started @ 199/- only ",
-                  //         style:
-                  //             blackStyle(context).copyWith(color: Colors.white),
-                  //       ),
-                  //       Container(
-                  //         padding: const EdgeInsets.all(8),
-                  //         decoration: BoxDecoration(
-                  //           border: Border.all(
-                  //             color: Colors.white,
-                  //           ),
-                  //           borderRadius: BorderRadius.circular(25),
-                  //         ),
-                  //         child: GestureDetector(
-                  //           onTap: () {
-                  //             Navigator.push(
-                  //                 context,
-                  //                 MaterialPageRoute(
-                  //                     builder: ((context) => Mysubscription())));
-                  //           },
-                  //           child: Text(
-                  //             "Book Now",
-                  //             style: blackStyle(context)
-                  //                 .copyWith(color: Colors.white, fontSize: 12.sm),
-                  //           ),
-                  //         ),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
-                  ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-          unselectedLabelStyle: TextStyle(color: Colors.grey),
-          unselectedIconTheme: IconThemeData(color: Colors.grey),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.path_3177,
-                // color:
-                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  CustomIcons.path_4346,
-                  //  color:
-                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-                ),
-              ),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.group_2369,
-                // color:
-                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Subscribe',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.date_range,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.bottombarbagicon,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
-                size: 22.5,
-              ),
-              label: 'Dashboard',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Color(0xFFF78104),
-          backgroundColor: Colors.white,
-          onTap: (index) {
-            print(index);
-            _selectedTab(index);
-          },
-          type: BottomNavigationBarType.fixed,
-        ),
-        appBar: AppBar(
-          backgroundColor: Colors.white, elevation: 2,
-          shadowColor: Colors.black,
-          automaticallyImplyLeading: false,
-          titleSpacing: 0,
-          // centerTitle: true,
-          title: SizedBox(
-            // width: 110,
-            child: SvgPicture.asset(
-              'assets/images/logo4final.svg',
-              height: 30.h,
-              alignment: Alignment.centerLeft,
-            ),
-          ),
-          leading: Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  _key.currentState!.openDrawer();
-                },
-                icon: Icon(
-                  Icons.menu,
-                  color: Get.isDarkMode ? Colors.black : Colors.black,
-                ),
-                iconSize: 25,
-              ),
-            ],
-          ),
-          actions: [
-            // IconButton(
-            //   onPressed: () {
-            //     // buildsmallcase();
-            //   },
-            //   icon: SvgPicture.asset(
-            //     'assets/images/search-icon.svg',
-            //   ),
-            //   iconSize: 22,
-            //   color: const Color(0xFF6B6B6B),
-            // ),
-            // IconButton(
-            //   onPressed: () {
-            //     Get.toNamed('/notification');
-            //   },
-            //   icon: SvgPicture.asset(
-            //     'assets/images/notification-icon.svg',
-            //   ),
-            //   iconSize: 22,
-            //   color: const Color(0xFF6B6B6B),
-            // ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfileMain()));
-              },
-              icon: SvgPicture.asset(
-                'assets/images/Profile1.svg',
-              ),
-              iconSize: 22,
-              color: const Color(0xFF303030),
-            ),
-          ],
-        ),
-        body: FutureBuilder(
-          future: futureGroup.future,
-          builder: (ctx, snapshot) {
-            if (snapshot.data == null) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Lottie.asset(
-                      "assets/images/lf30_editor_jc6n8oqe.json",
-                      repeat: true,
-                      height: 150.h,
-                      width: 150.w,
-                    ),
-                  ),
-                ],
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                    '${snapshot.error} occured',
-                    style: TextStyle(fontSize: 18.sm),
-                  ),
-                );
-              }
-            }
-            return _buildBody(
-              context,
-            );
-          },
-        ),
-      ),
-    );
+        case 1:
+          {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => Stocks(
+                          selectedPage: 0,
+                        ))));
+          }
+          break;
+
+        case 2:
+          {
+            Navigator.push(context,
+                MaterialPageRoute(builder: ((context) => Mysubscription())));
+          }
+          break;
+        case 3:
+          {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => SchduleAppointment())));
+          }
+          break;
+        case 4:
+          {
+            openDashboardPage(context);
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: ((context) => PortfolioMainUI())));
+          }
+          break;
+        default:
+          {
+            throw Error();
+          }
+      }
+    });
   }
 
   Widget _buildBody(context) {
@@ -1059,6 +793,339 @@ class _HomePageState extends State<HomePage> {
       ],
     ));
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      //onWillPop: () => Future.value(false),
+      onWillPop: () async {
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+        final difference = DateTime.now().difference(timebackPressed);
+        final isExitWarning = difference >= Duration(seconds: 2);
+
+        timebackPressed = DateTime.now();
+
+        if (isExitWarning) {
+          final message = "Press back again to exit";
+          print("reached here");
+          Fluttertoast.showToast(
+            msg: message,
+            fontSize: 18,
+          );
+
+          return false;
+        } else {
+          Fluttertoast.cancel();
+
+          SystemNavigator.pop();
+          return true;
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        key: _key,
+        drawer: NavDrawer(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Stack(
+          children: [
+            Positioned(
+              bottom: 22,
+              right: MediaQuery.of(context).size.width * 0.43,
+              child: FloatingActionButton(
+                backgroundColor: Color(0xFFF78104),
+                heroTag: "tag1",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const Mysubscription())));
+                },
+                tooltip: 'Subscribe',
+                elevation: 2.0,
+                child: SvgPicture.asset(
+                  "assets/images/product sans logo wh.svg",
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 80,
+              left: 20,
+              child: Visibility(
+                  visible: !userHasSubscription,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    //height: 52.h,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => Mysubscription())));
+                      },
+                      child: Image.asset(
+                        "assets/images/BannerNew.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                  // Container(
+                  //   decoration: const BoxDecoration(
+                  //       gradient: LinearGradient(
+                  //     begin: Alignment.topLeft,
+                  //     end: Alignment.bottomRight,
+                  //     colors: [
+                  //       Color(0xFF000000),
+                  //       Color(0xFF009A9E),
+                  //       Color(0xFF000000),
+                  //     ],
+                  //   )),
+                  //   width: MediaQuery.of(context).size.width * 0.9,
+                  //   height: 52.h,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     children: [
+                  //       Text.rich(
+                  //         TextSpan(children: [
+                  //           TextSpan(
+                  //             text: "Get Started @ ",
+                  //           ),
+                  //           TextSpan(
+                  //               text: "₹199/-",
+                  //               style: TextStyle(
+                  //                 decorationColor: Colors.red,
+                  //                 decoration: TextDecoration.lineThrough,
+                  //               )),
+                  //           TextSpan(
+                  //               text: " FREE",
+                  //               style: TextStyle(color: Colors.red)),
+                  //         ]),
+                  //         // "Get Started @ 199/- only ",
+                  //         style:
+                  //             blackStyle(context).copyWith(color: Colors.white),
+                  //       ),
+                  //       Container(
+                  //         padding: const EdgeInsets.all(8),
+                  //         decoration: BoxDecoration(
+                  //           border: Border.all(
+                  //             color: Colors.white,
+                  //           ),
+                  //           borderRadius: BorderRadius.circular(25),
+                  //         ),
+                  //         child: GestureDetector(
+                  //           onTap: () {
+                  //             Navigator.push(
+                  //                 context,
+                  //                 MaterialPageRoute(
+                  //                     builder: ((context) => Mysubscription())));
+                  //           },
+                  //           child: Text(
+                  //             "Book Now",
+                  //             style: blackStyle(context)
+                  //                 .copyWith(color: Colors.white, fontSize: 12.sm),
+                  //           ),
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
+          unselectedLabelStyle: TextStyle(color: Colors.grey),
+          unselectedIconTheme: IconThemeData(color: Colors.grey),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.path_3177,
+                // color:
+                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Icon(
+                  CustomIcons.path_4346,
+                  //  color:
+                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+                ),
+              ),
+              label: 'Explore',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.group_2369,
+                // color:
+                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              ),
+              label: 'Subscribe',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.date_range,
+                //  color:
+                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              ),
+              label: 'Calendar',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.bottombarbagicon,
+                //  color:
+                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
+                size: 22.5,
+              ),
+              label: 'Dashboard',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Color(0xFFF78104),
+          backgroundColor: Colors.white,
+          onTap: (index) {
+            print(index);
+            _selectedTab(index);
+          },
+          type: BottomNavigationBarType.fixed,
+        ),
+        appBar: AppBar(
+          backgroundColor: Colors.white, elevation: 2,
+          shadowColor: Colors.black,
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
+          // centerTitle: true,
+          title: SizedBox(
+            // width: 110,
+            child: SvgPicture.asset(
+              'assets/images/logo4final.svg',
+              height: 30.h,
+              alignment: Alignment.centerLeft,
+            ),
+          ),
+          leading: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  _key.currentState!.openDrawer();
+                },
+                icon: Icon(
+                  Icons.menu,
+                  color: Get.isDarkMode ? Colors.black : Colors.black,
+                ),
+                iconSize: 25,
+              ),
+            ],
+          ),
+          actions: [
+            // IconButton(
+            //   onPressed: () {
+            //     // buildsmallcase();
+            //   },
+            //   icon: SvgPicture.asset(
+            //     'assets/images/search-icon.svg',
+            //   ),
+            //   iconSize: 22,
+            //   color: const Color(0xFF6B6B6B),
+            // ),
+            // IconButton(
+            //   onPressed: () {
+            //     Get.toNamed('/notification');
+            //   },
+            //   icon: SvgPicture.asset(
+            //     'assets/images/notification-icon.svg',
+            //   ),
+            //   iconSize: 22,
+            //   color: const Color(0xFF6B6B6B),
+            // ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileMain()));
+              },
+              icon: SvgPicture.asset(
+                'assets/images/Profile1.svg',
+              ),
+              iconSize: 22,
+              color: const Color(0xFF303030),
+            ),
+          ],
+        ),
+        body:
+            //   _networkcheck ?
+            //   Center(
+            //   child: Obx(() => Text(
+            //         _controller.connectionType.value == 1
+            //             ? "Wifi Connected"
+            //             : _controller.connectionType.value == 2
+            //                 ? 'Mobile Data Connected'
+            //                 : 'No Internet',
+            //         style: const TextStyle(fontSize: 20),
+            //       )),
+            // ):
+            FutureBuilder(
+          future: futureGroup.future,
+          builder: (ctx, snapshot) {
+            if (snapshot.data == null) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset(
+                      "assets/images/lf30_editor_jc6n8oqe.json",
+                      repeat: true,
+                      height: 150.h,
+                      width: 150.w,
+                    ),
+                  ),
+                ],
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    '${snapshot.error} occured',
+                    style: TextStyle(fontSize: 18.sm),
+                  ),
+                );
+              }
+            }
+            return _buildBody(
+              context,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  // showDialogBox() => showCupertinoDialog<String>(
+  //   context: context,
+  //    builder: (BuildContext context) => CupertinoAlertDialog(
+  //     title: Text("No Connection"),
+  //     content: Text("Please check your internet connectivity"),
+  //     actions: <Widget>[
+  //       TextButton(
+  //         onPressed: () async{
+  //           Navigator.pop(context, "Cancel");
+  //           setState (() => isAlertSet = false);
+  //           isDeviceConnected = await InternetConnectionChecker().hasConnection;
+  //           if (!isDeviceConnected) {
+  //             showDialogBox();
+  //             setState(() => isAlertSet = true);
+  //           }
+  //         },
+  //          child: Text("Retry"),
+  //          )
+  //     ],
+  //    ),
+  //    );
 }
 
 class BottomCards extends StatelessWidget {
@@ -1068,9 +1135,10 @@ class BottomCards extends StatelessWidget {
     required this.title,
     required this.subtitle,
   }) : super(key: key);
+
   final String image;
-  final String title;
   final String subtitle;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -1193,10 +1261,11 @@ class CustomCardHomePage extends StatelessWidget {
     required this.isimage,
   }) : super(key: key);
 
-  final String? trailingimage;
-  final String? title;
-  final String? subtitle;
   bool isimage;
+  final String? subtitle;
+  final String? title;
+  final String? trailingimage;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -1240,10 +1309,11 @@ class CustomListTileHomePage extends StatelessWidget {
     this.givepadding = false,
   }) : super(key: key);
 
-  final String? leadingimage;
-  final String? title;
-  final String? subtitle;
   final bool? givepadding;
+  final String? leadingimage;
+  final String? subtitle;
+  final String? title;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(

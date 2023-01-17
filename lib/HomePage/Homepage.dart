@@ -92,44 +92,43 @@ class _HomePageState extends State<HomePage> {
   //bool _networkcheck = false;
   int _selectedIndex = 0;
 
-  late StreamSubscription subscription;
-  var isDeviceConnected = false;
-  bool isAlertSet = false;
+  // late StreamSubscription subscription;
+  // var isDeviceConnected = false;
+  // bool isAlertSet = false;
 
   @override
   void initState() {
-    //super.initState();
     futureGroup.add(getBlogs().getBlogsandNews());
     futureGroup.add(GetHomepagePopup().getHomepagePopup());
     futureGroup.add(Storegoalsdetails().getGoals());
     futureGroup.add(getSubscriptionWithDetails().getsubsDetail());
     futureGroup.close();
 
-    getConnectivity();
+    //getConnectivity();
     //getVideoStatus();
     //_fetchfutures();
     //myFuture = getBlogs().getBlogsandNews();
     super.initState();
   }
 
-  getConnectivity() =>
-      subscription = Connectivity().onConnectivityChanged.listen(
-        (ConnectivityResult result) async {
-          isDeviceConnected = await InternetConnectionChecker().hasConnection;
-          if (!isDeviceConnected && isAlertSet == false) {
-            print("no internet called");
-            //showDialogBox();
-            Get.to(() => No_internet());
-            setState(() => isAlertSet = true);
-          }
-        },
-      );
+  // getConnectivity() =>
+  //     subscription = Connectivity().onConnectivityChanged.listen(
+  //       (ConnectivityResult result) async {
+  //         isDeviceConnected = await InternetConnectionChecker().hasConnection;
+  //         if (!isDeviceConnected && isAlertSet == false) {
+  //           print("no internet called");
+  //           showDialogBox();
+  //           //Get.to(() => No_internet());
+  //           setState(() => isAlertSet = true);
+  //         }
+  //       },
+  //     );
 
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   subscription.cancel();
+  //   super.dispose();
+  // }
 
   void replaceBannerWithLoader() {
     setState(() {
@@ -1105,27 +1104,31 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // showDialogBox() => showCupertinoDialog<String>(
-  //   context: context,
-  //    builder: (BuildContext context) => CupertinoAlertDialog(
-  //     title: Text("No Connection"),
-  //     content: Text("Please check your internet connectivity"),
-  //     actions: <Widget>[
-  //       TextButton(
-  //         onPressed: () async{
-  //           Navigator.pop(context, "Cancel");
-  //           setState (() => isAlertSet = false);
-  //           isDeviceConnected = await InternetConnectionChecker().hasConnection;
-  //           if (!isDeviceConnected) {
-  //             showDialogBox();
-  //             setState(() => isAlertSet = true);
-  //           }
-  //         },
-  //          child: Text("Retry"),
-  //          )
-  //     ],
-  //    ),
-  //    );
+    // showDialogBox() => showCupertinoDialog<String>(
+    // context: context,
+    //  builder: (BuildContext context) => 
+    //  WillPopScope(
+    //   onWillPop: () => Future.value(false),
+    //    child: CupertinoAlertDialog(
+    //     title: Text("No Connection"),
+    //     content: Text("Please check your internet connectivity"),
+    //     actions: <Widget>[
+    //       TextButton(
+    //         onPressed: () async{
+    //          Navigator.pop(context, "Cancel");
+    //           setState (() => isAlertSet = false);
+    //           isDeviceConnected = await InternetConnectionChecker().hasConnection;
+    //           if (!isDeviceConnected) {
+    //              showDialogBox();
+    //             setState(() => isAlertSet = true);
+    //           }
+    //         },
+    //          child: Text( "Try Again"),
+    //          )
+    //     ],
+    //    ),
+    //  ),
+    //  );
 }
 
 class BottomCards extends StatelessWidget {

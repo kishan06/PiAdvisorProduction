@@ -11,6 +11,7 @@ import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
 import 'package:piadvisory/HomePage/Stock/stock.dart';
 import 'package:piadvisory/Portfolio/PortfolioMainUI.dart';
+import 'package:piadvisory/Profile/Assets.dart';
 import 'package:piadvisory/Profile/BankDetails.dart';
 import 'package:piadvisory/Profile/BankdetailsRepository/storeBankdetails.dart';
 import 'package:piadvisory/Profile/CustomRiskAssessment.dart';
@@ -20,6 +21,7 @@ import 'package:piadvisory/Profile/KYC/Repository/storebasicaddincome.dart';
 import 'package:piadvisory/Profile/KYC/Repository/storebasicfamilydetails.dart';
 import 'package:piadvisory/Profile/KYC/Repository/storebasickycuserdetails.dart';
 import 'package:piadvisory/Profile/KYC/SchduleAppointment.dart';
+import 'package:piadvisory/Profile/Liabilities.dart';
 import 'package:piadvisory/Profile/PasswordAndSecurity/PasswordAndSecurity.dart';
 import 'package:piadvisory/Profile/PersonalProfile.dart';
 import 'package:piadvisory/Profile/Personalprofilerepository/storePersonalprofile.dart';
@@ -374,6 +376,42 @@ class _ProfileMainState extends State<ProfileMain> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const PasswordAndSecurity()));
+            },
+          ),
+          const Divider(
+            thickness: 1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomListTiles(
+            showTrailingText: false,
+            sizefactor: 20,
+            isimage: false,
+            isupdate: false,
+            leadingimage: "assets/images/Group 6058.svg",
+            title: "My Assets",
+            ontap: () {
+               Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Assets()));
+            },
+          ),
+          const Divider(
+            thickness: 1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+           CustomListTiles(
+            showTrailingText: false,
+            sizefactor: 20,
+            isimage: false,
+            isupdate: false,
+            leadingimage: "assets/images/Group 6058.svg",
+            title: "My Liabilities",
+            ontap: () {
+               Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Liabilities()));
             },
           ),
           const Divider(

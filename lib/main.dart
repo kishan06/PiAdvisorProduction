@@ -12,6 +12,7 @@ import 'package:month_year_picker/month_year_picker.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:piadvisory/Common/SubscriptionLoadingPage.dart';
 import 'package:piadvisory/Common/ThankYouPage.dart';
+import 'package:piadvisory/Common/connectivity.dart';
 import 'package:piadvisory/Common/sfCalendarView.dart';
 
 import 'package:piadvisory/HomePage/Homepage.dart';
@@ -151,6 +152,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    ConnectivityController connectivityController =
+      Get.put(ConnectivityController());
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         localizationsDelegates: [

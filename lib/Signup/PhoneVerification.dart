@@ -262,6 +262,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                           disabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Color(0xFF008083)),
                           ),
+                          helperText: "",
                           hintText: 'Enter Number',
                           hintStyle: TextStyle(
                               color:
@@ -286,7 +287,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.only(bottom: 27),
                             child: !_sendOTPclicked
                                 ? TextButton(
                                     style: TextButton.styleFrom(
@@ -312,32 +313,59 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                                           fontSize: 14, color: Colors.white),
                                     ),
                                   )
-                                : TimerButton(
-                                    disabledTextStyle:
-                                        TextStyle(color: Colors.white),
-                                    activeTextStyle:
-                                        TextStyle(color: Colors.white),
-                                    buttonType: ButtonType.TextButton,
-                                    label: "Resend",
-                                    timeOutInSeconds: 60,
-                                    onPressed: () {
-                                      setState(() {
-                                        if (mobile.text.isEmpty) {
-                                          _otpSent = false;
-                                          Flushbar(
-                                            message:
-                                                "Please Enter Phone Number",
-                                            duration:
-                                                const Duration(seconds: 3),
-                                          ).show(context);
-                                        } else {
-                                          checkNumberExist();
-                                        }
-                                      });
-                                    },
-                                    disabledColor: Colors.grey,
-                                    color: Color(0xFFF78104),
-                                  ),
+                                : mobile.text.isEmpty
+                                    ? TextButton(
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: Color(0xFFF78104)),
+                                        onPressed: () {
+                                          setState(() {
+                                            if (mobile.text.isEmpty) {
+                                              _otpSent = false;
+                                              Flushbar(
+                                                message:
+                                                    "Please Enter Phone Number",
+                                                duration:
+                                                    const Duration(seconds: 3),
+                                              ).show(context);
+                                            } else {
+                                              checkNumberExist();
+                                            }
+                                          });
+                                        },
+                                        child: Text(
+                                          "Resend",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white),
+                                        ),
+                                      )
+                                    : TimerButton(
+                                        disabledTextStyle:
+                                            TextStyle(color: Colors.white),
+                                        activeTextStyle:
+                                            TextStyle(color: Colors.white),
+                                        buttonType: ButtonType.TextButton,
+                                        label: "Resend",
+                                        timeOutInSeconds: 3,
+                                        //mobile.text.isEmpty ?  1 : 60,
+                                        onPressed: () {
+                                          setState(() {
+                                            if (mobile.text.isEmpty) {
+                                              _otpSent = false;
+                                              Flushbar(
+                                                message:
+                                                    "Please Enter Phone Number",
+                                                duration:
+                                                    const Duration(seconds: 3),
+                                              ).show(context);
+                                            } else {
+                                              checkNumberExist();
+                                            }
+                                          });
+                                        },
+                                        disabledColor: Colors.grey,
+                                        color: Color(0xFFF78104),
+                                      ),
                           )
                         ],
                       )

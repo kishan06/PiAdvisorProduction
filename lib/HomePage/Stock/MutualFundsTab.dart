@@ -456,6 +456,9 @@ class _LargeCapState extends State<LargeCap> {
 
               return GestureDetector(
                   onTap: () {
+                    SystemChannels
+                    .textInput
+                    .invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -618,6 +621,9 @@ class _FlexiCapState extends State<FlexiCap> {
 
               return GestureDetector(
                   onTap: () {
+                    SystemChannels
+                    .textInput
+                    .invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -781,6 +787,9 @@ class _MidCapState extends State<MidCap> {
 
               return GestureDetector(
                   onTap: () {
+                    SystemChannels
+                    .textInput
+                    .invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -944,6 +953,9 @@ class _LargeAndMidCapState extends State<LargeAndMidCap> {
 
               return GestureDetector(
                   onTap: () {
+                    SystemChannels
+                    .textInput
+                    .invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1106,6 +1118,9 @@ class _SmallCapState extends State<SmallCap> {
 
               return GestureDetector(
                   onTap: () {
+                    SystemChannels
+                    .textInput
+                    .invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(

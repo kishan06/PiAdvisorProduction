@@ -41,6 +41,7 @@ class _LoadingPageCKYCCheckState extends State<LoadingPageCKYCCheck> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Text("Checking for CKYC"),
                 Center(
                   child: Lottie.asset(
                     "assets/images/lf30_editor_jc6n8oqe.json",
@@ -65,6 +66,7 @@ class _LoadingPageCKYCCheckState extends State<LoadingPageCKYCCheck> {
               Future.microtask(() => Get.offAllNamed('/digi_locker',
                   arguments: {"kra_ckyc_verified": true}));
             } else {
+              print("else condition");
               Future.microtask(() => Get.offAllNamed('/digi_locker_start'));
             }
           }

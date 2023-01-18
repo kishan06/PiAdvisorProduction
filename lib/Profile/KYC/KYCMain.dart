@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Common/StreamEnum.dart';
+import 'package:piadvisory/Profile/KYC/LoadingPageCKYCCheck.dart';
 import 'package:piadvisory/Profile/KYC/LoadingPageKRACheck.dart';
 import 'package:piadvisory/Profile/KYC/Repository/storebasickycuserdetails.dart';
 import 'package:piadvisory/Utils/Constants.dart';
@@ -129,7 +130,7 @@ class _KYCMainState extends State<KYCMain> {
         replaceLoaderWithKycBtn();
         _storePanAndDob();
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+            MaterialPageRoute(builder: (context) => LoadingPageCKYCCheck()));
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
       } else {

@@ -57,14 +57,16 @@ class CKYCMethods {
   }
 
   Future<ResponseData> CkycCheck(Map<String, dynamic> idno) async {
+    String basicAuth = 'Basic ' +
+        base64.encode(utf8.encode(
+            'AIKXNZ35JKSNK9R4TQJEHNAUPU3KYKRV:YJ2CKKL1YFL87Y6MFJ7DW1EV9GI7KPSG'));
     Response response;
     try {
       response =
-          await dio.post("https://ext.digio.in:444/v3/client/kyc/ckyc/search",
+          await dio.post("https://api.digio.in/v3/client/kyc/ckyc/search",
               data: idno,
               options: Options(headers: {
-                "authorization":
-                    "Basic QUlERjg5SVFTMlRMVFM2T0ZQMUxOUDdXOVlGSDJYR1I6WDE4UlcxRFhIT0xETENBUTJKMTgySkVWR1JKTjlUM0c=",
+                "authorization": basicAuth,
               }));
     } on Exception catch (_) {
       return ResponseData<dynamic>(

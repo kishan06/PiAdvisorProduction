@@ -24,7 +24,7 @@ class KYCDigilocker {
     var email = globalEmailID;
     var logo = ApiConstant.endlogoForDigio;
     String link =
-        "https://ext.digio.in/#/gateway/login/$reqid/$randString/$email?logo=$logo";
+        "https://app.digio.in/#/gateway/login/$reqid/$randString/$email?logo=$logo";
 
     print(" generated link is $link");
 
@@ -36,14 +36,14 @@ class KYCDigilocker {
     Response response;
     Map<String, dynamic> userdata = Database().restoreUserDetails();
     print("reached to generate req id");
-    String username = 'AIDF89IQS2TLTS6OFP1LNP7W9YFH2XGR';
-    String password = 'X18RW1DXHOLDLCAQ2J182JEVGRJN9T3G';
+    String username = 'AIKXNZ35JKSNK9R4TQJEHNAUPU3KYKRV';
+    String password = 'YJ2CKKL1YFL87Y6MFJ7DW1EV9GI7KPSG';
     String basicAuth =
         'Basic ' + base64.encode(utf8.encode('$username:$password'));
 
     try {
       response = await dio.post(
-          "https://ext.digio.in:444/client/kyc/v2/request/with_template",
+          "https://api.digio.in/client/kyc/v2/request/with_template",
           data: {
             "customer_identifier": globalEmailID,
             "customer_name": userdata['fullname'],
@@ -55,8 +55,7 @@ class KYCDigilocker {
             "generate_access_token": true
           },
           options: Options(headers: {
-            "authorization":
-                "Basic QUlERjg5SVFTMlRMVFM2T0ZQMUxOUDdXOVlGSDJYR1I6WDE4UlcxRFhIT0xETENBUTJKMTgySkVWR1JKTjlUM0c=",
+            "authorization": basicAuth,
           }));
       // await dio.post("https://ext.digio.in:444/client/kyc/v2/request",
       //     data: {
@@ -122,13 +121,14 @@ class KYCDigilocker {
     Map<String, dynamic> requestid = Database().restoreKYCRequestID();
     print(requestid['requestId']);
     var reqid = requestid['requestId'];
+    String username = 'AIKXNZ35JKSNK9R4TQJEHNAUPU3KYKRV';
+    String password = 'YJ2CKKL1YFL87Y6MFJ7DW1EV9GI7KPSG';
+    String basicAuth =
+        'Basic ' + base64.encode(utf8.encode('$username:$password'));
     try {
       response = await dio.post(
-          "https://ext.digio.in:444/client/kyc/v2/$reqid/response",
-          options: Options(headers: {
-            "authorization":
-                "Basic QUlERjg5SVFTMlRMVFM2T0ZQMUxOUDdXOVlGSDJYR1I6WDE4UlcxRFhIT0xETENBUTJKMTgySkVWR1JKTjlUM0c=",
-          }));
+          "https://api.digio.in/client/kyc/v2/$reqid/response",
+          options: Options(headers: {"authorization": basicAuth}));
       print(response);
     } on Exception catch (_) {
       return ResponseData<dynamic>(
@@ -169,15 +169,15 @@ class KYCDigilocker {
     Response response;
 
     Map<String, dynamic> requestid = Database().restoreKYCRequestID();
-
+    String username = 'AIKXNZ35JKSNK9R4TQJEHNAUPU3KYKRV';
+    String password = 'YJ2CKKL1YFL87Y6MFJ7DW1EV9GI7KPSG';
+    String basicAuth =
+        'Basic ' + base64.encode(utf8.encode('$username:$password'));
     var reqid = requestid['requestId'];
     try {
       response = await dio.post(
-          "https://ext.digio.in:444/client/kyc/v2/$reqid/response",
-          options: Options(headers: {
-            "authorization":
-                "Basic QUlERjg5SVFTMlRMVFM2T0ZQMUxOUDdXOVlGSDJYR1I6WDE4UlcxRFhIT0xETENBUTJKMTgySkVWR1JKTjlUM0c=",
-          }));
+          "https://api.digio.in/client/kyc/v2/$reqid/response",
+          options: Options(headers: {"authorization": basicAuth}));
     } on Exception catch (_) {
       return ResponseData<dynamic>(
           'Invalid Credentials', ResponseStatus.FAILED);

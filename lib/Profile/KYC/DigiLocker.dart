@@ -22,6 +22,15 @@ class DigiLocker extends StatefulWidget {
 class _DigiLockerState extends State<DigiLocker> {
   final controller =
       Completer<WebViewController>(); // Instantiate the controller
+  final args = Get.arguments;
+  bool? verified;
+  @override
+  void initState() {
+    if (args != null) {
+      verified = Get.arguments["kra_ckyc_verified"];
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +76,7 @@ class _DigiLockerState extends State<DigiLocker> {
         ),
       ),
       body: FutureBuilder(
-        future: KYCDigilocker().generateRequestID(),
+        future: KYCDigilocker().generateRequestID(kra_ckyc_verfied: verified!),
         builder: (ctx, snapshot) {
           if (snapshot.data == null) {
             return Column(

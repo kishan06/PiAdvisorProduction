@@ -31,9 +31,13 @@ import 'package:piadvisory/Profile/AddBankDetails.dart';
 import 'package:piadvisory/Profile/CustomRiskAssessment.dart';
 
 import 'package:piadvisory/Profile/KYC/AddIncomeAndExpense.dart';
+import 'package:piadvisory/Profile/KYC/DigiLocker.dart';
 import 'package:piadvisory/Profile/KYC/FamilyDetails.dart';
+import 'package:piadvisory/Profile/KYC/KYCDigiLocker.dart';
 import 'package:piadvisory/Profile/KYC/KYCthankyou.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:piadvisory/Profile/KYC/LoadingPageCKYCCheck.dart';
+import 'package:piadvisory/Profile/KYC/LoadingPageKRACheck.dart';
 
 import 'package:piadvisory/Profile/KYC/Repository/LoadingPageKYC.dart';
 import 'package:piadvisory/Profile/KYC/SchduleAppointment.dart';
@@ -209,7 +213,11 @@ class _MyAppState extends State<MyApp> {
               page: () => SubscriptionLoadingPage()),
           GetPage(name: '/cartpi', page: () => CartPI()),
           GetPage(name: '/cartpi2', page: () => CartPI2()),
-          GetPage(name: '/stock_graph', page: () => StockGraph())
+          GetPage(name: '/stock_graph', page: () => StockGraph()),
+          GetPage(name: '/loading_kra', page: () => LoadingPageKRACheck()),
+          GetPage(name: '/loading_ckyc', page: () => LoadingPageCKYCCheck()),
+          GetPage(name: '/digi_locker', page: () => DigiLocker()),
+          GetPage(name: '/digi_locker_start', page: () => KYCDigiLocker()),
         ],
       ),
       designSize: Size(390, 844),

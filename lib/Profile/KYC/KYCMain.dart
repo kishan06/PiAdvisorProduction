@@ -6,6 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Common/StreamEnum.dart';
+import 'package:piadvisory/Profile/KYC/LoadingPageCKYCCheck.dart';
+import 'package:piadvisory/Profile/KYC/LoadingPageKRACheck.dart';
 import 'package:piadvisory/Profile/KYC/Repository/storebasickycuserdetails.dart';
 import 'package:piadvisory/Utils/Constants.dart';
 import 'package:piadvisory/Utils/database.dart';
@@ -22,6 +24,7 @@ import '/Utils/Dialogs.dart';
 import '../../Common/app_bar.dart';
 import '../../Utils/textStyles.dart';
 import 'package:piadvisory/Profile/Personalprofilerepository/Model/kycbasicdetails.dart';
+
 String? globalEmailID;
 
 class KYCMain extends StatefulWidget {
@@ -42,15 +45,16 @@ class _KYCMainState extends State<KYCMain> {
 
   DateTime? _selectedDate;
   late final Future? myFuture;
- StreamController<requestResponseState> kycmainController =
+  StreamController<requestResponseState> kycmainController =
       StreamController.broadcast();
-      
+
   @override
   void initState() {
     super.initState();
-     getKYCDetails();
+    getKYCDetails();
   }
-prefix.Dio dio = new prefix.Dio();
+
+  prefix.Dio dio = new prefix.Dio();
 
   Future<ResponseData> getKYCDetails() async {
     prefix.Response response;
@@ -66,8 +70,8 @@ prefix.Dio dio = new prefix.Dio();
     print(" resp is $response");
     if (response.statusCode == 200) {
       kycDetails = kycbasicdetails.fromJson(response.data);
-       setControllerValues();
-  kycmainController.add(requestResponseState.DataReceived);
+      setControllerValues();
+      kycmainController.add(requestResponseState.DataReceived);
       return ResponseData<dynamic>(
         "success",
         ResponseStatus.SUCCESS,
@@ -82,9 +86,6 @@ prefix.Dio dio = new prefix.Dio();
       }
     }
   }
-
-        
-
 
   void _presentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -127,8 +128,11 @@ prefix.Dio dio = new prefix.Dio();
           await StorebasickycuserDetails().postStorebasickycuserDetails(updata);
       if (data.status == ResponseStatus.SUCCESS) {
         replaceLoaderWithKycBtn();
+        _storePanAndDob();
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
+            MaterialPageRoute(builder: (context) => LoadingPageCKYCCheck()));
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
       } else {
         replaceLoaderWithKycBtn();
         return utils.showToast(data.message);
@@ -262,39 +266,45 @@ prefix.Dio dio = new prefix.Dio();
     //selectedLifeExpectancy.text = kycDetails?.user?.lifeExpectancy ?? "";
   }
 
-
+  _storePanAndDob() {
+    Map<String, dynamic> pandobmap = {
+      "pan_no": pannumber.text,
+      "dob": datecontroller.text
+    };
+    Database().storePanAndDob(pandobmap);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(
-          titleTxt: "KYC",
-          bottomtext: false,
-        ),
-        body:// _buildBody(context)
-        StreamBuilder<requestResponseState>(
-          stream: kycmainController.stream,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                  child: Lottie.asset(
-                    "assets/images/lf30_editor_jc6n8oqe.json",
-                    repeat: true,
-                    height: 50,
-                    width: 50,
-                  ),
-                );
+      appBar: const CustomAppBar(
+        titleTxt: "KYC",
+        bottomtext: false,
+      ),
+      body: // _buildBody(context)
+          StreamBuilder<requestResponseState>(
+              stream: kycmainController.stream,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: Lottie.asset(
+                        "assets/images/lf30_editor_jc6n8oqe.json",
+                        repeat: true,
+                        height: 50,
+                        width: 50,
+                      ),
+                    );
 
-              default:
-                if (snapshot.hasError) {
-                  return Text("Error Occured");
-                } else {
-                  return _buildBody(context);
+                  default:
+                    if (snapshot.hasError) {
+                      return Text("Error Occured");
+                    } else {
+                      return _buildBody(context);
+                    }
                 }
-            }
-          }),
-        );
+              }),
+    );
   }
 
   Widget _buildBody(context) {

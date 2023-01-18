@@ -73,6 +73,9 @@ class _SplashState extends State<Splash> {
   Map<String, bool> data = {"show_fingerprint": true};
   countDownTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (_ispinverified == 1) {
+      await prefs.setBool('pinenabled', true);
+    }
     bool? pinenabled = await prefs.getBool('pinenabled');
 
     return Timer(
@@ -85,7 +88,7 @@ class _SplashState extends State<Splash> {
           String? hastoken = await prefs.getString('token');
           print("token is $hastoken");
           if (hastoken != null) {
-            pinenabled != null && !pinenabled
+            pinenabled != null && pinenabled
                 ? _ispinverified == 1
                     ? _isFingerPrint == 1
                         ? Navigator.push(
@@ -101,12 +104,7 @@ class _SplashState extends State<Splash> {
                                       showFingerAndPin: "no",
                                     ))))
                     : Get.toNamed("/login")
-                : Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => PinDialog(
-                              showFingerAndPin: "yes",
-                            ))));
+                : Get.toNamed("/login");
           } else {
             Get.toNamed('/login');
           }

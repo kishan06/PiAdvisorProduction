@@ -72,7 +72,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  FutureGroup futureGroup = FutureGroup();
+
+  int _selectedIndex = 0;
+
+
   late final Future myFuture;
   // void _fetchfutures() async {
   //   await Future.wait([
@@ -88,6 +91,9 @@ class _HomePageState extends State<HomePage> {
   bool showBannerLoader = true;
   DateTime timebackPressed = DateTime.now();
 
+
+  FutureGroup futureGroup = FutureGroup();
+
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   //bool _networkcheck = false;
   int _selectedIndex = 0;
@@ -95,6 +101,7 @@ class _HomePageState extends State<HomePage> {
   // late StreamSubscription subscription;
   // var isDeviceConnected = false;
   // bool isAlertSet = false;
+
 
   @override
   void initState() {
@@ -439,6 +446,261 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
+
+                          builder: ((context) => const Mysubscription())));
+                },
+                tooltip: 'Subscribe',
+                elevation: 2.0,
+                child: SvgPicture.asset(
+                  "assets/images/product sans logo wh.svg",
+                ),
+              ),
+            ),
+            FutureBuilder(
+                future: getSubscriptionWithDetails().getsubsDetail(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.data == null) {
+                    // return Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
+                    //     Center(
+                    //       child: Lottie.asset(
+                    //         "assets/images/lf30_editor_jc6n8oqe.json",
+                    //         repeat: true,
+                    //         height: 150.h,
+                    //         width: 150.w,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // );
+                  }
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          '${snapshot.error} occured',
+                          style: TextStyle(fontSize: 18.sm),
+                        ),
+                      );
+                    }
+                  }
+                  return Positioned(
+                    bottom: 80,
+                    left: 20,
+                    child: Visibility(
+                        visible: !userHasSubscription,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          //height: 52.h,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          Mysubscription())));
+                            },
+                            child: Image.asset(
+                              "assets/images/BannerNew.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )),
+                  );
+                }),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
+          unselectedLabelStyle: TextStyle(color: Colors.grey),
+          unselectedIconTheme: IconThemeData(color: Colors.grey),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.path_3177,
+                // color:
+                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Icon(
+                  CustomIcons.path_4346,
+                  //  color:
+                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+                ),
+              ),
+              label: 'Explore',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.group_2369,
+                // color:
+                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              ),
+              label: 'Subscribe',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.date_range,
+                //  color:
+                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              ),
+              label: 'Calendar',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.bottombarbagicon,
+                //  color:
+                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
+                size: 22.5,
+              ),
+              label: 'Dashboard',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Color(0xFFF78104),
+          backgroundColor: Colors.white,
+          onTap: (index) {
+            print(index);
+            _selectedTab(index);
+          },
+          type: BottomNavigationBarType.fixed,
+        ),
+        appBar: AppBar(
+          backgroundColor: Colors.white, elevation: 2,
+          shadowColor: Colors.black,
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
+          // centerTitle: true,
+          title: SizedBox(
+            // width: 110,
+            child: SvgPicture.asset(
+              'assets/images/logo4final.svg',
+              height: 30.h,
+              alignment: Alignment.centerLeft,
+            ),
+          ),
+          leading: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  _key.currentState!.openDrawer();
+                },
+                icon: Icon(
+                  Icons.menu,
+                  color: Get.isDarkMode ? Colors.black : Colors.black,
+                ),
+                iconSize: 25,
+              ),
+            ],
+          ),
+          actions: [
+            // IconButton(
+            //   onPressed: () {
+            //     // buildsmallcase();
+            //   },
+            //   icon: SvgPicture.asset(
+            //     'assets/images/search-icon.svg',
+            //   ),
+            //   iconSize: 22,
+            //   color: const Color(0xFF6B6B6B),
+            // ),
+            // IconButton(
+            //   onPressed: () {
+            //     Get.toNamed('/notification');
+            //   },
+            //   icon: SvgPicture.asset(
+            //     'assets/images/notification-icon.svg',
+            //   ),
+            //   iconSize: 22,
+            //   color: const Color(0xFF6B6B6B),
+            // ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileMain()));
+              },
+              icon: SvgPicture.asset(
+                'assets/images/Profile1.svg',
+              ),
+              iconSize: 22,
+              color: const Color(0xFF303030),
+            ),
+          ],
+        ),
+        body: FutureBuilder(
+          future: futureGroup.future,
+          builder: (ctx, snapshot) {
+            if (snapshot.data == null) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset(
+                      "assets/images/lf30_editor_jc6n8oqe.json",
+                      repeat: true,
+                      height: 150.h,
+                      width: 150.w,
+                    ),
+                  ),
+                ],
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    '${snapshot.error} occured',
+                    style: TextStyle(fontSize: 18.sm),
+                  ),
+                );
+              }
+            }
+            return _buildBody(
+              context,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody(context) {
+    return SingleChildScrollView(
+        child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 20.h,
+              ),
+              Text(
+                "Investment Advisory",
+                style: blackStyle(context).copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Get.isDarkMode ? Colors.white : Colors.black),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+
                           builder: (context) => Stocks(
                                 selectedPage: 0,
                               )));

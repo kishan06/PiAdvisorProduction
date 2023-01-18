@@ -1,4 +1,3 @@
-
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get_core/get_core.dart';
@@ -15,14 +14,12 @@ import '/Utils/textStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class LoadingPageKRACheck extends StatefulWidget {
+  const LoadingPageKRACheck({Key? key}) : super(key: key);
 
- class LoadingPageKRACheck extends StatefulWidget {
-   const LoadingPageKRACheck({Key? key}) : super(key: key);
-
-   @override
-   State<LoadingPageKRACheck> createState() => _LoadingPageKRACheckState();
- }
-
+  @override
+  State<LoadingPageKRACheck> createState() => _LoadingPageKRACheckState();
+}
 
 class _LoadingPageKRACheckState extends State<LoadingPageKRACheck> {
   Map<String, dynamic>? updata = {};
@@ -77,5 +74,7 @@ class _LoadingPageKRACheckState extends State<LoadingPageKRACheck> {
     );
   }
 
-
-
+  Widget _buildbody(context) {
+    return Container();
+  }
+}

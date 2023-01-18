@@ -1645,7 +1645,9 @@ class TopGainer extends StatefulWidget {
   State<TopGainer> createState() => _TopGainerState();
 }
 
-class _TopGainerState extends State<TopGainer> {
+class _TopGainerState extends State<TopGainer> 
+//with AutomaticKeepAliveClientMixin<TopGainer>
+{
   StreamController<TopGainersLosers> topGainerLoserController =
       StreamController();
    final searchController = TextEditingController();
@@ -1745,6 +1747,7 @@ class _TopGainerState extends State<TopGainer> {
       children: [
         Expanded(
           child: ListView.separated(
+            //addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
               String dateStart = data.table![index].uPDTIME!;
@@ -1803,6 +1806,9 @@ class _TopGainerState extends State<TopGainer> {
       ],
     );
   }
+  
+  // @override
+  // bool get wantKeepAlive => true;
 }
 
 class TopLoser extends StatefulWidget {
@@ -1814,7 +1820,9 @@ class TopLoser extends StatefulWidget {
   State<TopLoser> createState() => _TopLoserState();
 }
 
-class _TopLoserState extends State<TopLoser> {
+class _TopLoserState extends State<TopLoser> 
+//with AutomaticKeepAliveClientMixin<TopLoser> 
+{
   StreamController<TopGainersLosers> topGainerLoserController =
       StreamController();
   final searchController = TextEditingController();
@@ -1913,6 +1921,7 @@ class _TopLoserState extends State<TopLoser> {
       children: [
         Expanded(
           child: ListView.separated(
+            //addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
               String dateStart = data.table![index].uPDTIME!;
@@ -1971,6 +1980,9 @@ class _TopLoserState extends State<TopLoser> {
       ],
     );
   }
+  
+  // @override
+  // bool get wantKeepAlive => true;
 }
 
 class ActiveByValue extends StatefulWidget {
@@ -1982,7 +1994,9 @@ class ActiveByValue extends StatefulWidget {
   State<ActiveByValue> createState() => _ActiveByValueState();
 }
 
-class _ActiveByValueState extends State<ActiveByValue> {
+class _ActiveByValueState extends State<ActiveByValue> 
+// with AutomaticKeepAliveClientMixin<ActiveByValue>
+ {
   StreamController<ActiveByValueModel> topGainerLoserController =
       StreamController();
   final searchController = TextEditingController();
@@ -2080,6 +2094,7 @@ class _ActiveByValueState extends State<ActiveByValue> {
       children: [
         Expanded(
           child: ListView.separated(
+            //addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
               String dateStart = data.table![index].uPDTIME!;
@@ -2137,6 +2152,9 @@ class _ActiveByValueState extends State<ActiveByValue> {
       ],
     );
   }
+  
+  // @override
+  // bool get wantKeepAlive => true;
 }
 
 class ActiveByVolume extends StatefulWidget {
@@ -2148,7 +2166,9 @@ class ActiveByVolume extends StatefulWidget {
   State<ActiveByVolume> createState() => _ActiveByVolumeState();
 }
 
-class _ActiveByVolumeState extends State<ActiveByVolume> {
+class _ActiveByVolumeState extends State<ActiveByVolume> 
+ //with AutomaticKeepAliveClientMixin<ActiveByVolume>
+ {
   StreamController<ActiveByValueModel> topGainerLoserController =
       StreamController();
         final searchController = TextEditingController();
@@ -2246,6 +2266,7 @@ class _ActiveByVolumeState extends State<ActiveByVolume> {
       children: [
         Expanded(
           child: ListView.separated(
+            //addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
               String dateStart = data.table![index].uPDTIME!;
@@ -2303,6 +2324,9 @@ class _ActiveByVolumeState extends State<ActiveByVolume> {
       ],
     );
   }
+  
+  // @override
+  // bool get wantKeepAlive => true;
 }
 
 class Week52 extends StatefulWidget {
@@ -2314,7 +2338,9 @@ class Week52 extends StatefulWidget {
   State<Week52> createState() => _Week52State();
 }
 
-class _Week52State extends State<Week52> {
+class _Week52State extends State<Week52>
+ //with AutomaticKeepAliveClientMixin<Week52> 
+ {
   StreamController<Week52Model> topGainerLoserController = StreamController();
         final searchController = TextEditingController();
   bool searchingStarted = false;
@@ -2409,6 +2435,7 @@ class _Week52State extends State<Week52> {
       children: [
         Expanded(
           child: ListView.separated(
+            //addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
               String dateStart = data.table![index].uPDTIME!;
@@ -2466,6 +2493,9 @@ class _Week52State extends State<Week52> {
       ],
     );
   }
+  
+  // @override
+  // bool get wantKeepAlive => true;
 }
 
 class Week52Low extends StatefulWidget {
@@ -2477,7 +2507,9 @@ class Week52Low extends StatefulWidget {
   State<Week52Low> createState() => _Week52LowState();
 }
 
-class _Week52LowState extends State<Week52Low> {
+class _Week52LowState extends State<Week52Low> 
+ //with AutomaticKeepAliveClientMixin<Week52Low>
+ {
   StreamController<Week52Model> topGainerLoserController = StreamController();
       final searchController = TextEditingController();
   bool searchingStarted = false;
@@ -2572,6 +2604,7 @@ class _Week52LowState extends State<Week52Low> {
       children: [
         Expanded(
           child: ListView.separated(
+            //addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
               String dateStart = data.table![index].uPDTIME!;
@@ -2629,6 +2662,9 @@ class _Week52LowState extends State<Week52Low> {
       ],
     );
   }
+  
+  // @override
+  // bool get wantKeepAlive => true;
 }
 
 class OnlyBuyers extends StatefulWidget {
@@ -2640,7 +2676,9 @@ class OnlyBuyers extends StatefulWidget {
   State<OnlyBuyers> createState() => _OnlyBuyersState();
 }
 
-class _OnlyBuyersState extends State<OnlyBuyers> {
+class _OnlyBuyersState extends State<OnlyBuyers> 
+ //with AutomaticKeepAliveClientMixin<OnlyBuyers> 
+ {
   StreamController<OnlyBuyersModel> topGainerLoserController =
       StreamController();
   final searchController = TextEditingController();
@@ -2737,6 +2775,7 @@ class _OnlyBuyersState extends State<OnlyBuyers> {
       children: [
         Expanded(
           child: ListView.separated(
+            //addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
               // String dateStart = data.table![index].uPDTIME!;
@@ -2794,6 +2833,9 @@ class _OnlyBuyersState extends State<OnlyBuyers> {
       ],
     );
   }
+  
+  // @override
+  // bool get wantKeepAlive => true;
 }
 
 class OnlySellers extends StatefulWidget {
@@ -2805,7 +2847,9 @@ class OnlySellers extends StatefulWidget {
   State<OnlySellers> createState() => _OnlySellersState();
 }
 
-class _OnlySellersState extends State<OnlySellers> {
+class _OnlySellersState extends State<OnlySellers> 
+ //with AutomaticKeepAliveClientMixin<OnlySellers> 
+ {
   StreamController<OnlyBuyersModel> topGainerLoserController =
       StreamController();
        final searchController = TextEditingController();
@@ -2902,6 +2946,7 @@ class _OnlySellersState extends State<OnlySellers> {
       children: [
         Expanded(
           child: ListView.separated(
+            //addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
               // String dateStart = data.table![index].uPDTIME!;
@@ -2959,6 +3004,9 @@ class _OnlySellersState extends State<OnlySellers> {
       ],
     );
   }
+  
+  // @override
+  // bool get wantKeepAlive => true;
 }
 /*
 class MutualFundsWatchlist extends StatelessWidget {

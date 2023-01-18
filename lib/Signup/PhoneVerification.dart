@@ -98,13 +98,13 @@ class _PhoneVerificationState extends State<PhoneVerification> {
     } else if (data.status == ResponseStatus.PRIVATE) {
       Flushbar(
         duration: const Duration(seconds: 2),
-        message: "Mobile Number Does not exist",
+        message: "Mobile number does not exist",
       ).show(context);
       replaceLoaderWithSignInBtn();
     } else {
       Flushbar(
         duration: const Duration(seconds: 2),
-        message: "Some Error Occured",
+        message: "Some error occured",
       ).show(context);
       replaceLoaderWithSignInBtn();
     }
@@ -346,7 +346,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                                             TextStyle(color: Colors.white),
                                         buttonType: ButtonType.TextButton,
                                         label: "Resend",
-                                        timeOutInSeconds: 3,
+                                        timeOutInSeconds: 60,
                                         //mobile.text.isEmpty ?  1 : 60,
                                         onPressed: () {
                                           setState(() {
@@ -439,6 +439,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                   ),
               SizedBox(
                 height: 30,
+                
               ),
               Row(
                 children: [

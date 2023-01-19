@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:piadvisory/HomePage/Homepage.dart';
@@ -74,12 +75,12 @@ class _NavDrawerState extends State<NavDrawer> {
               //     ),
               //   ],
               // ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 10,
+                    height: 10.h,
                   ),
                   // ListTile(
                   //   leading: const CircleAvatar(
@@ -92,7 +93,7 @@ class _NavDrawerState extends State<NavDrawer> {
                   //       )),
                   // ),
                   SizedBox(
-                    height: 15,
+                    height: 15.h,
                   ),
                   // Divider(
                   //   height: 10,
@@ -122,7 +123,7 @@ class _NavDrawerState extends State<NavDrawer> {
               //   ),
               // ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -143,7 +144,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -164,7 +165,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -183,7 +184,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -202,7 +203,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -221,7 +222,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -242,7 +243,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -261,7 +262,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -282,7 +283,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -303,7 +304,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -322,7 +323,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -346,7 +347,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 45.h,
                 child: ListTile(
                   trailing: const Icon(
                     Icons.navigate_next,
@@ -394,7 +395,7 @@ class _NavDrawerState extends State<NavDrawer> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SizedBox(
-                              height: 50,
+                              height: 50.h,
                             ),
                             Center(
                               child: Text(
@@ -408,7 +409,7 @@ class _NavDrawerState extends State<NavDrawer> {
                               ),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 10.h,
                             ),
                             Center(
                               child: Text(
@@ -422,7 +423,7 @@ class _NavDrawerState extends State<NavDrawer> {
                               ),
                             ),
                             SizedBox(
-                              height: 30,
+                              height: 30.h,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
@@ -431,7 +432,7 @@ class _NavDrawerState extends State<NavDrawer> {
                               ),
                               child: SizedBox(
                                   width: double.infinity,
-                                  height: 50,
+                                  height: 50.h,
                                   child: CustomNextButton(
                                     text: "Log out",
                                     ontap: () {
@@ -441,7 +442,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                   )),
                             ),
                             SizedBox(
-                              height: 15,
+                              height: 15.h,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
@@ -457,7 +458,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                 },
                                 child: SizedBox(
                                   width: double.infinity,
-                                  height: 50,
+                                  height: 50.h,
                                   child: Text(
                                     "Cancel",
                                     textAlign: TextAlign.center,
@@ -479,7 +480,7 @@ class _NavDrawerState extends State<NavDrawer> {
                 },
               ),
               SizedBox(
-                height: 100,
+                height: 100.h,
               ),
               ListTile(
                 title: Text(

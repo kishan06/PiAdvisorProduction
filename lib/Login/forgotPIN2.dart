@@ -9,6 +9,7 @@ import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
+import 'package:piadvisory/Login/Repository/LoginMethod.dart';
 import 'package:piadvisory/Login/Repository/ResetPin.dart';
 import 'package:piadvisory/Login/Repository/Resetpassword.dart';
 import 'package:piadvisory/Login/ResetPassword.dart';
@@ -19,6 +20,7 @@ import 'package:piadvisory/Signup/Repository/VerifyOtp.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:timer_button/timer_button.dart';
 
 import '/Utils/Dialogs.dart';
 import '../Common/app_bar.dart';
@@ -42,6 +44,9 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
   bool isProceedBtnVisible = true;
   bool isProceedBtnLoaderVisible = false;
 
+  bool _sendOTPclicked = false;
+    final GlobalKey<FormState> _form = GlobalKey<FormState>();
+
   // @override
   // void initState() {
   //   myFuture = ResertPin().postResetPin();
@@ -60,6 +65,40 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
       } else {
         return utils.showToast(data.message);
       }
+    }
+  }
+
+  Future<void> checkNumberExist() async {
+    Map<String, dynamic> updata = {
+      "number": number.text,
+    };
+    final data = await LoginMethod().checkMobileExist(updata, context);
+    if (data.status == ResponseStatus.SUCCESS) {
+      setState(() {
+        //_otpSent = true;
+        _sendOTPclicked = true;
+      });
+
+      Map<String, dynamic> updata2 = {
+        "mob_number": number.text,
+      };
+      await SendOtp().SendOtpExotel(updata2);
+      Flushbar(
+        message: "Otp has been sent successfully",
+        duration: const Duration(seconds: 3),
+      ).show(context);
+    } else if (data.status == ResponseStatus.PRIVATE) {
+      Flushbar(
+        duration: const Duration(seconds: 2),
+        message: "Mobile number does not exist",
+      ).show(context);
+      //replaceLoaderWithSignInBtn();
+    } else {
+      Flushbar(
+        duration: const Duration(seconds: 2),
+        message: "Some error occured",
+      ).show(context);
+      //replaceLoaderWithSignInBtn();
     }
   }
 
@@ -124,7 +163,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                         Divider(
                           thickness: 2,
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 50.h,
                         ),
                         const Text("Choose a PIN of Your choice"),
@@ -146,7 +185,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                                   keyboardType: TextInputType.number,
                                   controller: pincontroller,
                                   textAlign: TextAlign.center,
-                                  decoration:  InputDecoration(
+                                  decoration: InputDecoration(
                                     //  helperText: '',
                                     hintText: "",
                                     floatingLabelBehavior:
@@ -170,7 +209,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                             ),
                           ),
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 30.h,
                         ),
                         const Text("Please Re-Enter the PIN"),
@@ -193,7 +232,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                                     keyboardType: TextInputType.number,
                                     controller: confirmpincontroller,
                                     textAlign: TextAlign.center,
-                                    decoration:  InputDecoration(
+                                    decoration: InputDecoration(
                                       hintText: "",
                                       //    helperText: '',
                                       floatingLabelBehavior:
@@ -227,7 +266,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                             ),
                           ),
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 30.h,
                         ),
                         Container(
@@ -243,7 +282,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                                 UploadNewPinData();
                               },
                             )),
-                         SizedBox(
+                        SizedBox(
                           height: 30.h,
                         ),
                       ],
@@ -291,13 +330,15 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
   }
 
   void _validateData(_btnController1) {
-    if (pincode?.text != null && pincode!.text.isNotEmpty) {
+   final isValid = _form.currentState?.validate();
+    if (pincode?.text != null && pincode!.text.isNotEmpty && isValid!) {
       UploadPinData(_btnController1);
     } else {
       // _btnController1.error();
       // Timer(Duration(seconds: 1), () {
       //   _btnController1.reset();
       // });
+      utils.showToast("please fill all required fields");
       setState(() {
         isProceedBtnVisible = true;
         isProceedBtnLoaderVisible = false;
@@ -324,138 +365,306 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
         left: 20,
         right: 20,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-           SizedBox(
-            height: 50.h,
-          ),
-          const Text(
-            "We will send a verification OTP to\nthe Phone Number on your account in order\nto reset your password",
-            style: TextStyle(
-              fontSize: 15,
+      child: Form(
+        key: _form,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 50.h,
             ),
-          ),
-           SizedBox(
-            height: 30.h,
-          ),
-          TextField(
-            onSubmitted: (value) {
-              setState(() {
-                Map<String, dynamic> updata = {"mob_number": number.text};
-                SendOtp().SendOtpExotel(updata);
-              });
-              Flushbar(
-                message: "OTP Sent",
-                duration: const Duration(seconds: 3),
-              ).show(context);
-            },
-            controller: number,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              prefixIcon: Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Icon(
-                  Icons.call,
-                  color: Color(0xFF008083),
+            const Text(
+              "We will send a verification OTP to\nthe Phone Number on your account in order\nto reset your password",
+              style: TextStyle(
+                fontSize: 15,
+              ),
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: Container(
+                height: 55,
+                width: 150,
+                child: Stack(
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please Enter Number";
+                        } else if (value.length < 10) {
+                          return "Please Enter Correct Phone Number";
+                        }
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: number,
+                      autofocus: true,
+                      cursorColor: Colors.black,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(
+                          fontFamily: 'Productsans',
+                          fontSize: 21,
+                          fontWeight: FontWeight.w400,
+                          color: Get.isDarkMode ? Colors.white : Colors.black),
+                      decoration: InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Icon(
+                            Icons.call,
+                            color: Color(0xFF008083),
+                          ),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(width: 1.w, color: Colors.grey),
+                         // borderSide: BorderSide(color: Color(0xFF008083)),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF008083)),
+                        ),
+                        disabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF008083)),
+                        ),
+                        helperText: "",
+                        hintText: 'Enter Phone Number',
+                        hintStyle: TextStyle(
+                          fontSize: 15,
+                            color: Get.isDarkMode ? Colors.white : Colors.grey),
+                       floatingLabelBehavior: FloatingLabelBehavior.always,   
+                      ),
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(10),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 27),
+                          child: !_sendOTPclicked
+                              ? TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Color(0xFFF78104)),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (number.text.isEmpty) {
+                                        //_otpSent = false;
+                                        Flushbar(
+                                          message: "Please Enter Phone Number",
+                                          duration: const Duration(seconds: 3),
+                                        ).show(context);
+                                      } else {
+                                        checkNumberExist();
+                                      }
+                                    });
+                                  },
+                                  child: Text(
+                                    "Send OTP",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.white),
+                                  ),
+                                )
+                              : number.text.isEmpty
+                                  ? TextButton(
+                                      style: TextButton.styleFrom(
+                                          backgroundColor: Color(0xFFF78104)),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (number.text.isEmpty) {
+                                            // _otpSent = false;
+                                            Flushbar(
+                                              message:
+                                                  "Please Enter Phone Number",
+                                              duration:
+                                                  const Duration(seconds: 3),
+                                            ).show(context);
+                                          } else {
+                                            checkNumberExist();
+                                          }
+                                        });
+                                      },
+                                      child: Text(
+                                        "Resend",
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.white),
+                                      ),
+                                    )
+                                  : TimerButton(
+                                      disabledTextStyle:
+                                          TextStyle(color: Colors.white),
+                                      activeTextStyle:
+                                          TextStyle(color: Colors.white),
+                                      buttonType: ButtonType.TextButton,
+                                      label: "Resend",
+                                      timeOutInSeconds: 60,
+                                      //mobile.text.isEmpty ?  1 : 60,
+                                      onPressed: () {
+                                        setState(() {
+                                          if (number.text.isEmpty) {
+                                            //_otpSent = false;
+                                            Flushbar(
+                                              message:
+                                                  "Please Enter Phone Number",
+                                              duration:
+                                                  const Duration(seconds: 3),
+                                            ).show(context);
+                                          } else {
+                                            checkNumberExist();
+                                          }
+                                        });
+                                      },
+                                      disabledColor: Colors.grey,
+                                      color: Color(0xFFF78104),
+                                    ),
+                        )
+                      ],
+                    )
+                  ],
                 ),
               ),
-              hintText: "Enter Phone Number",
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(width: 1.w, color: Colors.grey)),
             ),
-          ),
-          SizedBox(
-            height: 40.h,
-          ),
-          PinCodeTextField(
-            keyboardType: TextInputType.number,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            length: 4,
-            obscureText: false,
-            animationType: AnimationType.fade,
-            pinTheme: PinTheme(
-              selectedFillColor: Get.isDarkMode
-                  ? Color(0xFF303030).withOpacity(0.4)
-                  : Colors.white,
-              inactiveFillColor: Get.isDarkMode
-                  ? Color(0xFF303030).withOpacity(0.4)
-                  : Colors.white,
-              inactiveColor: Color(0xFF707070),
-              activeColor: Color.fromRGBO(0, 128, 131, 1),
-              selectedColor: Color.fromRGBO(0, 128, 131, 1),
-              shape: PinCodeFieldShape.box,
-              borderRadius: BorderRadius.circular(5),
-              fieldHeight: 70,
-              fieldWidth: 70,
-              activeFillColor: Get.isDarkMode
-                  ? Color(0xFF303030).withOpacity(0.4)
-                  : Colors.white,
+            // TextField(
+            //   onSubmitted: (value) {
+            //     setState(() {
+            //       Map<String, dynamic> updata = {"mob_number": number.text};
+            //       SendOtp().SendOtpExotel(updata);
+            //     });
+            //     Flushbar(
+            //       message: "OTP Sent",
+            //       duration: const Duration(seconds: 3),
+            //     ).show(context);
+            //   },
+            //   // validator: (value) {
+            //   //               if (value == null || value.isEmpty) {
+            //   //                 return "Please Enter Number";
+            //   //               } else if (value.length < 10) {
+            //   //                 return "Please Enter Correct Phone Number";
+            //   //               }
+            //   //               return null;
+            //   //             },
+            //   controller: number,
+            //   keyboardType: TextInputType.number,
+            //   decoration: InputDecoration(
+            //     prefixIcon: Padding(
+            //       padding: EdgeInsets.only(right: 20),
+            //       child: Icon(
+            //         Icons.call,
+            //         color: Color(0xFF008083),
+            //       ),
+            //     ),
+            //     hintText: "Enter Phone Number",
+            //     floatingLabelBehavior: FloatingLabelBehavior.always,
+            //     focusedBorder: UnderlineInputBorder(
+            //         borderSide: BorderSide(width: 1.w, color: Colors.grey)),
+            //   ),
+            // ),
+            SizedBox(
+              height: 40.h,
             ),
-            animationDuration: Duration(milliseconds: 300),
-            // backgroundColor: Color.fromARGB(255, 155, 113, 113),
-            enableActiveFill: true,
-            // errorAnimationController: errorController,
-            controller: pincode,
-            onCompleted: (v) {
-              print("Completed");
-            },
-            onChanged: (value) {
-              print(value);
-              setState(() {
-                // currentText = value;
-              });
-            },
-            beforeTextPaste: (text) {
-              return true;
-            },
-            appContext: context,
-          ),
-          SizedBox(
-            height: 50.h,
-          ),
-          Visibility(
-            visible: isProceedBtnVisible,
-            child: SizedBox(
-              width: double.infinity,
-              child: CustomNextButton(
-                text: "Proceed",
-                ontap: () {
-                  setState(() {
-                    isProceedBtnVisible = false;
-                    isProceedBtnLoaderVisible = true;
-                  });
-                  _validateData(_btnController1);
-                },
+            PinCodeTextField(
+                 validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "Please Enter verification code";
+                    } else if (value != null && value.length < 4) {
+                      return "OTP length should be atleast 4";
+                    }
+                    return null;
+                  },
+              keyboardType: TextInputType.number,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              length: 4,
+              obscureText: false,
+              animationType: AnimationType.fade,
+              pinTheme: PinTheme(
+                selectedFillColor: Get.isDarkMode
+                    ? Color(0xFF303030).withOpacity(0.4)
+                    : Colors.white,
+                inactiveFillColor: Get.isDarkMode
+                    ? Color(0xFF303030).withOpacity(0.4)
+                    : Colors.white,
+                inactiveColor: Color(0xFF707070),
+                activeColor: Color.fromRGBO(0, 128, 131, 1),
+                selectedColor: Color.fromRGBO(0, 128, 131, 1),
+                shape: PinCodeFieldShape.box,
+                borderRadius: BorderRadius.circular(5),
+                fieldHeight: 70,
+                fieldWidth: 70,
+                activeFillColor: Get.isDarkMode
+                    ? Color(0xFF303030).withOpacity(0.4)
+                    : Colors.white,
+              ),
+              animationDuration: Duration(milliseconds: 300),
+              // backgroundColor: Color.fromARGB(255, 155, 113, 113),
+              enableActiveFill: true,
+              // errorAnimationController: errorController,
+              controller: pincode,
+              onCompleted: (v) {
+                print("Completed");
+              },
+              onChanged: (value) {
+                print(value);
+                setState(() {
+                  // currentText = value;
+                });
+              },
+              beforeTextPaste: (text) {
+                return true;
+              },
+              appContext: context,
+            ),
+            SizedBox(
+              height: 50.h,
+            ),
+            Visibility(
+              visible: isProceedBtnVisible,
+              child: SizedBox(
+                width: double.infinity,
+                child: CustomNextButton(
+                  text: "Proceed",
+                  ontap: () {
+                    // if(number.text.isEmpty){    
+                    //   Flushbar(
+                    //             message: "Please enter phone number",
+                    //             duration: const Duration(seconds: 3),
+                    //           ).show(context);
+                    // }
+                    setState(() {
+                      isProceedBtnVisible = false;
+                      isProceedBtnLoaderVisible = true;
+                    });
+                    _validateData(_btnController1);
+                  },
+                ),
               ),
             ),
-          ),
-          Visibility(
-              visible: isProceedBtnLoaderVisible,
-              child: Center(child: CircularProgressIndicator()))
-          // RoundedLoadingButton(
-          //   height: 60,
-          //   resetAfterDuration: true,
-          //   resetDuration: Duration(seconds: 5),
-          //   width: MediaQuery.of(context).size.width * 1,
-          //   color: const Color.fromRGBO(247, 129, 4, 1),
-          //   successColor: const Color.fromRGBO(247, 129, 4, 1),
-          //   controller: _btnController1,
-          //   onPressed: () => _validateData(_btnController1),
-          //   valueColor: Colors.black,
-          //   borderRadius: 10,
-          //   child: Text(
-          //     "Proceed",
-          //     style: TextStyle(
-          //       color: Color(0xFFFFFFFF),
-          //       fontSize: 20,
-          //       fontFamily: 'Productsans',
-          //     ),
-          //   ),
-          // ),
-        ],
+            Visibility(
+                visible: isProceedBtnLoaderVisible,
+                child: Center(child: CircularProgressIndicator()))
+            // RoundedLoadingButton(
+            //   height: 60,
+            //   resetAfterDuration: true,
+            //   resetDuration: Duration(seconds: 5),
+            //   width: MediaQuery.of(context).size.width * 1,
+            //   color: const Color.fromRGBO(247, 129, 4, 1),
+            //   successColor: const Color.fromRGBO(247, 129, 4, 1),
+            //   controller: _btnController1,
+            //   onPressed: () => _validateData(_btnController1),
+            //   valueColor: Colors.black,
+            //   borderRadius: 10,
+            //   child: Text(
+            //     "Proceed",
+            //     style: TextStyle(
+            //       color: Color(0xFFFFFFFF),
+            //       fontSize: 20,
+            //       fontFamily: 'Productsans',
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

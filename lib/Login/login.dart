@@ -119,6 +119,7 @@ class _LoginState extends State<Login> {
         controller.success();
         Timer(Duration(seconds: 1), () {
           buildGuidedTour();
+
         });
       });
     */
@@ -341,6 +342,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    ImageProvider logo = AssetImage("assets/images/pilogo.png");
     return WillPopScope(
       onWillPop: () async {
         final difference = DateTime.now().difference(timebackPressed);
@@ -383,9 +385,19 @@ class _LoginState extends State<Login> {
                     child: SizedBox(
                       height: 103.17.h,
                       width: 100.w,
-                      child: Image.asset(
-                        'assets/images/pilogo.png',
+                      child: 
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            image: DecorationImage(
+                                image: logo, 
+                                //fit: BoxFit.cover
+                                )),
+                        child: null,
                       ),
+                      //  Image.asset(
+                      //   'assets/images/pilogo.png',
+                      // ),
                     ),
                   ),
                   SizedBox(

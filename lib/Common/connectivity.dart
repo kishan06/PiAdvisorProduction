@@ -35,6 +35,7 @@ class ConnectivityController extends GetxController {
       Get.snackbar(
         'Internet Connection ',
         'Internet Connected',
+        duration: Duration(seconds: 3),
         colorText: Colors.black,
         backgroundColor: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -46,6 +47,7 @@ class ConnectivityController extends GetxController {
       Get.snackbar(
         'Internet Connection',
         'Internet Connected',
+        duration: Duration(seconds: 3),
         colorText: Colors.black,
         backgroundColor: Colors.white,
         snackPosition: SnackPosition.BOTTOM,
@@ -55,6 +57,7 @@ class ConnectivityController extends GetxController {
       Get.snackbar(
         'No Internet',
         'Please check you\'r Internet connection',
+        duration: Duration(seconds: 3),
         colorText: Colors.black,
         backgroundColor: Colors.white,
         snackPosition: SnackPosition.BOTTOM,

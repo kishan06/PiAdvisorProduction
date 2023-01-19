@@ -76,7 +76,7 @@ class _DigiLockerState extends State<DigiLocker> {
         ),
       ),
       body: FutureBuilder(
-        future: KYCDigilocker().generateRequestID(kra_ckyc_verfied: verified!),
+        future: KYCDigilocker().generateRequestID(kra_ckyc_verfied: verified ?? false),
         builder: (ctx, snapshot) {
           if (snapshot.data == null) {
             return Column(

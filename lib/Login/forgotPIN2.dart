@@ -567,7 +567,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
             PinCodeTextField(
                  validator: (value) {
                     if (value != null && value.isEmpty) {
-                      return "Please Enter verification code";
+                      return "Please enter verification code";
                     } else if (value != null && value.length < 4) {
                       return "OTP length should be atleast 4";
                     }

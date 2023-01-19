@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, camel_case_types, prefer_const_constructors, duplicate_ignore, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/SideMenu/About%20Repository/aboutrepo.dart';
@@ -116,15 +117,18 @@ class _aboutState extends State<about> {
             SizedBox(
               height: 20,
             ),
-            Container(
-              child: Text(
-                aboutuspage!.data!.first.content!,
-                style: TextStyle(
-                  color: Color(0xFF6B6B6B),
-                  fontSize: 14,
-                ),
-              ),
-            ),
+           // Container(
+             // child:
+              // Text(
+                Html(
+                  data: aboutuspage?.data?.first.content ?? "",
+                  ),
+                // style: TextStyle(
+                //   color: Color(0xFF6B6B6B),
+                //   fontSize: 14,
+                // ),
+              //),
+            //),
             // SizedBox(
             //   height: 20,
             // ),

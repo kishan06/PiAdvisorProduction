@@ -3,23 +3,19 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:piadvisory/Common/app_bar.dart';
-import 'package:piadvisory/SideMenu/Subscribe/AppWidget.dart';
 
-class Assets extends StatefulWidget {
-  const Assets({super.key});
+class Liabilities extends StatefulWidget {
+  const Liabilities({super.key});
 
   @override
-  State<Assets> createState() => _AssetsState();
+  State<Liabilities> createState() => _LiabilitiesState();
 }
 
-class _AssetsState extends State<Assets> {
+class _LiabilitiesState extends State<Liabilities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        titleTxt: "Assets",
-        bottomtext: false,
-      ),
+      appBar: CustomAppBar(titleTxt: "My Liabilities", bottomtext: false,),
       body: Card(
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
@@ -48,7 +44,7 @@ class _AssetsState extends State<Assets> {
                 Column(
                   children: <Widget>[
                    IconButton(
-                    icon: Icon(Icons.assessment_outlined),
+                    icon: Icon(Icons.home),
                     onPressed: () {},
                   ),
                   // SizedBox(
@@ -56,7 +52,7 @@ class _AssetsState extends State<Assets> {
                   // ),
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
-                    child: Text("Mutual Fund",
+                    child: Text("Home Loan",
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.black
@@ -80,13 +76,13 @@ class _AssetsState extends State<Assets> {
                  Column(
                   children: <Widget>[
                    IconButton(
-                    icon: Icon(Icons.snapchat_rounded),
+                    icon: Icon(Icons.location_history_sharp),
                     onPressed: () {},
                   ),
                   // SizedBox(
                   //   height: 2.h,
                   // ),
-                  Text("Fix Deposit",
+                  Text("Personal Loan",
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.black
@@ -106,7 +102,7 @@ class _AssetsState extends State<Assets> {
                  Column(
                   children: <Widget>[
                    IconButton(
-                    icon:  Icon(Icons.star),
+                    icon:  Icon(Icons.car_repair_rounded),
                     onPressed: () {},
                   ),
                   // SizedBox(
@@ -114,7 +110,7 @@ class _AssetsState extends State<Assets> {
                   // ),
                   Padding(
                     padding: const EdgeInsets.only(right: 12),
-                    child: Text("Real Estate",
+                    child: Text("Car Loan",
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.black

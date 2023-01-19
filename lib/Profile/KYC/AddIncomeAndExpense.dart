@@ -70,7 +70,7 @@ class _AddIncomeAndExpenseDetailsState
       if (data.status == ResponseStatus.SUCCESS) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const ProfileMain()));
-        utils.showToast("Add Income And Expense added successfully");
+        utils.showToast("Income and Expense added successfully");
       } else {
         return utils.showToast(data.message);
       }

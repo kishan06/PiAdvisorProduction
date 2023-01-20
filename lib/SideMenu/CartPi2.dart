@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -108,14 +107,18 @@ class _CartPI2State extends State<CartPI2> {
                 tooltip: 'Subscribe',
                 elevation: 2.0,
                 child: SvgPicture.asset(
-                  "assets/images/product sans logo wh.svg",
+                  "assets/images/product sans logo wh new.svg",
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                  width: 30,
+                  height: 28,
                 ),
               ),
             ),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
-             selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
+          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
           unselectedLabelStyle: TextStyle(color: Colors.grey),
           unselectedIconTheme: IconThemeData(color: Colors.grey),
           items: [
@@ -147,9 +150,10 @@ class _CartPI2State extends State<CartPI2> {
               label: 'Subscribe',
             ),
             BottomNavigationBarItem(
-              icon: Icon(CustomIcons.date_range,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              icon: Icon(
+                CustomIcons.date_range,
+                //  color:
+                //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
               ),
               label: 'Calendar',
             ),
@@ -165,7 +169,7 @@ class _CartPI2State extends State<CartPI2> {
           ],
           currentIndex: 0,
           unselectedItemColor: Colors.grey,
-           selectedItemColor: Color(0xFFF78104),
+          selectedItemColor: Color(0xFFF78104),
           backgroundColor: Colors.white,
           onTap: (index) {
             print(index);
@@ -206,7 +210,7 @@ class _CartPI2State extends State<CartPI2> {
                   ),
                   Text("ICICI Prudential Technology \nDirect Plan SM",
                       style: TextStyle(
-                          color:Get.isDarkMode? Colors.white: Colors.black,
+                          color: Get.isDarkMode ? Colors.white : Colors.black,
                           fontSize: 16.sm,
                           fontWeight: FontWeight.w600)),
                 ],
@@ -216,7 +220,9 @@ class _CartPI2State extends State<CartPI2> {
                 children: [
                   Text(
                     "Equity Sectorial / Thematic",
-                    style: TextStyle(color:Get.isDarkMode? Colors.white: Colors.grey, fontSize: 12.sm),
+                    style: TextStyle(
+                        color: Get.isDarkMode ? Colors.white : Colors.grey,
+                        fontSize: 12.sm),
                   ),
                 ],
               ),
@@ -231,9 +237,9 @@ class _CartPI2State extends State<CartPI2> {
                     height: 40.h,
                     child: TextButton(
                       onPressed: () {
-                       _isstartselected = true;
-                       _isoneselected =  false;
-                        Get.off(()=>CartPI());
+                        _isstartselected = true;
+                        _isoneselected = false;
+                        Get.off(() => CartPI());
                       },
                       style: ButtonStyle(
                         backgroundColor: _isstartselected
@@ -245,7 +251,7 @@ class _CartPI2State extends State<CartPI2> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side:  BorderSide(
+                            side: BorderSide(
                               width: 2.w,
                               color: Colors.grey,
                             ),
@@ -264,7 +270,7 @@ class _CartPI2State extends State<CartPI2> {
                             color:
                                 _isstartselected ? Colors.white : Colors.black),
                       ),
-                     // ),
+                      // ),
                     ),
                   ),
                   SizedBox(
@@ -275,23 +281,23 @@ class _CartPI2State extends State<CartPI2> {
                     height: 40.h,
                     child: TextButton(
                       onPressed: () {
-                       setState(() {
+                        setState(() {
                           _isoneselected = true;
                           _isstartselected = false;
-                       });
-
+                        });
                       },
                       style: ButtonStyle(
                         backgroundColor: _isoneselected
                             ? MaterialStateProperty.all<Color>(
                                 Color(0xFF008083),
                               )
-                            : MaterialStateProperty.all<Color>( Color(0xFF008083)),
+                            : MaterialStateProperty.all<Color>(
+                                Color(0xFF008083)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side:  BorderSide(
+                            side: BorderSide(
                               width: 2.w,
                               color: Colors.grey,
                             ),
@@ -305,7 +311,6 @@ class _CartPI2State extends State<CartPI2> {
                             color:
                                 _isoneselected ? Colors.white : Colors.white),
                       ),
-                      
                     ),
                   ),
                 ],
@@ -319,7 +324,7 @@ class _CartPI2State extends State<CartPI2> {
                   Text(
                     "₹ 60000",
                     style: TextStyle(
-                      color:Get.isDarkMode? Colors.white: Colors.black,
+                      color: Get.isDarkMode ? Colors.white : Colors.black,
                       fontSize: 35.sm,
                       fontWeight: FontWeight.w600,
                     ),
@@ -328,7 +333,7 @@ class _CartPI2State extends State<CartPI2> {
               ),
               Divider(
                 thickness: 2,
-                color: Get.isDarkMode? Colors.grey: Colors.grey,
+                color: Get.isDarkMode ? Colors.grey : Colors.grey,
               ),
               SizedBox(
                 height: 12.h,
@@ -357,7 +362,7 @@ class _CartPI2State extends State<CartPI2> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side:  BorderSide(
+                            side: BorderSide(
                               width: 2.w,
                               color: Color(0xFF008083),
                             ),
@@ -383,11 +388,10 @@ class _CartPI2State extends State<CartPI2> {
                     child: TextButton(
                       onPressed: () {
                         setState(() {
-                             _is10000selected = true;
-                        _is500selected = false;
-                        _is15000selected = false;
+                          _is10000selected = true;
+                          _is500selected = false;
+                          _is15000selected = false;
                         });
-                     
                       },
                       style: ButtonStyle(
                         backgroundColor: _is10000selected
@@ -399,7 +403,7 @@ class _CartPI2State extends State<CartPI2> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side:  BorderSide(
+                            side: BorderSide(
                               width: 2.w,
                               color: Color(0xFF008083),
                             ),
@@ -425,11 +429,10 @@ class _CartPI2State extends State<CartPI2> {
                     child: TextButton(
                       onPressed: () {
                         setState(() {
-                         _is15000selected = true;
-                        _is500selected = false;
-                        _is10000selected = false;
+                          _is15000selected = true;
+                          _is500selected = false;
+                          _is10000selected = false;
                         });
-              
                       },
                       style: ButtonStyle(
                         backgroundColor: _is15000selected
@@ -441,7 +444,7 @@ class _CartPI2State extends State<CartPI2> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side:  BorderSide(
+                            side: BorderSide(
                               width: 2.w,
                               color: Color(0xFF008083),
                             ),
@@ -463,19 +466,16 @@ class _CartPI2State extends State<CartPI2> {
                   ),
                 ],
               ),
-              
               SizedBox(
                 height: 320.h,
               ),
-            SizedBox(
-              width: 350.w,
-              child: CustomNextButton(
-                text: "Continue",
-                ontap: (){
-                  
-                },
+              SizedBox(
+                width: 350.w,
+                child: CustomNextButton(
+                  text: "Continue",
+                  ontap: () {},
                 ),
-            ) 
+              )
             ],
           ),
         ),

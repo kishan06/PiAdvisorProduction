@@ -155,7 +155,11 @@ class _ProfileMainState extends State<ProfileMain> {
                 tooltip: 'Subscribe',
                 elevation: 2.0,
                 child: SvgPicture.asset(
-                  "assets/images/product sans logo wh.svg",
+                  "assets/images/product sans logo wh new.svg",
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                  width: 30,
+                  height: 28,
                 ),
               ),
             ),
@@ -381,45 +385,45 @@ class _ProfileMainState extends State<ProfileMain> {
           const Divider(
             thickness: 1,
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomListTiles(
-            showTrailingText: false,
-            sizefactor: 20,
-            isimage: false,
-            isupdate: false,
-            leadingimage: "assets/images/Group 6058.svg",
-            title: "My Assets",
-            ontap: () {
-               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Assets()));
-            },
-          ),
-          const Divider(
-            thickness: 1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-           CustomListTiles(
-            showTrailingText: false,
-            sizefactor: 20,
-            isimage: false,
-            isupdate: false,
-            leadingimage: "assets/images/Group 6058.svg",
-            title: "My Liabilities",
-            ontap: () {
-               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Liabilities()));
-            },
-          ),
-          const Divider(
-            thickness: 1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
+          // CustomListTiles(
+          //   showTrailingText: false,
+          //   sizefactor: 20,
+          //   isimage: false,
+          //   isupdate: false,
+          //   leadingimage: "assets/images/Group 12.svg",
+          //   title: "My Assets",
+          //   ontap: () {
+          //      Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => const Assets()));
+          //   },
+          // ),
+          // const Divider(
+          //   thickness: 1,
+          // ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
+          //  CustomListTiles(
+          //   showTrailingText: false,
+          //   sizefactor: 20,
+          //   isimage: false,
+          //   isupdate: false,
+          //   leadingimage: "assets/images/Group 11.svg",
+          //   title: "My Liabilities",
+          //   ontap: () {
+          //      Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => const Liabilities()));
+          //   },
+          // ),
+          // const Divider(
+          //   thickness: 1,
+          // ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
         ],
       ),
     ));

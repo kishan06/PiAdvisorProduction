@@ -142,7 +142,11 @@ class _BlogState extends State<Blog> {
                 tooltip: 'Subscribe',
                 elevation: 2.0,
                 child: SvgPicture.asset(
-                  "assets/images/product sans logo wh.svg",
+                  "assets/images/product sans logo wh new.svg",
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                  width: 30,
+                  height: 28,
                 ),
               ),
             )
@@ -659,7 +663,7 @@ class ScrollableCards extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                         title,
+                        title,
                         style: TextStyle(
                           fontSize: 15.sm,
                           fontWeight: FontWeight.w600,
@@ -671,7 +675,7 @@ class ScrollableCards extends StatelessWidget {
                       ),
                       Flexible(
                         child: Html(
-                        data:  subtitle,
+                          data: subtitle,
                           //  style: TextStyle(
                           //   color: Get.isDarkMode
                           //       ? Colors.white

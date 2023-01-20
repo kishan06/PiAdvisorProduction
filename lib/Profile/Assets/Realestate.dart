@@ -97,7 +97,7 @@ class _RealEstateState extends State<RealEstate> {
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Property Name";
+                            return "Please enter property name";
                           }
                           return null;
                         },
@@ -136,7 +136,7 @@ class _RealEstateState extends State<RealEstate> {
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Invested Value";
+                            return "Please enter invested value";
                           }
                           return null;
                         },
@@ -155,7 +155,7 @@ class _RealEstateState extends State<RealEstate> {
                       RealestateDatePicker(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Please Select Date of Investment";
+                              return "Please select date of investment";
                             }
                             return null;
                           },
@@ -196,7 +196,7 @@ class _RealEstateState extends State<RealEstate> {
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Current Value";
+                            return "Please enter current value";
                           }
                           return null;
                         },

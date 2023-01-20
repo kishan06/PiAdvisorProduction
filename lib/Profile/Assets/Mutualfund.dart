@@ -97,7 +97,7 @@ class _MutualfundState extends State<Mutualfund> {
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Scheme Name";
+                            return "Please enter scheme name";
                           }
                           return null;
                         },
@@ -136,7 +136,7 @@ class _MutualfundState extends State<Mutualfund> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Amount";
+                            return "Please enter investment amount";
                           }
                           return null;
                         },
@@ -158,7 +158,7 @@ class _MutualfundState extends State<Mutualfund> {
                       MutualDatePicker(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Select Date of Birth";
+                            return "Please Select Date of Investment";
                           }
                           return null;
                         },
@@ -185,7 +185,7 @@ class _MutualfundState extends State<Mutualfund> {
                           focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                   width: 1, color: Color(0xFF303030))),
-                          hintText: "Current Value",
+                          hintText: "Enter Current Value",
                           helperText: "",
                           hintStyle: blackStyle(context).copyWith(
                             color: Get.isDarkMode
@@ -199,7 +199,7 @@ class _MutualfundState extends State<Mutualfund> {
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Current Value";
+                            return "Please enter current value";
                           }
                           return null;
                         },

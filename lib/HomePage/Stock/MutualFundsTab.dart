@@ -331,7 +331,9 @@ class LargeCap extends StatefulWidget {
   State<LargeCap> createState() => _LargeCapState();
 }
 
-class _LargeCapState extends State<LargeCap> {
+class _LargeCapState extends State<LargeCap>
+with AutomaticKeepAliveClientMixin<LargeCap>
+ {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -450,6 +452,7 @@ class _LargeCapState extends State<LargeCap> {
         ),
         Expanded(
           child: ListView.separated(
+            addAutomaticKeepAlives: true,
             itemCount: data.table1!.length,
             itemBuilder: (BuildContext context, int index) {
               num returns = num.parse(data.table1![index].returns!);
@@ -489,6 +492,9 @@ class _LargeCapState extends State<LargeCap> {
       ],
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class FlexiCap extends StatefulWidget {
@@ -498,7 +504,9 @@ class FlexiCap extends StatefulWidget {
   State<FlexiCap> createState() => _FlexiCapState();
 }
 
-class _FlexiCapState extends State<FlexiCap> {
+class _FlexiCapState extends State<FlexiCap>
+with AutomaticKeepAliveClientMixin<FlexiCap>
+ {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -615,6 +623,7 @@ class _FlexiCapState extends State<FlexiCap> {
         ),
         Expanded(
           child: ListView.separated(
+            addAutomaticKeepAlives: true,
             itemCount: data.table1!.length,
             itemBuilder: (BuildContext context, int index) {
               num returns = num.parse(data.table1![index].returns!);
@@ -654,6 +663,9 @@ class _FlexiCapState extends State<FlexiCap> {
       ],
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class MidCap extends StatefulWidget {
@@ -663,7 +675,9 @@ class MidCap extends StatefulWidget {
   State<MidCap> createState() => _MidCapState();
 }
 
-class _MidCapState extends State<MidCap> {
+class _MidCapState extends State<MidCap>
+with AutomaticKeepAliveClientMixin<MidCap>
+ {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -781,6 +795,7 @@ class _MidCapState extends State<MidCap> {
         ),
         Expanded(
           child: ListView.separated(
+            addAutomaticKeepAlives: true,
             itemCount: data.table1!.length,
             itemBuilder: (BuildContext context, int index) {
               num returns = num.parse(data.table1![index].returns!);
@@ -820,6 +835,9 @@ class _MidCapState extends State<MidCap> {
       ],
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class LargeAndMidCap extends StatefulWidget {
@@ -829,7 +847,9 @@ class LargeAndMidCap extends StatefulWidget {
   State<LargeAndMidCap> createState() => _LargeAndMidCapState();
 }
 
-class _LargeAndMidCapState extends State<LargeAndMidCap> {
+class _LargeAndMidCapState extends State<LargeAndMidCap>
+with AutomaticKeepAliveClientMixin<LargeAndMidCap>
+ {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -947,6 +967,7 @@ class _LargeAndMidCapState extends State<LargeAndMidCap> {
         ),
         Expanded(
           child: ListView.separated(
+            addAutomaticKeepAlives: true,
             itemCount: data.table1!.length,
             itemBuilder: (BuildContext context, int index) {
               num returns = num.parse(data.table1![index].returns!);
@@ -986,6 +1007,9 @@ class _LargeAndMidCapState extends State<LargeAndMidCap> {
       ],
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class SmallCap extends StatefulWidget {
@@ -995,7 +1019,9 @@ class SmallCap extends StatefulWidget {
   State<SmallCap> createState() => _SmallCapState();
 }
 
-class _SmallCapState extends State<SmallCap> {
+class _SmallCapState extends State<SmallCap>
+with AutomaticKeepAliveClientMixin<SmallCap>
+ {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -1112,6 +1138,7 @@ class _SmallCapState extends State<SmallCap> {
         ),
         Expanded(
           child: ListView.separated(
+            addAutomaticKeepAlives: true,
             itemCount: data.table1!.length,
             itemBuilder: (BuildContext context, int index) {
               num returns = num.parse(data.table1![index].returns!);
@@ -1151,6 +1178,9 @@ class _SmallCapState extends State<SmallCap> {
       ],
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class CommonListTile extends StatefulWidget {

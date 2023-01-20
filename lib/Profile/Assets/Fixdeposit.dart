@@ -103,7 +103,7 @@ class _FixDepositState extends State<FixDeposit> {
                           focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                   width: 1, color: Color(0xFF303030))),
-                          hintText: "Bank/Institution Name",
+                          hintText: "Enter Bank/Institution name",
                           helperText: "",
                           hintStyle: blackStyle(context).copyWith(
                             color: Get.isDarkMode
@@ -118,7 +118,7 @@ class _FixDepositState extends State<FixDeposit> {
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Bank/Institution Name";
+                            return "Please enter bank/institution name";
                           }
                           return null;
                         },
@@ -157,7 +157,7 @@ class _FixDepositState extends State<FixDeposit> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Amount";
+                            return "Please enter amount";
                           }
                           return null;
                         },
@@ -196,7 +196,7 @@ class _FixDepositState extends State<FixDeposit> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Annual Rate of Interest";
+                            return "Please enter annual rate of interest";
                           }
                           return null;
                         },
@@ -215,7 +215,7 @@ class _FixDepositState extends State<FixDeposit> {
                       FixDEpositDatePicker(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Please Select Start Date";
+                              return "Please select start date";
                             }
                             return null;
                           },
@@ -236,13 +236,13 @@ class _FixDepositState extends State<FixDeposit> {
                       FixDEpositDatePicker(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Select Tenure";
+                            return "Please select tenure";
                           }
                           return null;
                         },
                         datecontroller: datecontroller2,
                         ontap: () => _TenurepresentDatePicker(),
-                        hintText: "Select Tenure",
+                        hintText: "Select tenure",
                       ),
                       SizedBox(
                         height: 50.h,

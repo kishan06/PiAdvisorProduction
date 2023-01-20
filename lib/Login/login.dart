@@ -342,7 +342,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    ImageProvider logo = AssetImage("assets/images/pilogo.png");
+    ImageProvider logo = AssetImage("assets/images/loginlogo.png");
     return WillPopScope(
       onWillPop: () async {
         final difference = DateTime.now().difference(timebackPressed);
@@ -383,16 +383,13 @@ class _LoginState extends State<Login> {
                   ),
                   Center(
                     child: SizedBox(
-                      height: 103.17.h,
+                      height: 150.17.h,
                       width: 100.w,
-                      child: 
-                      Container(
+                      child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
                             image: DecorationImage(
-                                image: logo, 
-                                //fit: BoxFit.cover
-                                )),
+                          image: logo,
+                        )),
                         child: null,
                       ),
                       //  Image.asset(

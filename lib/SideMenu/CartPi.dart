@@ -191,9 +191,13 @@ class _CartPIState extends State<CartPI> {
                       },
                       tooltip: 'Subscribe',
                       elevation: 2.0,
-                      child: SvgPicture.asset(
-                        "assets/images/product sans logo wh.svg",
-                      ),
+                      child:SvgPicture.asset(
+                  "assets/images/product sans logo wh new.svg",
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                  width: 30,
+                  height: 28,
+                ),
                     ),
                   ),
                 ],

@@ -246,7 +246,7 @@ class _MutualFundsWatchlistState extends State<MutualFundsWatchlist> {
           ),
           !userHasSubscription
               ? SizedBox(
-                  height: 60.h,
+                  height: 180.h,
                 )
               : SizedBox(
                   height: 5.h,

@@ -843,7 +843,11 @@ class _HomePageState extends State<HomePage> {
                 tooltip: 'Subscribe',
                 elevation: 2.0,
                 child: SvgPicture.asset(
-                  "assets/images/product sans logo wh.svg",
+                  "assets/images/product sans logo wh new.svg",
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                  width: 30,
+                  height: 28,
                 ),
               ),
             ),
@@ -970,11 +974,16 @@ class _HomePageState extends State<HomePage> {
           // centerTitle: true,
           title: SizedBox(
             // width: 110,
-            child: SvgPicture.asset(
-              'assets/images/logo4final.svg',
+            child: Image.asset(
+              'assets/images/Newlogo.png',
               height: 30.h,
               alignment: Alignment.centerLeft,
             ),
+            // SvgPicture.asset(
+            //   'assets/images/Newlogo.svg',
+            //   height: 30.h,
+            //   alignment: Alignment.centerLeft,
+            // ),
           ),
           leading: Row(
             children: [

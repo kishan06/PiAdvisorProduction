@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:piadvisory/Common/app_bar.dart';
 import 'package:piadvisory/Profile/Assets/Fixdeposit.dart';
 import 'package:piadvisory/Profile/Assets/Mutualfund.dart';
@@ -51,7 +52,7 @@ class _AssetsState extends State<Assets> {
                 Column(
                   children: <Widget>[
                     IconButton(
-                      icon: Icon(Icons.assessment_outlined),
+                      icon: SvgPicture.asset("assets/images/Group 9.svg"),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -94,7 +95,7 @@ class _AssetsState extends State<Assets> {
                 Column(
                   children: <Widget>[
                     IconButton(
-                      icon: Icon(Icons.snapchat_rounded),
+                     icon: SvgPicture.asset("assets/images/Group 10.svg"),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -131,7 +132,7 @@ class _AssetsState extends State<Assets> {
                 Column(
                   children: <Widget>[
                     IconButton(
-                      icon: Icon(Icons.star),
+                     icon: SvgPicture.asset("assets/images/Group 8.svg"),
                       onPressed: () {
                         Navigator.push(
                             context,

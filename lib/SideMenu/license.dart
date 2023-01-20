@@ -124,7 +124,7 @@ class _licenseState extends State<license> {
               height: 20,
             ),
             Html(
-              data: licensepage!.data!.first.licenseContent!,
+              data: licensepage?.data?.first.licenseContent ?? "",
               // style: {
               //   "h1": Style(
               //    //fontSize: FontSize.,

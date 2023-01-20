@@ -518,6 +518,7 @@ class commonBlog extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -822,6 +823,7 @@ class CommonMutual extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -1061,6 +1063,7 @@ class CommonThird extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -1243,6 +1246,7 @@ class CommonFourth extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () {
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
           Navigator.push(
               context,
               MaterialPageRoute(

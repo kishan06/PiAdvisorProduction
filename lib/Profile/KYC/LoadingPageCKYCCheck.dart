@@ -62,7 +62,7 @@ class _LoadingPageCKYCCheckState extends State<LoadingPageCKYCCheck> {
                 ),
               );
             }
-            if (CkycStatus!['status']) {
+            if (CkycStatus?['status'] ?? false) {
               Future.microtask(() => Get.offAllNamed('/digi_locker',
                   arguments: {"kra_ckyc_verified": true}));
             } else {

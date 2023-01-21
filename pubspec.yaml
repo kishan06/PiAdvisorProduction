@@ -96,14 +96,13 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
-  flutter_test:
+  flutter_test: 
     sdk: flutter
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/icons/LaunchIcon.png"
-  adaptive_icon_background: "assets/icons/blackBG.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

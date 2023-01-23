@@ -332,8 +332,7 @@ class LargeCap extends StatefulWidget {
 }
 
 class _LargeCapState extends State<LargeCap>
-with AutomaticKeepAliveClientMixin<LargeCap>
- {
+    with AutomaticKeepAliveClientMixin<LargeCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -459,9 +458,7 @@ with AutomaticKeepAliveClientMixin<LargeCap>
 
               return GestureDetector(
                   onTap: () {
-                    SystemChannels
-                    .textInput
-                    .invokeMethod('TextInput.hide');
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -484,7 +481,7 @@ with AutomaticKeepAliveClientMixin<LargeCap>
         ),
         !userHasSubscription
             ? SizedBox(
-                height: 100.h,
+                height: 180.h,
               )
             : SizedBox(
                 height: 37.h,
@@ -492,7 +489,7 @@ with AutomaticKeepAliveClientMixin<LargeCap>
       ],
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }
@@ -505,8 +502,7 @@ class FlexiCap extends StatefulWidget {
 }
 
 class _FlexiCapState extends State<FlexiCap>
-with AutomaticKeepAliveClientMixin<FlexiCap>
- {
+    with AutomaticKeepAliveClientMixin<FlexiCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -630,9 +626,7 @@ with AutomaticKeepAliveClientMixin<FlexiCap>
 
               return GestureDetector(
                   onTap: () {
-                    SystemChannels
-                    .textInput
-                    .invokeMethod('TextInput.hide');
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -655,7 +649,7 @@ with AutomaticKeepAliveClientMixin<FlexiCap>
         ),
         !userHasSubscription
             ? SizedBox(
-                height: 100.h,
+                height: 180.h,
               )
             : SizedBox(
                 height: 37.h,
@@ -663,7 +657,7 @@ with AutomaticKeepAliveClientMixin<FlexiCap>
       ],
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }
@@ -676,8 +670,7 @@ class MidCap extends StatefulWidget {
 }
 
 class _MidCapState extends State<MidCap>
-with AutomaticKeepAliveClientMixin<MidCap>
- {
+    with AutomaticKeepAliveClientMixin<MidCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -802,9 +795,7 @@ with AutomaticKeepAliveClientMixin<MidCap>
 
               return GestureDetector(
                   onTap: () {
-                    SystemChannels
-                    .textInput
-                    .invokeMethod('TextInput.hide');
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -827,7 +818,7 @@ with AutomaticKeepAliveClientMixin<MidCap>
         ),
         !userHasSubscription
             ? SizedBox(
-                height: 100.h,
+                height: 180.h,
               )
             : SizedBox(
                 height: 37.h,
@@ -835,7 +826,7 @@ with AutomaticKeepAliveClientMixin<MidCap>
       ],
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }
@@ -848,8 +839,7 @@ class LargeAndMidCap extends StatefulWidget {
 }
 
 class _LargeAndMidCapState extends State<LargeAndMidCap>
-with AutomaticKeepAliveClientMixin<LargeAndMidCap>
- {
+    with AutomaticKeepAliveClientMixin<LargeAndMidCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -974,9 +964,7 @@ with AutomaticKeepAliveClientMixin<LargeAndMidCap>
 
               return GestureDetector(
                   onTap: () {
-                    SystemChannels
-                    .textInput
-                    .invokeMethod('TextInput.hide');
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -999,7 +987,7 @@ with AutomaticKeepAliveClientMixin<LargeAndMidCap>
         ),
         !userHasSubscription
             ? SizedBox(
-                height: 100.h,
+                height: 180.h,
               )
             : SizedBox(
                 height: 37.h,
@@ -1007,7 +995,7 @@ with AutomaticKeepAliveClientMixin<LargeAndMidCap>
       ],
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }
@@ -1020,8 +1008,7 @@ class SmallCap extends StatefulWidget {
 }
 
 class _SmallCapState extends State<SmallCap>
-with AutomaticKeepAliveClientMixin<SmallCap>
- {
+    with AutomaticKeepAliveClientMixin<SmallCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
   @override
@@ -1145,9 +1132,7 @@ with AutomaticKeepAliveClientMixin<SmallCap>
 
               return GestureDetector(
                   onTap: () {
-                    SystemChannels
-                    .textInput
-                    .invokeMethod('TextInput.hide');
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -1170,7 +1155,7 @@ with AutomaticKeepAliveClientMixin<SmallCap>
         ),
         !userHasSubscription
             ? SizedBox(
-                height: 100.h,
+                height: 180.h,
               )
             : SizedBox(
                 height: 37.h,
@@ -1178,7 +1163,7 @@ with AutomaticKeepAliveClientMixin<SmallCap>
       ],
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }

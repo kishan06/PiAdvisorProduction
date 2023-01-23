@@ -2,16 +2,20 @@
 
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/user_id.dart';
 import 'package:piadvisory/HomePage/Mutual%20Funds/MutualFundsPlottableGraph.dart';
 import 'package:piadvisory/HomePage/Stock/SampleChart.dart';
 import 'package:piadvisory/HomePage/Stock/StocksRepository/MutualFundsAPImethods.dart';
+import 'package:piadvisory/Profile/KYC/SchduleAppointment.dart';
 import 'package:piadvisory/SideMenu/Brokerage/broker-login.dart';
 import 'package:piadvisory/Utils/textStyles.dart';
 import 'package:async/async.dart';
@@ -58,6 +62,73 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
         .add(watchlistMutualFundApiMethods.fetchWatchlistStocks());
     userIdAndWatchlistedMutualFundsFutureGroup.close();
     super.initState();
+  }
+
+  buildMutualpopup() {
+    return showDialog(
+      context: context,
+      builder: (context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AlertDialog(
+            insetPadding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
+            backgroundColor: Get.isDarkMode ? Colors.black : Colors.white,
+            contentPadding: EdgeInsets.fromLTRB(24, 30, 24, 24),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              side: BorderSide(
+                  color: Get.isDarkMode ? Colors.grey : Colors.white),
+            ),
+            // contentPadding:
+            //     EdgeInsets.all(
+            //         10),
+            //   title: ,
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Center(
+                  child: SizedBox(
+                    child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 5),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            "Why take a chance? Speak to our Mutual Fund Advisor for FREE.",
+                            style: blackStyle(context).copyWith(
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.black,
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 18.sm),
+                          ),
+                        ),
+                  ),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 40.h,
+                  child: CustomNextButton(
+                    text: "Continue",
+                    ontap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => SchduleAppointment())));
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -413,33 +484,34 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                               ),
                       ],
                     ),
-                    // SizedBox(
-                    //   height: 30,
-                    //   child: TextButton(
-                    //     onPressed: () {
-                    //       Navigator.push(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //               builder: ((context) => Brokerlogin())));
-                    //     },
-                    //     child: Text(
-                    //       "Invest Now",
-                    //       style: blackStyle(context)
-                    //           .copyWith(color: Colors.white, fontSize: 14),
-                    //     ),
-                    //     style: ButtonStyle(
-                    //         backgroundColor: MaterialStateProperty.all<Color>(
-                    //           Color(0xFF008083),
-                    //         ),
-                    //         shape: MaterialStateProperty.all<
-                    //                 RoundedRectangleBorder>(
-                    //             const RoundedRectangleBorder(
-                    //                 borderRadius:
-                    //                     BorderRadius.all(Radius.circular(5)),
-                    //                 side: BorderSide(
-                    //                     color: Color(0xFF008083), width: 2)))),
-                    //   ),
-                    // )
+                    SizedBox(
+                      height: 30,
+                      child: TextButton(
+                        onPressed: () {
+                          buildMutualpopup();
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: ((context) => Brokerlogin())));
+                        },
+                        child: Text(
+                          "Invest Now",
+                          style: blackStyle(context)
+                              .copyWith(color: Colors.white, fontSize: 14),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Color(0xFF008083),
+                            ),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                    side: BorderSide(
+                                        color: Color(0xFF008083), width: 2)))),
+                      ),
+                    )
                   ],
                 ),
               ),

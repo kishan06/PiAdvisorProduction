@@ -24,7 +24,7 @@ class KYCDigiLocker extends StatefulWidget {
   State<KYCDigiLocker> createState() => _KYCDigiLockerState();
 }
 
-class _KYCDigiLockerState extends State<KYCDigiLocker> {
+class _KYCDigiLockerState extends State<KYCDigiLocker> { 
   buildAllowCamerapopup() {
     return showDialog(
       context: context,

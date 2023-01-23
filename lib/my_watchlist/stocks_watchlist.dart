@@ -331,7 +331,7 @@ class _StocksWatchlistState extends State<StocksWatchlist> {
           ),
           !userHasSubscription
               ? SizedBox(
-                  height: 180.h,
+                  height: 160.h,
                 )
               : SizedBox(
                   height: 5.h,

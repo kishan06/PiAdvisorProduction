@@ -164,38 +164,41 @@ class _MutualFundsWatchlistState extends State<MutualFundsWatchlist> {
                         children: [
                           Row(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(MutualFundsGraph(
-                                    schemeCode: myWatchlistedStocks
-                                        .elementAt(index)
-                                        .schemeCode,
-                                    appbartitle: myWatchlistedStocks
-                                        .elementAt(index)
-                                        .companyName,
-                                  ));
-                                },
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      myWatchlistedStocks
-                                          .elementAt(index)
-                                          .companyName,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16.sm,
-                                      ),
-                                    ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      myWatchlistedStocks
+                              Expanded(
+                                flex: 3,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Get.to(MutualFundsGraph(
+                                      schemeCode: myWatchlistedStocks
                                           .elementAt(index)
                                           .schemeCode,
-                                      style: TextStyle(fontSize: 11.sm),
-                                    ),
-                                  ],
+                                      appbartitle: myWatchlistedStocks
+                                          .elementAt(index)
+                                          .companyName,
+                                    ));
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        myWatchlistedStocks
+                                            .elementAt(index)
+                                            .companyName,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16.sm,
+                                        ),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        myWatchlistedStocks
+                                            .elementAt(index)
+                                            .schemeCode,
+                                        style: TextStyle(fontSize: 11.sm),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               Spacer(),
@@ -246,7 +249,7 @@ class _MutualFundsWatchlistState extends State<MutualFundsWatchlist> {
           ),
           !userHasSubscription
               ? SizedBox(
-                  height: 180.h,
+                  height: 160.h,
                 )
               : SizedBox(
                   height: 5.h,

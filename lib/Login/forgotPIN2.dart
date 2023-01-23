@@ -18,6 +18,7 @@ import 'package:piadvisory/Signup/Repository/Securityfirstpage.dart';
 import 'package:piadvisory/Signup/Repository/SendOtp.dart';
 import 'package:piadvisory/Signup/Repository/VerifyOtp.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
+import 'package:piadvisory/Utils/database.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:timer_button/timer_button.dart';
@@ -52,6 +53,12 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
   //   myFuture = ResertPin().postResetPin();
   //   super.initState();
   // }
+
+  @override
+  void initState() {
+   setControllerValues();
+    super.initState();
+  }
 
   void UploadNewPinData() async {
     final isValid = _formKey.currentState?.validate();
@@ -346,6 +353,11 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
     }
   }
 
+  setControllerValues(){
+    Map<String, dynamic> userdata = Database().restoreUserDetails();
+    number.text = userdata['number'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -392,6 +404,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                 child: Stack(
                   children: [
                     TextFormField(
+                      readOnly: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please Enter Number";

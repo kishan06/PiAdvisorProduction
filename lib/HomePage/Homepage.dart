@@ -843,7 +843,7 @@ class _HomePageState extends State<HomePage> {
                 tooltip: 'Subscribe',
                 elevation: 2.0,
                 child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
+                  "assets/images/product sans logo wh new.svg",               
                   color: Colors.white,
                   fit: BoxFit.contain,
                   width: 30,

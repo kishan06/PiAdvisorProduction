@@ -145,8 +145,8 @@ class _BlogState extends State<Blog> {
                   "assets/images/product sans logo wh new.svg",
                   color: Colors.white,
                   fit: BoxFit.contain,
-                  width: 30,
-                  height: 28,
+                  width: 28,
+                  height: 24,
                 ),
               ),
             )

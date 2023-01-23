@@ -64,7 +64,7 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
     super.initState();
   }
 
-  buildAllowCamerapopup() {
+  buildMutualpopup() {
     return showDialog(
       context: context,
       builder: (context) => Column(
@@ -93,7 +93,7 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                               horizontal: 5, vertical: 5),
                           child: Text(
                             textAlign: TextAlign.center,
-                            "Book an Advisor",
+                            "Why take a chance? Speak to our Mutual Fund Advisor for FREE.",
                             style: blackStyle(context).copyWith(
                                 color: Get.isDarkMode
                                     ? Colors.white
@@ -105,11 +105,11 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 30.h,
                 ),
                 SizedBox(
                   width: double.infinity,
-                  height: 40,
+                  height: 40.h,
                   child: CustomNextButton(
                     text: "Continue",
                     ontap: () {
@@ -121,7 +121,7 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 20.h,
                 )
               ],
             ),
@@ -488,7 +488,7 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                       height: 30,
                       child: TextButton(
                         onPressed: () {
-                          buildAllowCamerapopup();
+                          buildMutualpopup();
                           // Navigator.push(
                           //     context,
                           //     MaterialPageRoute(

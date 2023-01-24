@@ -41,7 +41,7 @@ class _aboutState extends State<about> {
             child: Center(
               child:  Image.asset(
               'assets/images/Newlogo.png',
-              height: 45.h,
+              height: 30.h,
             ),
               //  SvgPicture.asset(
               //   "assets/images/logo4final.svg",

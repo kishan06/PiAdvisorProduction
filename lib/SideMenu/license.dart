@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/SideMenu/License%20Repository/licenserepo.dart';
@@ -42,10 +43,14 @@ class _licenseState extends State<license> {
               Padding(
                 padding: const EdgeInsets.only(right: 35, top: 10),
                 child: Center(
-                  child: SvgPicture.asset(
-                    "assets/images/logo4final.svg",
-                    height: 45,
+                  child: Image.asset(
+                    'assets/images/Newlogo.png',
+                    height: 45.h,
                   ),
+                  //  SvgPicture.asset(
+                  //   "assets/images/logo4final.svg",
+                  //   height: 45,
+                  // ),
                 ),
               ),
             ],

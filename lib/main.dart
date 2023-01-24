@@ -170,7 +170,7 @@ class _MyAppState extends State<MyApp> {
         // themeMode: ThemeServices().theme,
         theme: AppTheme.light(),
         debugShowCheckedModeBanner: false,
-        title: 'PI Advisor',
+        title: 'Pi',
         initialRoute: '/',
         getPages: [
           GetPage(name: '/', page: () => Splash()),

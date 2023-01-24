@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
@@ -240,6 +241,9 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
                       child: CircularProgressIndicator(),
                     ),
                   ),
+                  SizedBox(
+                    height: 20.h,
+                  )
                 ],
               ),
             ),

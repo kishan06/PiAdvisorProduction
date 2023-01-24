@@ -156,8 +156,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    ConnectivityController connectivityController =
-      Get.put(ConnectivityController());
+    // ConnectivityController connectivityController =
+    //   Get.put(ConnectivityController());
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         localizationsDelegates: [

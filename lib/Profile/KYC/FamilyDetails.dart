@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, unused_field
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Profile/KYC/Repository/storebasicfamilydetails.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
@@ -104,7 +105,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
             context,
             MaterialPageRoute(
                 builder: (context) => const AddIncomeAndExpenseDetails()));
-      utils.showToast("Family Details added successfully");
+        utils.showToast("Family Details added successfully");
       } else {
         return utils.showToast(data.message);
       }
@@ -179,7 +180,8 @@ class _FamilyDetailsState extends State<FamilyDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope( onWillPop: () {
+    return WillPopScope(
+      onWillPop: () {
         Navigator.push(context,
             MaterialPageRoute(builder: ((context) => const ProfileMain())));
 
@@ -240,14 +242,17 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               style: Theme.of(context).textTheme.headline2,
             ),
             CustomTextFields(
-            
-                   validator: (value) {
+              validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Father Name";
                 } else
                   return null;
               },
-              
+              txtinptype: TextInputType.name,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
               textCapitalization: TextCapitalization.none,
               errortext: "Enter Name",
               hint: "Enter Name",
@@ -265,7 +270,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             OccupationCustomDropDownOptions(
-              
               controller: selectedOccupationFather,
               hinttext: "Select occupation",
               ontap: () => _showOccupationPicker(
@@ -283,7 +287,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             familyDatePickerWidget(
-              
               datecontroller: datecontrollerFather,
               ontap: () =>
                   _presentDatePicker(_isFather = true, _isHusbandWife = false),
@@ -300,10 +303,13 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             CustomTextFields(
-               validator: (value) {
+              validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
-                } else
+                }else if(value != null && value.length >= 3) {
+                  return "Please Enter Correct Age";
+                }
+                else
                   return null;
               },
               textCapitalization: TextCapitalization.none,
@@ -325,12 +331,17 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             CustomTextFields(
-                   validator: (value) {
+              validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Mother Name";
                 } else
                   return null;
               },
+              txtinptype: TextInputType.name,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
               textCapitalization: TextCapitalization.none,
               errortext: "Enter Name",
               hint: "Enter Name",
@@ -381,10 +392,13 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             CustomTextFields(
-                 validator: (value) {
+              validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
-                } else
+                }else if(value != null && value.length >= 3) {
+                  return "Please Enter Correct Age";
+                }
+                 else
                   return null;
               },
               textCapitalization: TextCapitalization.none,
@@ -406,12 +420,17 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             CustomTextFields(
-                  validator: (value) {
+              validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Mother Name";
                 } else
                   return null;
               },
+              txtinptype: TextInputType.name,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
               textCapitalization: TextCapitalization.none,
               errortext: "Enter Name",
               hint: "Enter Name",
@@ -462,10 +481,13 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             CustomTextFields(
-                   validator: (value) {
+              validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
-                } else
+                }else if(value != null && value.length >= 3) {
+                  return "Please Enter Correct Age";
+                }
+                 else
                   return null;
               },
               textCapitalization: TextCapitalization.none,
@@ -596,12 +618,12 @@ class OccupationCustomDropDownOptions extends StatelessWidget {
                   : Color(0xFF303030).withOpacity(0.3)),
           //  Color(0xFF303030).withOpacity(0.3)),
           hintText: hinttext),
-           validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Please Enter Occupation";
-                } else
-                  return null;
-              },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please Enter Occupation";
+        } else
+          return null;
+      },
     );
   }
 }
@@ -649,12 +671,12 @@ class familyDatePickerWidget extends StatelessWidget {
                       ? Colors.white
                       : Color(0xFF303030).withOpacity(0.3)),
           hintText: "Select Date"),
-            validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Please Select Date of Birth";
-                }
-                return null;
-              },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please Select Date of Birth";
+        }
+        return null;
+      },
     );
   }
 }

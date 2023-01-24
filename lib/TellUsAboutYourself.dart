@@ -327,7 +327,10 @@ class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please enter age";
-                } else
+                }else if(value != null && value.length >= 3) {
+                  return "Please enter correct age";
+                }
+                 else
                   return null;
               },
               controller: agecontroller,

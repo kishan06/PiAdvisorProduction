@@ -88,7 +88,8 @@ class _PersonalinfoState extends State<Personalinfo> {
                           children: [
                             Text("What's your age?"),
                             TextFormField(
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               keyboardType: TextInputType.number,
                               controller: ageTextFieldController,
                               cursorColor: Colors.grey,
@@ -102,12 +103,16 @@ class _PersonalinfoState extends State<Personalinfo> {
                                 hintStyle: blackStyle(context).copyWith(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color:Get.isDarkMode?  Colors.white:Color(0xFF303030).withOpacity(0.3),
+                                  color: Get.isDarkMode
+                                      ? Colors.white
+                                      : Color(0xFF303030).withOpacity(0.3),
                                 ),
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter age';
+                                } else if (value != null && value.length >= 3) {
+                                  return "Please Enter Correct Age";
                                 }
                                 return null;
                               },
@@ -126,7 +131,8 @@ class _PersonalinfoState extends State<Personalinfo> {
                             StatefulBuilder(
                               builder: (context, setFieldState) {
                                 return TextFormField(
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   onTap: () async {
                                     FocusScope.of(context).unfocus();
                                     final data =
@@ -140,8 +146,11 @@ class _PersonalinfoState extends State<Personalinfo> {
                                           child: const Languagepicker(),
                                         );
                                       },
-                                      shape:  RoundedRectangleBorder(
-                                        side: BorderSide(color: Get.isDarkMode? Colors.grey: Colors.white),
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color: Get.isDarkMode
+                                                ? Colors.grey
+                                                : Colors.white),
                                         borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(30),
                                           topRight: Radius.circular(30),
@@ -175,8 +184,10 @@ class _PersonalinfoState extends State<Personalinfo> {
                                     hintStyle: blackStyle(context).copyWith(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
-                                        color:Get.isDarkMode? Colors.white:
-                                            Color(0xFF303030).withOpacity(0.3)),
+                                        color: Get.isDarkMode
+                                            ? Colors.white
+                                            : Color(0xFF303030)
+                                                .withOpacity(0.3)),
                                     // errorStyle: const TextStyle(
                                     //   fontSize: 16.0,
                                     // ),
@@ -237,7 +248,7 @@ class _PersonalinfoState extends State<Personalinfo> {
                                       if (isAdded) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
-                                              duration : Duration(seconds: 1),
+                                                duration: Duration(seconds: 1),
                                                 content: Text("Done")));
                                         Navigator.pushReplacement(
                                             context,

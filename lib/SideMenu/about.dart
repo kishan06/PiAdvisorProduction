@@ -107,7 +107,7 @@ class _aboutState extends State<about> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "About PI Advisors",
+              "About Pi",
               textAlign: TextAlign.start,
               style: TextStyle(
                 color: Colors.black,

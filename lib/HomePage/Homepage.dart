@@ -548,7 +548,7 @@ class _HomePageState extends State<HomePage> {
                   isimage: false,
                   title: "Simplifying Investment for you",
                   trailingimage: "assets/images/Cardicon1.svg",
-                  subtitle: "What is PI advisors?",
+                  subtitle: "What is Pi?",
                 ),
               ),
               SizedBox(

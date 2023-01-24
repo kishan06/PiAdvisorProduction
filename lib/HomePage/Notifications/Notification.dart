@@ -112,8 +112,8 @@ class _NotifyState extends State<Notify> {
                   "assets/images/product sans logo wh new.svg",
                   color: Colors.white,
                   fit: BoxFit.contain,
-                  width: 30,
-                  height: 28,
+                  width: 28,
+                  height: 24,
                 ),
               // SvgPicture.asset(
               //   "assets/images/product sans logo wh.svg",

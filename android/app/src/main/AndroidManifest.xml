@@ -22,7 +22,7 @@
       <!-- <uses-sdk tools:overrideLibrary="com.nb.nb_utils"/>
       <uses-sdk tools:ignore="GradleOverrides"/> -->
    <application
-        android:label="PI Advisors"
+        android:label="Pi"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"

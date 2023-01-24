@@ -527,7 +527,10 @@ class _KYCMainState extends State<KYCMain> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
-                } else
+                }else if(value != null && value.length >= 3) {
+                  return "Please Enter Correct Age";
+                }
+                 else
                   return null;
               },
               inputFormatters: [

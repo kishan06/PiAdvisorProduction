@@ -578,7 +578,8 @@ class _ViewSubscriptionState extends State<ViewSubscription> {
                                 ),
                                 SizedBox(height: 14),
                                 Text(
-                                  " ₹ ${activePlans[index].plan!.amount!.toString()}",
+                                  "Free",
+                                  //" ₹ ${activePlans[index].plan!.amount!.toString()}",
                                   style: blackStyle(context).copyWith(
                                     fontSize: 16,
                                     color: Get.isDarkMode

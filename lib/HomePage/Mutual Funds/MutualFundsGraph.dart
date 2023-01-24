@@ -89,19 +89,17 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                 Center(
                   child: SizedBox(
                     child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 5),
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            "Why take a chance? Speak to our Mutual Fund Advisor for FREE.",
-                            style: blackStyle(context).copyWith(
-                                color: Get.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
-                                //fontWeight: FontWeight.bold,
-                                fontSize: 18.sm),
-                          ),
-                        ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        "Why take a chance? Speak to our Mutual Fund Advisor for FREE.",
+                        style: blackStyle(context).copyWith(
+                            color: Get.isDarkMode ? Colors.white : Colors.black,
+                            //fontWeight: FontWeight.bold,
+                            fontSize: 18.sm),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -117,6 +115,7 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                           context,
                           MaterialPageRoute(
                               builder: ((context) => SchduleAppointment())));
+                      // Navigator.pop(context);
                     },
                   ),
                 ),

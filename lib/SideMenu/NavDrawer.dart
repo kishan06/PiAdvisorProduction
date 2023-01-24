@@ -484,7 +484,7 @@ class _NavDrawerState extends State<NavDrawer> {
               ),
               ListTile(
                 title: Text(
-                  "Version 1.0",
+                  "Version 1.0.1",
                   style: TextStyle(
                     fontSize: 18,
                     color: Color(0xFFF78104),

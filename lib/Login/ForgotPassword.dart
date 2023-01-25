@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable, sort_child_properties_last, file_namesimport 'package:piadvisory/Login/forgot-password.dart';, avoid_unnecessary_containers, file_names
 import 'dart:async';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -29,8 +30,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   void _validateData() {
     final isValid = _form.currentState?.validate();
     if (isValid!) {
-      replaceSignInBtnWithLoader();
-      UploadData();
+      checkNumberExist();
     }
   }
 
@@ -64,6 +64,43 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     });
   }
 
+  Future<void> checkNumberExist() async {
+    Map<String, dynamic> updata = {
+      "number": numberController.text,
+    };
+    final data = await LoginMethod().checkMobileExist(updata, context);
+    if (data.status == ResponseStatus.SUCCESS) {
+      setState(() {
+        replaceSignInBtnWithLoader();
+        UploadData();
+        //_otpSent = true;
+      });
+
+      // Map<String, dynamic> updata2 = {
+      //   "mob_number": numberController.text,
+      // };
+      //await SendOtp().SendOtpExotel(updata2);
+      // Flushbar(
+      //   message: "Taking to next page",
+      //   duration: const Duration(seconds: 3),
+      // ).show(context);
+    } else if (data.status == ResponseStatus.PRIVATE) {
+      Flushbar(
+        duration: const Duration(seconds: 2),
+        message: "Mobile number does not exist",
+      ).show(context);
+      //replaceLoaderWithSignInBtn();
+      //replaceLoaderWithSignInBtn();
+    } else {
+      Flushbar(
+        duration: const Duration(seconds: 2),
+        message: "Some error occured",
+      ).show(context);
+      //replaceLoaderWithSignInBtn();
+      //replaceLoaderWithSignInBtn();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,9 +125,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 Text(
                   "We will send a verification otp to\nthe phone number on your account in order\nto reset your password",
                   style: TextStyle(
-                    fontSize: 15,
-                    color: Get.isDarkMode? Colors.white: Colors.black
-                  ),
+                      fontSize: 15,
+                      color: Get.isDarkMode ? Colors.white : Colors.black),
                 ),
                 SizedBox(
                   height: 63.h,
@@ -109,7 +145,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         ),
                       ),
                       hintText: "Enter Phone Number",
-                      hintStyle: TextStyle(color: Get.isDarkMode? Colors.white: Colors.black),
+                      hintStyle: TextStyle(
+                          color: Get.isDarkMode ? Colors.white : Colors.black),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(width: 1, color: Colors.grey)),

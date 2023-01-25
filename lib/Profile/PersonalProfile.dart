@@ -105,7 +105,13 @@ class _PersonalProfileState extends State<PersonalProfile> {
 
   void UploadData() async {
     final isValid = _form.currentState?.validate();
-    if (isValid! && stateValue != null && cityValue != null) {
+    if (isValid! &&
+        stateValue != null &&
+        stateValue!.isNotEmpty &&
+        cityValue != null &&
+        cityValue!.isNotEmpty &&
+        stateValue! != "Select State*" &&
+        cityValue! != "Select City*") {
       print("api calling now");
       replacePersonalProfileBtnWithLoader();
       Map<String, dynamic> updata = {

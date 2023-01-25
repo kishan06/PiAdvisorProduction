@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/SideMenu/Subscribe/Model/SubscriptionFullDetails.dart';
@@ -49,13 +50,50 @@ class _ViewSubscriptionState extends State<ViewSubscription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
-            titleTxt: "Subscribe/Request Advice", bottomtext: false),
-        body: subsDetail.data!.isNotEmpty
-            ? _buildBody(
-                context,
-              )
-            : _buildNoData(context));
+      appBar:
+          CustomAppBar(titleTxt: "Subscribe/Request Advice", bottomtext: false),
+      body: FutureBuilder(
+        future: getSubscriptionWithDetails().getsubsDetail(),
+        builder: (ctx, snapshot) {
+          if (snapshot.data == null) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: Lottie.asset(
+                    "assets/images/lf30_editor_jc6n8oqe.json",
+                    repeat: true,
+                    height: 150.h,
+                    width: 150.w,
+                  ),
+                ),
+              ],
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occured',
+                  style: TextStyle(fontSize: 18.sm),
+                ),
+              );
+            }
+          }
+          return subsDetail.data!.isNotEmpty
+              ? _buildBody(
+                  context,
+                )
+              : _buildNoData(context);
+        },
+      ),
+      //  subsDetail.data!.isNotEmpty
+      //     ? _buildBody(
+      //         context,
+      //       )
+      //     : _buildNoData(context)
+    );
   }
 
   Widget _buildNoData(context) {

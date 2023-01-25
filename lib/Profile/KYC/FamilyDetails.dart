@@ -262,7 +262,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Occupation",
+              "Occupation*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -279,7 +279,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Date of Birth",
+              "Date of Birth*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -295,7 +295,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Age",
+              "Age*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -306,12 +306,15 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
-                }else if(value != null && value.length >= 3) {
+                } else if (value != null && value.length >= 3) {
                   return "Please Enter Correct Age";
-                }
-                else
+                } else
                   return null;
               },
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(2),
+                FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
               textCapitalization: TextCapitalization.none,
               txtinptype: TextInputType.number,
               errortext: "Enter  Age",
@@ -351,7 +354,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Occupation",
+              "Occupation*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -368,7 +371,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Date of Birth",
+              "Date of Birth*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -384,7 +387,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Age",
+              "Age*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -395,12 +398,15 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
-                }else if(value != null && value.length >= 3) {
+                } else if (value != null && value.length >= 3) {
                   return "Please Enter Correct Age";
-                }
-                 else
+                } else
                   return null;
               },
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(2),
+                FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
               textCapitalization: TextCapitalization.none,
               txtinptype: TextInputType.number,
               errortext: "Enter  Age",
@@ -440,7 +446,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Occupation",
+              "Occupation*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -457,7 +463,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Date of Birth",
+              "Date of Birth*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -473,7 +479,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 40,
             ),
             Text(
-              "Age",
+              "Age*",
               style: blackStyle(context).copyWith(
                 fontSize: 16.sm,
                 fontWeight: FontWeight.w600,
@@ -484,12 +490,15 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
-                }else if(value != null && value.length >= 3) {
+                } else if (value != null && value.length >= 3) {
                   return "Please Enter Correct Age";
-                }
-                 else
+                } else
                   return null;
               },
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(2),
+                FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
               textCapitalization: TextCapitalization.none,
               txtinptype: TextInputType.number,
               errortext: "Enter Age",
@@ -500,7 +509,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               height: 20,
             ),
             Text(
-              "Children",
+              "Children*",
               style: blackStyle(context).copyWith(
                   fontSize: 16.sm,
                   fontWeight: FontWeight.w600,

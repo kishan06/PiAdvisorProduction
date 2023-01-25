@@ -4,6 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:piadvisory/Login/Repository/LoginMethod.dart';
 
 import 'package:piadvisory/Login/Repository/UserVerified.dart';
 import 'package:piadvisory/Login/login.dart';
@@ -90,7 +91,8 @@ class _SplashState extends State<Splash> {
           if (hastoken != null) {
             pinenabled != null && pinenabled
                 ? _ispinverified == 1
-                    ? _isFingerPrint == 1
+                    ? fingerPrintStatusGlobal != null &&
+                            fingerPrintStatusGlobal!
                         ? Navigator.push(
                             context,
                             MaterialPageRoute(

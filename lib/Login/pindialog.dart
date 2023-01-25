@@ -11,6 +11,7 @@ import 'package:piadvisory/Signup/Repository/Securityfirstpage.dart';
 
 import 'package:piadvisory/Utils/Dialogs.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
+import 'package:piadvisory/Utils/database.dart';
 import 'package:piadvisory/Utils/textStyles.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:flutter/services.dart';
@@ -206,7 +207,9 @@ class _PinDialogState extends State<PinDialog> {
     print(updata);
     final data = await LoginMethod().postPinStatus(updata);
     if (data.status == ResponseStatus.SUCCESS) {
-      Get.toNamed('/home');
+      fingerPrintStatusGlobal != null && fingerPrintStatusGlobal!
+          ? Get.toNamed('/home')
+          : Get.toNamed('/touchid2');
       user_pin.clear();
     } else {
       return utils.showToast(data.message);

@@ -48,6 +48,7 @@ import 'package:piadvisory/Profile/Personalprofilerepository/Model/familybasicde
 import 'package:piadvisory/Profile/add-goal.dart';
 import 'package:piadvisory/SideMenu/CartPi.dart';
 import 'package:piadvisory/SideMenu/CartPi2.dart';
+import 'package:piadvisory/Signup/TouchId2.dart';
 import 'package:piadvisory/Utils/database.dart';
 import 'package:piadvisory/payment-failed.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -157,7 +158,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     ConnectivityController connectivityController =
-      Get.put(ConnectivityController());
+        Get.put(ConnectivityController());
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         localizationsDelegates: [
@@ -192,6 +193,7 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: '/notification', page: () => Notify()),
           GetPage(name: '/profile', page: () => ProfileMain()),
           GetPage(name: '/touchid', page: () => TouchId()),
+          GetPage(name: '/touchid2', page: () => TouchID2()),
           GetPage(name: '/forgotpin2', page: () => ForgotPIN2()),
           GetPage(name: '/mysubscription', page: () => Mysubscription()),
           GetPage(name: '/paymentsuccessfull', page: () => PaymentSuccess()),

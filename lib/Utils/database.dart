@@ -93,4 +93,14 @@ class Database extends GetxController {
 
     return updata;
   }
+
+  storeUserIDasList(int value) {
+    // List<int> data = [];
+    //  box.write('user_id_list', () => data.add(value));
+    box.write('user_id_list', value);
+  }
+
+  restoreUserIdAsList() {
+    return box.read('user_id_list');
+  }
 }

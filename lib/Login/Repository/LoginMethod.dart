@@ -6,6 +6,8 @@ import 'package:piadvisory/Utils/database.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+bool? fingerPrintStatusGlobal;
+
 class LoginMethod {
   Dio dio = new Dio();
 
@@ -29,6 +31,14 @@ class LoginMethod {
 
       await prefs.setString('token', res["token"]);
       await prefs.setInt('user_id', res["user_id"]);
+
+      int userIdList = Database().restoreUserIdAsList();
+      if (userIdList == res["user_id"]) {
+        fingerPrintStatusGlobal = true;
+      } else {
+        fingerPrintStatusGlobal = false;
+      }
+
       Map<String, dynamic> store = {
         'email': res['email'],
         'number': res['number'],

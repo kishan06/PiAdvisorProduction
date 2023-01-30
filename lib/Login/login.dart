@@ -6,7 +6,9 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:piadvisory/Common/ConnectivityService.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
+import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/Common/VideoYoutube.dart';
 import 'package:piadvisory/Login/Repository/LoginMethod.dart';
 import 'package:piadvisory/Login/Repository/UserVerified.dart';
@@ -27,6 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Common/CustomTextFormFields.dart';
@@ -339,11 +342,15 @@ class _LoginState extends State<Login> {
       isSignInBtnLoaderVisible = false;
     });
   }
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     ImageProvider logo = AssetImage("assets/images/loginlogo.png");
-    return WillPopScope(
+    return StreamProvider<ConnectivityStatus>.value(
+      initialData: ConnectivityStatus.Cellular,
+      value: ConnectivityService().connectionStatusController.stream,
+      child: WillPopScope(
       onWillPop: () async {
         final difference = DateTime.now().difference(timebackPressed);
         final isExitWarning = difference >= Duration(seconds: 2);
@@ -365,252 +372,257 @@ class _LoginState extends State<Login> {
           return true;
         }
       },
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-            ),
-            child: Form(
-              key: _form,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 102.83.h,
-                  ),
-                  Center(
-                    child: SizedBox(
-                      height: 150.17.h,
-                      width: 100.w,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                          image: logo,
-                        )),
-                        child: null,
+      child: NetworkSensitive(
+        scaffoldKey: _scaffoldKey,
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+              ),
+              child: Form(
+                key: _form,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 102.83.h,
+                    ),
+                    Center(
+                      child: SizedBox(
+                        height: 150.17.h,
+                        width: 100.w,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            image: logo,
+                          )),
+                          child: null,
+                        ),
+                        //  Image.asset(
+                        //   'assets/images/pilogo.png',
+                        // ),
                       ),
-                      //  Image.asset(
-                      //   'assets/images/pilogo.png',
-                      // ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Text(
-                      "Phone",
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Get.isDarkMode ? Colors.white : Colors.black),
+                    SizedBox(
+                      height: 25.h,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CustomTextFormFieldPhone(
-                    texttype: TextInputType.number,
-                    limitlength: 10,
-                    errortext: "Please Enter Phone Number",
-                    controller: emailcontroller,
-                    hint: "Enter Phone Number",
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Padding(
+                    Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: Text(
-                        "Password",
+                        "Phone",
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color:
-                                Get.isDarkMode ? Colors.white : Colors.black),
-                      )),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Stack(
-                    children: [
-                      TextFormField(
-                        obscureText: true,
-                        cursorColor: Color(0xFF303030).withOpacity(0.3),
-                        style: const TextStyle(
-                          //color: Colors.grey,
-                          fontFamily: 'Productsans',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: InputDecoration(
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: Colors.grey, width: 2.0),
-                          ),
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: Colors.grey, width: 2.0),
-                          ),
-                          errorMaxLines: 3,
-                          hintText: "Enter Password",
-                          hintStyle: Get.isDarkMode
-                              ? Theme.of(context).textTheme.headline3
-                              : blackStyle(context).copyWith(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Get.isDarkMode
-                                      ? Colors.white
-                                      : Color(0xFF303030).withOpacity(0.3)),
-                          fillColor: Get.isDarkMode
-                              ? Color(0xFF303030).withOpacity(0.3)
-                              : Colors.white,
-                          filled: true,
-                          errorBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: Colors.red, width: 2.0),
-                          ),
-                          focusedErrorBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: Colors.red, width: 2.0),
-                          ),
-                          errorStyle: const TextStyle(
-                            fontSize: 16.0,
-                          ),
-                        ),
-                        controller: passwordcontroller,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please Enter Password";
-                          }
-                          return null;
-                        },
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(20),
-                        ],
-                        onSaved: (value) {},
+                            color: Get.isDarkMode ? Colors.white : Colors.black),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              PhoneVerification(
-                                                  number:
-                                                      emailcontroller.text)));
-                                  // Get.toNamed('/phoneverification', arguments: {
-                                  //   'number': emailcontroller.text
-                                  // });
-                                },
-                                child: const Text(
-                                  'Login Using OTP',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFFF78104),
-                                  ),
-                                )),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 17.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.toNamed('/forgotpassword');
-                        },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    CustomTextFormFieldPhone(
+                      texttype: TextInputType.number,
+                      limitlength: 10,
+                      errortext: "Please Enter Phone Number",
+                      controller: emailcontroller,
+                      hint: "Enter Phone Number",
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 5),
                         child: Text(
-                          'Forgot Password?',
+                          "Password",
                           style: TextStyle(
                               fontSize: 14,
+                              fontWeight: FontWeight.w600,
                               color:
-                                  Get.isDarkMode ? Colors.white : Colors.black,
-                              fontWeight: FontWeight.w500),
+                                  Get.isDarkMode ? Colors.white : Colors.black),
+                        )),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Stack(
+                      children: [
+                        TextFormField(
+                          obscureText: true,
+                          cursorColor: Color(0xFF303030).withOpacity(0.3),
+                          style: const TextStyle(
+                            //color: Colors.grey,
+                            fontFamily: 'Productsans',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2.0),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 2.0),
+                            ),
+                            errorMaxLines: 3,
+                            hintText: "Enter Password",
+                            hintStyle: Get.isDarkMode
+                                ? Theme.of(context).textTheme.headline3
+                                : blackStyle(context).copyWith(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Get.isDarkMode
+                                        ? Colors.white
+                                        : Color(0xFF303030).withOpacity(0.3)),
+                            fillColor: Get.isDarkMode
+                                ? Color(0xFF303030).withOpacity(0.3)
+                                : Colors.white,
+                            filled: true,
+                            errorBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2.0),
+                            ),
+                            focusedErrorBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2.0),
+                            ),
+                            errorStyle: const TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          controller: passwordcontroller,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please Enter Password";
+                            }
+                            return null;
+                          },
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(20),
+                          ],
+                          onSaved: (value) {},
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PhoneVerification(
+                                                    number:
+                                                        emailcontroller.text)));
+                                    // Get.toNamed('/phoneverification', arguments: {
+                                    //   'number': emailcontroller.text
+                                    // });
+                                  },
+                                  child: const Text(
+                                    'Login Using OTP',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xFFF78104),
+                                    ),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 17.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed('/forgotpassword');
+                          },
+                          child: Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color:
+                                    Get.isDarkMode ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 140.h,
+                    ),
+                    Visibility(
+                      visible: isSignInBtnVisible,
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        height: 48,
+                        child: CustomNextButton(
+                          text: "Sign in",
+                          ontap: () => _validateData(),
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 140.h,
-                  ),
-                  Visibility(
-                    visible: isSignInBtnVisible,
-                    child: SizedBox(
-                      width: double.maxFinite,
-                      height: 48,
-                      child: CustomNextButton(
-                        text: "Sign in",
-                        ontap: () => _validateData(),
+                    ),
+                    Visibility(
+                      visible: isSignInBtnLoaderVisible,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
                       ),
                     ),
-                  ),
-                  Visibility(
-                    visible: isSignInBtnLoaderVisible,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
+                    SizedBox(
+                      height: 51.h,
                     ),
-                  ),
-                  SizedBox(
-                    height: 51.h,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text("Don't have an account?",
-                          style: blackStyle(context).copyWith(
-                              color: Get.isDarkMode
-                                  ? Colors.white
-                                  : Color(0xFF585858),
-                              fontSize: 14)),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Get.toNamed('/signupforfree');
-                        },
-                        child: Text(
-                          'Signup for free',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFFF78104)),
+                    Row(
+                      children: <Widget>[
+                        Text("Don't have an account?",
+                            style: blackStyle(context).copyWith(
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Color(0xFF585858),
+                                fontSize: 14)),
+                        SizedBox(
+                          width: 2,
                         ),
-                      )
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                ],
+                        TextButton(
+                          onPressed: () {
+                            Get.toNamed('/signupforfree');
+                          },
+                          child: Text(
+                            'Signup for free',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFF78104)),
+                          ),
+                        )
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
+    ),
     );
   }
 }
+   
 
 class CustomTextFormFieldPhone extends StatelessWidget {
   const CustomTextFormFieldPhone({

@@ -1,5 +1,6 @@
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/Utils/textStyles.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -37,6 +38,7 @@ class _SplashsliderState extends State<Splashslider> {
     _controller.dispose();
     super.dispose();
   }
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,145 +64,148 @@ class _SplashsliderState extends State<Splashslider> {
           return true;
         }
       },
-      child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 100,
-            ),
-            Expanded(
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: contents.length,
-                onPageChanged: (int index) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
-                itemBuilder: (_, i) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: SvgPicture.asset(
-                          contents[i].image,
-                          height: 250,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 100,
-                      ),
-                      Expanded(
-                        child: Text(
-                          contents[i].title,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Productsans',
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+      child: NetworkSensitive(
+        scaffoldKey: _scaffoldKey, 
+        child: Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 100,
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
+              Expanded(
+                child: PageView.builder(
+                  controller: _controller,
+                  itemCount: contents.length,
+                  onPageChanged: (int index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  itemBuilder: (_, i) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                            child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: List.generate(
-                            contents.length,
-                            (index) => buildDot(index, context),
+                        Expanded(
+                          flex: 2,
+                          child: SvgPicture.asset(
+                            contents[i].image,
+                            height: 250,
                           ),
-                        )),
-                        SizedBox(
-                          height: 20,
                         ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 35,
+                        SizedBox(
+                          height: 100,
+                        ),
+                        Expanded(
+                          child: Text(
+                            contents[i].title,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Productsans',
                             ),
-                            GestureDetector(
-                              child: Text("Skip"),
-                              onTap: () {
-                                Get.toNamed('/login');
-                              },
-                            ),
-                          ],
+                          ),
                         ),
                       ],
-                    )),
-                SizedBox(
-                  width: 50,
+                    );
+                  },
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 60,
-                        margin:
-                            EdgeInsets.only(left: 35, right: 35, bottom: 20),
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              _controller.animateToPage(currentIndex + 1,
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.linear);
-                              if (currentIndex == 5) {
-                                Get.toNamed('/login');
-                              }
-                            });
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Color(0xFFF78104)),
-                            shape: MaterialStateProperty.all<OutlinedBorder>(
-                                RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            )),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                              child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                              contents.length,
+                              (index) => buildDot(index, context),
+                            ),
+                          )),
+                          SizedBox(
+                            height: 20,
                           ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Next",
-                                    style: blackStyle(context).copyWith(
-                                      color: Colors.white,
-                                      fontSize: 16,
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 35,
+                              ),
+                              GestureDetector(
+                                child: Text("Skip"),
+                                onTap: () {
+                                  Get.toNamed('/login');
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 60,
+                          margin:
+                              EdgeInsets.only(left: 35, right: 35, bottom: 20),
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                _controller.animateToPage(currentIndex + 1,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.linear);
+                                if (currentIndex == 5) {
+                                  Get.toNamed('/login');
+                                }
+                              });
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFFF78104)),
+                              shape: MaterialStateProperty.all<OutlinedBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              )),
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Next",
+                                      style: blackStyle(context).copyWith(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
                                     ),
-                                  ),
-                                ]),
+                                  ]),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      )
-                    ],
+                        SizedBox(
+                          height: 20,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

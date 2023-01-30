@@ -89,7 +89,7 @@ class ApiConstant {
   static const String postupdatefingerstatus = base + 'api/update_fingerprint';
 
   static const String endlogoForDigio =
-      'https://pi.betadelivery.com/pi_advisors/images/pilogo.png&theme={"PRIMARY_COLOR":"#008083","SECONDARY_COLOR":"#f78104"}';
+      'https://app.piadvisors.in/images/pilogo.png&theme={"PRIMARY_COLOR":"#008083","SECONDARY_COLOR":"#f78104"}';
 
   static const String getabout = base + 'api/get_about_us';
 

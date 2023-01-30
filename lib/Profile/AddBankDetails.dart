@@ -470,7 +470,6 @@ class CustomTextFieldsIfsc extends StatelessWidget {
     this.txtinptype,
     this.sizefactor,
     this.validator,
-    this.inputFormatters,
     this.readonly,
   }) : super(key: key);
 
@@ -484,7 +483,7 @@ class CustomTextFieldsIfsc extends StatelessWidget {
   final TextInputType? txtinptype;
   final double? sizefactor;
   final dynamic validator;
-  final dynamic inputFormatters;
+
   final bool? readonly;
   @override
   Widget build(BuildContext context) {

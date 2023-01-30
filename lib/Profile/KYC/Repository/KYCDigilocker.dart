@@ -78,7 +78,7 @@ class KYCDigilocker {
       //     },
       //     options: Options(headers: {
       //       "authorization":
-      //           "Basic QUlERjg5SVFTMlRMVFM2T0ZQMUxOUDdXOVlGSDJYR1I6WDE4UlcxRFhIT0xETENBUTJKMTgySkVWR1JKTjlUM0c=",
+      //           "Basic QUlERjg5SVFTMlRMVFM2T0ZQMUxOUDdXOVlGSDJYR1I6fundWDE4UlcxRFhIT0xETENBUTJKMTgySkVWR1JKTjlUM0c=",
       //     }));
       print(response);
     } on Exception catch (_) {

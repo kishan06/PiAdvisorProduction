@@ -86,7 +86,7 @@ class _StockGraphState extends State<StockGraph> {
 
   bool showTradeBtn = true;
   bool showTradeBtnLoader = false;
-
+  num? netAssests;
   void replaceBuyandSellBtnWithLoader() {
     setState(() {
       showTradeBtn = false;
@@ -109,7 +109,7 @@ class _StockGraphState extends State<StockGraph> {
     userIdAndWatchlistedStocksFutureGroup
         .add(watchlistStockApiMethods.fetchWatchlistStocks());
     userIdAndWatchlistedStocksFutureGroup.close();
-
+    netAssests = num.parse(widget.mCap ?? "0");
     Timer.periodic(Duration(seconds: 3), (timer) {
       priceChart();
       IntradatePriceChart();
@@ -990,7 +990,9 @@ class _StockGraphState extends State<StockGraph> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(widget.mCap ?? "NA"),
+                  Text(
+                    "₹ ${netAssests?.toStringAsFixed(2) ?? "NA"} Cr",
+                  ),
                 ],
               ),
               // Column(

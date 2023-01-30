@@ -488,69 +488,71 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                         SizedBox(
                           height: 30,
                           child: ElevatedButton(
-                            onPressed: () {
-                              buildMutualpopup();
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: ((context) => Brokerlogin())));
-                            },
-                            child: Text(
-                              "Buy",
-                              //"Invest Now",
-                              style: blackStyle(context)
-                                  .copyWith(color: Colors.white, fontSize: 14),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Color(0xFFF78104),
-                            )
-                            //  ButtonStyle(
-                            //     backgroundColor: MaterialStateProperty.all<Color>(
-                            //       Color(0xFF008083),
-                            //     ),
-                            //     shape: MaterialStateProperty.all<
-                            //             RoundedRectangleBorder>(
-                            //         const RoundedRectangleBorder(
-                            //             borderRadius:
-                            //                 BorderRadius.all(Radius.circular(5)),
-                            //             side: BorderSide(
-                            //                 color: Color(0xFF008083), width: 2)))),
-                          ),
+                              onPressed: () {
+                                buildMutualpopup();
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: ((context) => Brokerlogin())));
+                              },
+                              child: Text(
+                                "Buy",
+                                //"Invest Now",
+                                style: blackStyle(context).copyWith(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Color(0xFFF78104),
+                              )
+                              //  ButtonStyle(
+                              //     backgroundColor: MaterialStateProperty.all<Color>(
+                              //       Color(0xFF008083),
+                              //     ),
+                              //     shape: MaterialStateProperty.all<
+                              //             RoundedRectangleBorder>(
+                              //         const RoundedRectangleBorder(
+                              //             borderRadius:
+                              //                 BorderRadius.all(Radius.circular(5)),
+                              //             side: BorderSide(
+                              //                 color: Color(0xFF008083), width: 2)))),
+                              ),
                         ),
-                        SizedBox(width: 8,),
-                             SizedBox(
+                        SizedBox(
+                          width: 8,
+                        ),
+                        SizedBox(
                           height: 30,
                           child: ElevatedButton(
-                            onPressed: () {
-                              buildMutualpopup();
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: ((context) => Brokerlogin())));
-                            },
-                            child: Text(
-                              "Sell",
-                              //"Invest Now",
-                              style: blackStyle(context)
-                                  .copyWith(color: Colors.white, fontSize: 14),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor:Color(0xFF008083),
-                            )
-                            //  ButtonStyle(
-                            //     backgroundColor: MaterialStateProperty.all<Color>(
-                            //       Color(0xFF008083),
-                            //     ),
-                            //     shape: MaterialStateProperty.all<
-                            //             RoundedRectangleBorder>(
-                            //         const RoundedRectangleBorder(
-                            //             borderRadius:
-                            //                 BorderRadius.all(Radius.circular(5)),
-                            //             side: BorderSide(
-                            //                 color: Color(0xFF008083), width: 2)))),
-                          ),
+                              onPressed: () {
+                                buildMutualpopup();
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: ((context) => Brokerlogin())));
+                              },
+                              child: Text(
+                                "Sell",
+                                //"Invest Now",
+                                style: blackStyle(context).copyWith(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Color(0xFF008083),
+                              )
+                              //  ButtonStyle(
+                              //     backgroundColor: MaterialStateProperty.all<Color>(
+                              //       Color(0xFF008083),
+                              //     ),
+                              //     shape: MaterialStateProperty.all<
+                              //             RoundedRectangleBorder>(
+                              //         const RoundedRectangleBorder(
+                              //             borderRadius:
+                              //                 BorderRadius.all(Radius.circular(5)),
+                              //             side: BorderSide(
+                              //                 color: Color(0xFF008083), width: 2)))),
+                              ),
                         ),
                       ],
                     )
@@ -637,7 +639,7 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                         height: 5,
                       ),
                       Text(
-                        "₹ ${netAssests.toStringAsFixed(2)} Cr",
+                        "₹ ${netAssests.toStringAsFixed(0)} Cr",
                         style:
                             blackStyle(context).copyWith(color: Colors.black),
                       ),

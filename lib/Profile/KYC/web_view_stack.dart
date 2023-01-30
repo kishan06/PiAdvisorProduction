@@ -35,7 +35,7 @@ class _WebViewStackState extends State<WebViewStack> {
           initialOptions: InAppWebViewGroupOptions(
             crossPlatform: InAppWebViewOptions(
               mediaPlaybackRequiresUserGesture: false,
-
+              userAgent: 'random',
               //  debuggingEnabled: true,
             ),
           ),

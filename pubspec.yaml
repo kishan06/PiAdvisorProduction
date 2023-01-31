@@ -157,12 +157,10 @@ flutter:
         - asset: assets/fonts/Product Sans Regular.ttf
 
 flutter_native_splash:
-  color: "#e1f5fe"
+  color: "#000000"
   #background_image: "assets/images/pilogo.png"
   #image: assets/images/pilogo.png
 
   android_gravity: center
-  android_12:
-    image: assets/images/pilogo.png
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -6,8 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/app_bar.dart';
+import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
+import 'package:piadvisory/Utils/base_manager.dart';
 import 'package:piadvisory/Utils/textStyles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '/Utils/Dialogs.dart';
 
 class FixDeposit extends StatefulWidget {
   const FixDeposit({super.key});
@@ -46,7 +50,7 @@ class _FixDepositState extends State<FixDeposit> {
     });
   }
 
-    void _TenurepresentDatePicker() {
+  void _TenurepresentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
     showDatePicker(
             context: context,
@@ -63,6 +67,50 @@ class _FixDepositState extends State<FixDeposit> {
         datecontroller2.text =
             "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
       });
+    });
+  }
+
+  void UploadData() async {
+    final isValid = _form.currentState?.validate();
+    if (isValid!) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? user_id = await prefs.getInt('user_id');
+      replaceAssetsBtnWithLoader();
+      Map<String, dynamic> updata = {
+        "user_id": user_id,
+        "bank_name": BankName.text,
+        "investment_amount": Ammount.text,
+        "annual_rate": Annual.text,
+        "start_date": datecontroller.text,
+        "tenure": datecontroller2.text
+      };
+      print(updata);
+      final data = await StoreAssetsform().postStoreAssetsformFD(updata);
+      if (data.status == ResponseStatus.SUCCESS) {
+        replaceLoaderWithAssetsBtn();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ProfileMain()));
+      } else {
+        replaceLoaderWithAssetsBtn();
+        return utils.showToast(data.message);
+      }
+    }
+  }
+
+  bool isSaveBtnVisible = true;
+  bool isSaveBtnLoaderVisible = false;
+
+  void replaceAssetsBtnWithLoader() {
+    setState(() {
+      isSaveBtnVisible = false;
+      isSaveBtnLoaderVisible = true;
+    });
+  }
+
+  void replaceLoaderWithAssetsBtn() {
+    setState(() {
+      isSaveBtnVisible = true;
+      isSaveBtnLoaderVisible = false;
     });
   }
 
@@ -247,23 +295,29 @@ class _FixDepositState extends State<FixDeposit> {
                       SizedBox(
                         height: 50.h,
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 60.h,
-                        child: CustomNextButton(
-                          text: "Save",
-                          ontap: () {
-                            final isValid = _form.currentState?.validate();
-                            if (isValid!) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProfileMain()));
+                      Visibility(
+                        visible: isSaveBtnVisible,
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 60.h,
+                          child: CustomNextButton(
+                            text: "Save",
+                            ontap: () {
+                              UploadData();
+                              // final isValid = _form.currentState?.validate();
+                              // if (isValid!) {
+                              //   Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //           builder: (context) => ProfileMain()));
                               //args ! = null ? editGoal() : UploadData();
-                            }
-                          },
+                            },
+                          ),
                         ),
                       ),
+                      Visibility(
+                          visible: isSaveBtnLoaderVisible,
+                          child: Center(child: CircularProgressIndicator())),
                       SizedBox(
                         height: 30.h,
                       ),

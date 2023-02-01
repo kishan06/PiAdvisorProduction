@@ -991,7 +991,7 @@ class _StockGraphState extends State<StockGraph> {
                     height: 5,
                   ),
                   Text(
-                    "₹ ${netAssests?.toStringAsFixed(2) ?? "NA"} Cr",
+                    "₹ ${netAssests?.toStringAsFixed(0) ?? "NA"} Cr",
                   ),
                 ],
               ),

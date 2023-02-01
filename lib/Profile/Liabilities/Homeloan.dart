@@ -6,8 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/app_bar.dart';
+import 'package:piadvisory/Profile/Liabilities/LiabilitiesRepository/liabilitiesform.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
+import 'package:piadvisory/Utils/base_manager.dart';
 import 'package:piadvisory/Utils/textStyles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '/Utils/Dialogs.dart';
 
 class Homeloan extends StatefulWidget {
   const Homeloan({super.key});
@@ -44,6 +48,51 @@ class _HomeloanState extends State<Homeloan> {
         datecontroller.text =
             "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
       });
+    });
+  }
+
+  void UploadData() async {
+    final isValid = _form.currentState?.validate();
+    if (isValid!) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? user_id = await prefs.getInt('user_id');
+      replaceAssetsBtnWithLoader();
+      Map<String, dynamic> updata = {
+        "user_id": user_id,
+        "total_loan": LoanAmmount.text,
+        "loan_issued_on": datecontroller.text,
+        "loan_tenure": TenureMonths.text,
+        "installment_amount": InstallmentAmount.text,
+        "frequency_payment": Frequency.text,
+        "rate_of_interest": Interest.text
+      };
+      print(updata);
+      final data = await StoreLiabilitiesform().postStoreLiabilitiesformHL(updata);
+      if (data.status == ResponseStatus.SUCCESS) {
+        replaceLoaderWithAssetsBtn();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ProfileMain()));
+      } else {
+        replaceLoaderWithAssetsBtn();
+        return utils.showToast(data.message);
+      }
+    }
+  }
+
+  bool isSaveBtnVisible = true;
+  bool isSaveBtnLoaderVisible = false;
+
+  void replaceAssetsBtnWithLoader() {
+    setState(() {
+      isSaveBtnVisible = false;
+      isSaveBtnLoaderVisible = true;
+    });
+  }
+
+  void replaceLoaderWithAssetsBtn() {
+    setState(() {
+      isSaveBtnVisible = true;
+      isSaveBtnLoaderVisible = false;
     });
   }
 
@@ -322,23 +371,30 @@ class _HomeloanState extends State<Homeloan> {
                     SizedBox(
                       height: 70.h,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 60.h,
-                      child: CustomNextButton(
-                        text: "Save",
-                        ontap: () {
-                          final isValid = _form.currentState?.validate();
-                          if (isValid!) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProfileMain()));
-                            //args ! = null ? editGoal() : UploadData();
-                          }
-                        },
+                    Visibility(
+                      visible: isSaveBtnVisible,
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 60.h,
+                        child: CustomNextButton(
+                          text: "Save",
+                          ontap: () {
+                            UploadData();
+                            // final isValid = _form.currentState?.validate();
+                            // if (isValid!) {
+                            //   Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => ProfileMain()));
+                            //   //args ! = null ? editGoal() : UploadData();
+                            // }
+                          },
+                        ),
                       ),
                     ),
+                    Visibility(
+                        visible: isSaveBtnLoaderVisible,
+                        child: Center(child: CircularProgressIndicator())),
                     SizedBox(
                       height: 30.h,
                     ),

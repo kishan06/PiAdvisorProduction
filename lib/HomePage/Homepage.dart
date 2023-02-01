@@ -12,6 +12,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
+import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/Common/VideoYoutube.dart';
 //import 'package:piadvisory/Common/network.dart';
 import 'package:piadvisory/HomePage/Blog%20Repository/blogrepo.dart';
@@ -794,17 +795,18 @@ class _HomePageState extends State<HomePage> {
     ));
   }
 
+final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    return  WillPopScope(
       //onWillPop: () => Future.value(false),
       onWillPop: () async {
         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
         final difference = DateTime.now().difference(timebackPressed);
         final isExitWarning = difference >= Duration(seconds: 2);
-
+    
         timebackPressed = DateTime.now();
-
+    
         if (isExitWarning) {
           final message = "Press back again to exit";
           print("reached here");
@@ -812,272 +814,275 @@ class _HomePageState extends State<HomePage> {
             msg: message,
             fontSize: 18,
           );
-
+    
           return false;
         } else {
           Fluttertoast.cancel();
-
+    
           SystemNavigator.pop();
           return true;
         }
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        key: _key,
-        drawer: NavDrawer(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Stack(
-          children: [
-            Positioned(
-              bottom: 22,
-              right: MediaQuery.of(context).size.width * 0.43,
-              child: FloatingActionButton(
-                backgroundColor: Color(0xFFF78104),
-                heroTag: "tag1",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => const Mysubscription())));
-                },
-                tooltip: 'Subscribe',
-                elevation: 2.0,
-                child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",               
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
+      child: NetworkSensitive(
+        scaffoldKey: _scaffoldKey,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          key: _key,
+          drawer: NavDrawer(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Stack(
+            children: [
+              Positioned(
+                bottom: 22,
+                right: MediaQuery.of(context).size.width * 0.43,
+                child: FloatingActionButton(
+                  backgroundColor: Color(0xFFF78104),
+                  heroTag: "tag1",
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const Mysubscription())));
+                  },
+                  tooltip: 'Subscribe',
+                  elevation: 2.0,
+                  child: SvgPicture.asset(
+                    "assets/images/product sans logo wh new.svg",               
+                    color: Colors.white,
+                    fit: BoxFit.contain,
+                    width: 28,
+                    height: 24,
+                  ),
                 ),
               ),
-            ),
-            FutureBuilder(
-                future: getSubscriptionWithDetails().getsubsDetail(),
-                builder: (ctx, snapshot) {
-                  if (snapshot.data == null) {
-                    // return Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: [
-                    //     Center(
-                    //       child: Lottie.asset(
-                    //         "assets/images/lf30_editor_jc6n8oqe.json",
-                    //         repeat: true,
-                    //         height: 150.h,
-                    //         width: 150.w,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // );
-                  }
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text(
-                          '${snapshot.error} occured',
-                          style: TextStyle(fontSize: 18.sm),
-                        ),
-                      );
+              FutureBuilder(
+                  future: getSubscriptionWithDetails().getsubsDetail(),
+                  builder: (ctx, snapshot) {
+                    if (snapshot.data == null) {
+                      // return Column(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     Center(
+                      //       child: Lottie.asset(
+                      //         "assets/images/lf30_editor_jc6n8oqe.json",
+                      //         repeat: true,
+                      //         height: 150.h,
+                      //         width: 150.w,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // );
                     }
-                  }
-                  return Positioned(
-                    bottom: 80,
-                    left: 20,
-                    child: Visibility(
-                        visible: !userHasSubscription,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          //height: 52.h,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          Mysubscription())));
-                            },
-                            child: Image.asset(
-                              "assets/images/BannerNew.png",
-                              fit: BoxFit.cover,
-                            ),
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(
+                            '${snapshot.error} occured',
+                            style: TextStyle(fontSize: 18.sm),
                           ),
-                        )),
-                  );
-                }),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-          unselectedLabelStyle: TextStyle(color: Colors.grey),
-          unselectedIconTheme: IconThemeData(color: Colors.grey),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.path_3177,
-                // color:
-                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  CustomIcons.path_4346,
-                  //  color:
+                        );
+                      }
+                    }
+                    return Positioned(
+                      bottom: 80,
+                      left: 20,
+                      child: Visibility(
+                          visible: !userHasSubscription,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            //height: 52.h,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            Mysubscription())));
+                              },
+                              child: Image.asset(
+                                "assets/images/BannerNew.png",
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )),
+                    );
+                  }),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            selectedLabelStyle: TextStyle(color:  Color(0xFFF78104)),
+            unselectedLabelStyle: TextStyle(color: Colors.grey),
+            unselectedIconTheme: IconThemeData(color: Colors.grey),
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  CustomIcons.path_3177,
+                  // color:
                   //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
                 ),
+                label: 'Home',
               ),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.group_2369,
-                // color:
-                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              BottomNavigationBarItem(
+                icon: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Icon(
+                    CustomIcons.path_4346,
+                    //  color:
+                    //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+                  ),
+                ),
+                label: 'Explore',
               ),
-              label: 'Subscribe',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.date_range,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              BottomNavigationBarItem(
+                icon: Icon(
+                  CustomIcons.group_2369,
+                  // color:
+                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+                ),
+                label: 'Subscribe',
               ),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.bottombarbagicon,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
-                size: 22.5,
+              BottomNavigationBarItem(
+                icon: Icon(
+                  CustomIcons.date_range,
+                  //  color:
+                  //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+                ),
+                label: 'Calendar',
               ),
-              label: 'Dashboard',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Color(0xFFF78104),
-          backgroundColor: Colors.white,
-          onTap: (index) {
-            print(index);
-            _selectedTab(index);
-          },
-          type: BottomNavigationBarType.fixed,
-        ),
-        appBar: AppBar(
-          backgroundColor: Colors.white, elevation: 2,
-          shadowColor: Colors.black,
-          automaticallyImplyLeading: false,
-          titleSpacing: 0,
-          // centerTitle: true,
-          title: SizedBox(
-            // width: 110,
-            child: Image.asset(
-              'assets/images/Newlogo.png',
-              height: 30.h,
-              alignment: Alignment.centerLeft,
-            ),
-            // SvgPicture.asset(
-            //   'assets/images/Newlogo.svg',
-            //   height: 30.h,
-            //   alignment: Alignment.centerLeft,
-            // ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  CustomIcons.bottombarbagicon,
+                  //  color:
+                  //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
+                  size: 22.5,
+                ),
+                label: 'Dashboard',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            unselectedItemColor: Colors.grey,
+            selectedItemColor: Color(0xFFF78104),
+            backgroundColor: Colors.white,
+            onTap: (index) {
+              print(index);
+              _selectedTab(index);
+            },
+            type: BottomNavigationBarType.fixed,
           ),
-          leading: Row(
-            children: [
+          appBar: AppBar(
+            backgroundColor: Colors.white, elevation: 2,
+            shadowColor: Colors.black,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            // centerTitle: true,
+            title: SizedBox(
+              // width: 110,
+              child: Image.asset(
+                'assets/images/Newlogo.png',
+                height: 30.h,
+                alignment: Alignment.centerLeft,
+              ),
+              // SvgPicture.asset(
+              //   'assets/images/Newlogo.svg',
+              //   height: 30.h,
+              //   alignment: Alignment.centerLeft,
+              // ),
+            ),
+            leading: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _key.currentState!.openDrawer();
+                  },
+                  icon: Icon(
+                    Icons.menu,
+                    color: Get.isDarkMode ? Colors.black : Colors.black,
+                  ),
+                  iconSize: 25,
+                ),
+              ],
+            ),
+            actions: [
+              // IconButton(
+              //   onPressed: () {
+              //     // buildsmallcase();
+              //   },
+              //   icon: SvgPicture.asset(
+              //     'assets/images/search-icon.svg',
+              //   ),
+              //   iconSize: 22,
+              //   color: const Color(0xFF6B6B6B),
+              // ),
+              // IconButton(
+              //   onPressed: () {
+              //     Get.toNamed('/notification');
+              //   },
+              //   icon: SvgPicture.asset(
+              //     'assets/images/notification-icon.svg',
+              //   ),
+              //   iconSize: 22,
+              //   color: const Color(0xFF6B6B6B),
+              // ),
               IconButton(
                 onPressed: () {
-                  _key.currentState!.openDrawer();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ProfileMain()));
                 },
-                icon: Icon(
-                  Icons.menu,
-                  color: Get.isDarkMode ? Colors.black : Colors.black,
+                icon: SvgPicture.asset(
+                  'assets/images/Profile1.svg',
                 ),
-                iconSize: 25,
+                iconSize: 22,
+                color: const Color(0xFF303030),
               ),
             ],
           ),
-          actions: [
-            // IconButton(
-            //   onPressed: () {
-            //     // buildsmallcase();
-            //   },
-            //   icon: SvgPicture.asset(
-            //     'assets/images/search-icon.svg',
-            //   ),
-            //   iconSize: 22,
-            //   color: const Color(0xFF6B6B6B),
-            // ),
-            // IconButton(
-            //   onPressed: () {
-            //     Get.toNamed('/notification');
-            //   },
-            //   icon: SvgPicture.asset(
-            //     'assets/images/notification-icon.svg',
-            //   ),
-            //   iconSize: 22,
-            //   color: const Color(0xFF6B6B6B),
-            // ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfileMain()));
-              },
-              icon: SvgPicture.asset(
-                'assets/images/Profile1.svg',
-              ),
-              iconSize: 22,
-              color: const Color(0xFF303030),
-            ),
-          ],
-        ),
-        body:
-            //   _networkcheck ?
-            //   Center(
-            //   child: Obx(() => Text(
-            //         _controller.connectionType.value == 1
-            //             ? "Wifi Connected"
-            //             : _controller.connectionType.value == 2
-            //                 ? 'Mobile Data Connected'
-            //                 : 'No Internet',
-            //         style: const TextStyle(fontSize: 20),
-            //       )),
-            // ):
-            FutureBuilder(
-          future: futureGroup.future,
-          builder: (ctx, snapshot) {
-            if (snapshot.data == null) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Lottie.asset(
-                      "assets/images/lf30_editor_jc6n8oqe.json",
-                      repeat: true,
-                      height: 150.h,
-                      width: 150.w,
+          body:
+              //   _networkcheck ?
+              //   Center(
+              //   child: Obx(() => Text(
+              //         _controller.connectionType.value == 1
+              //             ? "Wifi Connected"
+              //             : _controller.connectionType.value == 2
+              //                 ? 'Mobile Data Connected'
+              //                 : 'No Internet',
+              //         style: const TextStyle(fontSize: 20),
+              //       )),
+              // ):
+              FutureBuilder(
+            future: futureGroup.future,
+            builder: (ctx, snapshot) {
+              if (snapshot.data == null) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Lottie.asset(
+                        "assets/images/lf30_editor_jc6n8oqe.json",
+                        repeat: true,
+                        height: 150.h,
+                        width: 150.w,
+                      ),
                     ),
-                  ),
-                ],
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                    '${snapshot.error} occured',
-                    style: TextStyle(fontSize: 18.sm),
-                  ),
+                  ],
                 );
               }
-            }
-            return _buildBody(
-              context,
-            );
-          },
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      '${snapshot.error} occured',
+                      style: TextStyle(fontSize: 18.sm),
+                    ),
+                  );
+                }
+              }
+              return _buildBody(
+                context,
+              );
+            },
+          ),
         ),
       ),
     );

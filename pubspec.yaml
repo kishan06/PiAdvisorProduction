@@ -94,6 +94,8 @@ dependencies:
   timer_button: ^2.0.0
   connectivity_plus: ^3.0.2
   internet_connection_checker: ^1.0.0+1
+  provider: ^6.0.5
+  
 
 dev_dependencies:
   flutter_test: 

@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:piadvisory/Common/ConnectivityService.dart';
 import 'package:piadvisory/Common/SubscriptionLoadingPage.dart';
 import 'package:piadvisory/Common/ThankYouPage.dart';
 import 'package:piadvisory/Common/connectivity.dart';
@@ -50,6 +51,7 @@ import 'package:piadvisory/SideMenu/CartPi.dart';
 import 'package:piadvisory/SideMenu/CartPi2.dart';
 import 'package:piadvisory/Utils/database.dart';
 import 'package:piadvisory/payment-failed.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
 import 'package:piadvisory/SideMenu/Subscribe/Mysubscription.dart';
@@ -158,7 +160,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     // ConnectivityController connectivityController =
     //   Get.put(ConnectivityController());
-    return ScreenUtilInit(
+    return StreamProvider<ConnectivityStatus>.value(
+      initialData: ConnectivityStatus.Cellular,
+      value: ConnectivityService().connectionStatusController.stream,
+      child :  ScreenUtilInit(
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
@@ -221,6 +226,9 @@ class _MyAppState extends State<MyApp> {
         ],
       ),
       designSize: Size(390, 844),
+    ),
     );
   }
 }
+
+  

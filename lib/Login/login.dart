@@ -347,10 +347,12 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     ImageProvider logo = AssetImage("assets/images/loginlogo.png");
-    return StreamProvider<ConnectivityStatus>.value(
-      initialData: ConnectivityStatus.Cellular,
-      value: ConnectivityService().connectionStatusController.stream,
-      child: WillPopScope(
+    return 
+    // StreamProvider<ConnectivityStatus>.value(
+    //   initialData: ConnectivityStatus.Cellular,
+    //   value: ConnectivityService().connectionStatusController.stream,
+    //   child: 
+      WillPopScope(
       onWillPop: () async {
         final difference = DateTime.now().difference(timebackPressed);
         final isExitWarning = difference >= Duration(seconds: 2);
@@ -618,8 +620,8 @@ class _LoginState extends State<Login> {
           ),
         ),
       ),
-    ),
     );
+   // );
   }
 }
    

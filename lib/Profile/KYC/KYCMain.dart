@@ -130,7 +130,7 @@ class _KYCMainState extends State<KYCMain> {
         replaceLoaderWithKycBtn();
         _storePanAndDob();
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => LoadingPageCKYCCheck()));
+            MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
       } else {

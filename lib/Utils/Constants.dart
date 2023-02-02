@@ -1,5 +1,5 @@
 class ApiConstant {
-  static const String base = "https://app.piadvisors.in/";
+  static const String base = "https://pi.betadelivery.com/pi_advisors/";
 
   static const String basetesting = "https://pi.betadelivery.com/pi_advisors/";
 

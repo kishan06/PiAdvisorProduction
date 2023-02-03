@@ -203,6 +203,7 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
                                   fontSize: 20)),
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(10),
+                            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                           ],
                           validator: (value) {
                             if (value == null || value.isEmpty) {

@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
@@ -165,6 +166,9 @@ class _ForgotOTPState extends State<ForgotOTP> {
                     return null;
                   },
                   keyboardType: TextInputType.number,
+                  inputFormatters: [
+                 FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   length: 4,
                   obscureText: false,

@@ -153,6 +153,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(10),
+                      FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                     ],
                     validator: (value) {
                       if (value == null || value.isEmpty) {

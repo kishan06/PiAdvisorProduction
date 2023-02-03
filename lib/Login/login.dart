@@ -712,6 +712,8 @@ class CustomTextFormFieldPhone extends StatelessWidget {
       },
       inputFormatters: [
         LengthLimitingTextInputFormatter(limitlength ?? 20),
+        //FilteringTextInputFormatter.digitsOnly
+        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
         // FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
       ],
       onSaved: (value) {

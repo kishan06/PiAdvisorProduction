@@ -877,6 +877,9 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
     
               maxLength: 4,
               keyboardType: TextInputType.number,
+              inputFormatters: [
+                 FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (val) {
                 if (val == null || val.isEmpty) {

@@ -795,161 +795,161 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return NetworkSensitive(
-      scaffoldKey: _scaffoldKey, 
-      child: Scaffold(
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(25),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(13),
-              child: Text(
-                textAlign: TextAlign.left,
-                textDirection: TextDirection.ltr,
-                "Welcome back",
-                style: blackStyle(context).copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 19.sm,
-                    color: Get.isDarkMode ? Colors.white : Color(0xFF444444)),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Use your 4 Digit Pin to easily log in!",
+    return Scaffold(
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(25),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(13),
+            child: Text(
+              textAlign: TextAlign.left,
+              textDirection: TextDirection.ltr,
+              "Welcome back",
               style: blackStyle(context).copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 19.sm,
                   color: Get.isDarkMode ? Colors.white : Color(0xFF444444)),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              focusNode: pinFocusNode,
-              controller: user_pin,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(20),
-                hintText: 'Enter PIN',
-                // focusedBorder: const OutlineInputBorder(
-                //   borderRadius: BorderRadius.all(Radius.circular(5)),
-                //   borderSide:
-                //       BorderSide(color: Color(0xFF707070), width: 1.0),
-                // ),
-                // enabledBorder: const OutlineInputBorder(
-                //   borderRadius: BorderRadius.all(Radius.circular(5)),
-                //   borderSide:
-                //       BorderSide(color: Color(0xFF707070), width: 1.0),
-                // ),
-                hintStyle: blackStyle(context).copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Get.isDarkMode
-                        ? Colors.white
-                        : Color(0xFF303030).withOpacity(0.3)),
-                // errorBorder: const OutlineInputBorder(
-                //   borderRadius: BorderRadius.all(Radius.circular(5)),
-                //   borderSide: BorderSide(color: Colors.red, width: 1.0),
-                // ),
-                // focusedErrorBorder: const OutlineInputBorder(
-                //   borderRadius: BorderRadius.all(Radius.circular(5)),
-                //   borderSide: BorderSide(color: Colors.red, width: 1.0),
-                // ),
-                errorStyle: const TextStyle(
-                  fontSize: 16.0,
-                ),
-                // suffixIcon: GestureDetector(
-                //   onTap: () {
-                //     UploadPinData();
-                //   },
-                //   child: Container(
-                //     padding: EdgeInsets.only(right: 25),
-                //     width: 10,
-                //     height: 10,
-                //     child: SvgPicture.asset(
-                //       'assets/images/nextbuttonicon.svg',
-                //     ),
-                //   ),
-                // ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Use your 4 Digit Pin to easily log in!",
+            style: blackStyle(context).copyWith(
+                color: Get.isDarkMode ? Colors.white : Color(0xFF444444)),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            focusNode: pinFocusNode,
+            controller: user_pin,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(20),
+              hintText: 'Enter PIN',
+              // focusedBorder: const OutlineInputBorder(
+              //   borderRadius: BorderRadius.all(Radius.circular(5)),
+              //   borderSide:
+              //       BorderSide(color: Color(0xFF707070), width: 1.0),
+              // ),
+              // enabledBorder: const OutlineInputBorder(
+              //   borderRadius: BorderRadius.all(Radius.circular(5)),
+              //   borderSide:
+              //       BorderSide(color: Color(0xFF707070), width: 1.0),
+              // ),
+              hintStyle: blackStyle(context).copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Get.isDarkMode
+                      ? Colors.white
+                      : Color(0xFF303030).withOpacity(0.3)),
+              // errorBorder: const OutlineInputBorder(
+              //   borderRadius: BorderRadius.all(Radius.circular(5)),
+              //   borderSide: BorderSide(color: Colors.red, width: 1.0),
+              // ),
+              // focusedErrorBorder: const OutlineInputBorder(
+              //   borderRadius: BorderRadius.all(Radius.circular(5)),
+              //   borderSide: BorderSide(color: Colors.red, width: 1.0),
+              // ),
+              errorStyle: const TextStyle(
+                fontSize: 16.0,
               ),
-    
-              maxLength: 4,
-              keyboardType: TextInputType.number,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (val) {
-                if (val == null || val.isEmpty) {
-                  return 'Pin is Empty';
-                } else {
-                  return null;
-                }
-              },
-              //onEditingComplete:() => UploadPinData(),
-              //onFieldSubmitted:(value) => UploadPinData(),
+              // suffixIcon: GestureDetector(
+              //   onTap: () {
+              //     UploadPinData();
+              //   },
+              //   child: Container(
+              //     padding: EdgeInsets.only(right: 25),
+              //     width: 10,
+              //     height: 10,
+              //     child: SvgPicture.asset(
+              //       'assets/images/nextbuttonicon.svg',
+              //     ),
+              //   ),
+              // ),
             ),
-            SizedBox(
-              height: 22,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 130, right: 130),
-              child: SizedBox(
-                width: double.infinity,
-                height: 40,
-                child: CustomNextButton(
-                  text: 'GO',
-                  ontap: () {
-                    UploadPinData();
-                  },
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 22,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed("/forgotpin2");
-                  },
-                  child: Text(
-                    "Forgot PIN?",
-                    style: blackStyle(context).copyWith(
-                        color: Get.isDarkMode ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
+
+            maxLength: 4,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+            ],
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (val) {
+              if (val == null || val.isEmpty) {
+                return 'Pin is Empty';
+              } else {
+                return null;
+              }
+            },
+            //onEditingComplete:() => UploadPinData(),
+            //onFieldSubmitted:(value) => UploadPinData(),
+          ),
+          SizedBox(
+            height: 22,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 130, right: 130),
+            child: SizedBox(
+              width: double.infinity,
+              height: 40,
+              child: CustomNextButton(
+                text: 'GO',
+                ontap: () {
+                  UploadPinData();
+                },
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () async {
-                    Get.toNamed("/login");
-                    SharedPreferences preferences =
-                        await SharedPreferences.getInstance();
-                    await preferences.remove('token');
-                    await preferences.remove('video');
-                  },
-                  child: Text(
-                    "Switch Account?",
-                    style: blackStyle(context).copyWith(
-                        color: Get.isDarkMode ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.w600),
-                  ),
+          ),
+          SizedBox(
+            height: 22,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed("/forgotpin2");
+                },
+                child: Text(
+                  "Forgot PIN?",
+                  style: blackStyle(context).copyWith(
+                      color: Get.isDarkMode ? Colors.white : Colors.black,
+                      fontWeight: FontWeight.w600),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () async {
+                  Get.toNamed("/login");
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  await preferences.remove('token');
+                  await preferences.remove('video');
+                },
+                child: Text(
+                  "Switch Account?",
+                  style: blackStyle(context).copyWith(
+                      color: Get.isDarkMode ? Colors.white : Colors.black,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

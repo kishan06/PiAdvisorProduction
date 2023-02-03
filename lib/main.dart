@@ -160,10 +160,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     // ConnectivityController connectivityController =
     //   Get.put(ConnectivityController());
-    return StreamProvider<ConnectivityStatus>.value(
-      initialData: ConnectivityStatus.Cellular,
-      value: ConnectivityService().connectionStatusController.stream,
-      child :  ScreenUtilInit(
+    return
+      // StreamProvider<ConnectivityStatus>.value(
+      // initialData: ConnectivityStatus.Cellular,
+      // value: ConnectivityService().connectionStatusController.stream,
+      //child :
+    ScreenUtilInit(
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
@@ -226,8 +228,8 @@ class _MyAppState extends State<MyApp> {
         ],
       ),
       designSize: Size(390, 844),
-    ),
     );
+   // );
   }
 }
 

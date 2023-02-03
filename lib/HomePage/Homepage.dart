@@ -823,266 +823,263 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
           return true;
         }
       },
-      child: NetworkSensitive(
-        scaffoldKey: _scaffoldKey,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          key: _key,
-          drawer: NavDrawer(),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: Stack(
-            children: [
-              Positioned(
-                bottom: 22,
-                right: MediaQuery.of(context).size.width * 0.43,
-                child: FloatingActionButton(
-                  backgroundColor: Color(0xFFF78104),
-                  heroTag: "tag1",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => const Mysubscription())));
-                  },
-                  tooltip: 'Subscribe',
-                  elevation: 2.0,
-                  child: SvgPicture.asset(
-                    "assets/images/product sans logo wh new.svg",               
-                    color: Colors.white,
-                    fit: BoxFit.contain,
-                    width: 28,
-                    height: 24,
-                  ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        key: _key,
+        drawer: NavDrawer(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Stack(
+          children: [
+            Positioned(
+              bottom: 22,
+              right: MediaQuery.of(context).size.width * 0.43,
+              child: FloatingActionButton(
+                backgroundColor: Color(0xFFF78104),
+                heroTag: "tag1",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const Mysubscription())));
+                },
+                tooltip: 'Subscribe',
+                elevation: 2.0,
+                child: SvgPicture.asset(
+                  "assets/images/product sans logo wh new.svg",
+                  color: Colors.white,
+                  fit: BoxFit.contain,
+                  width: 28,
+                  height: 24,
                 ),
               ),
-              FutureBuilder(
-                  future: getSubscriptionWithDetails().getsubsDetail(),
-                  builder: (ctx, snapshot) {
-                    if (snapshot.data == null) {
-                      // return Column(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: [
-                      //     Center(
-                      //       child: Lottie.asset(
-                      //         "assets/images/lf30_editor_jc6n8oqe.json",
-                      //         repeat: true,
-                      //         height: 150.h,
-                      //         width: 150.w,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // );
+            ),
+            FutureBuilder(
+                future: getSubscriptionWithDetails().getsubsDetail(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.data == null) {
+                    // return Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: [
+                    //     Center(
+                    //       child: Lottie.asset(
+                    //         "assets/images/lf30_editor_jc6n8oqe.json",
+                    //         repeat: true,
+                    //         height: 150.h,
+                    //         width: 150.w,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // );
+                  }
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          '${snapshot.error} occured',
+                          style: TextStyle(fontSize: 18.sm),
+                        ),
+                      );
                     }
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text(
-                            '${snapshot.error} occured',
-                            style: TextStyle(fontSize: 18.sm),
-                          ),
-                        );
-                      }
-                    }
-                    return Positioned(
-                      bottom: 80,
-                      left: 20,
-                      child: Visibility(
-                          visible: !userHasSubscription,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            //height: 52.h,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) =>
-                                            Mysubscription())));
-                              },
-                              child: Image.asset(
-                                "assets/images/BannerNew.png",
-                                fit: BoxFit.cover,
-                              ),
+                  }
+                  return Positioned(
+                    bottom: 80,
+                    left: 20,
+                    child: Visibility(
+                        visible: !userHasSubscription,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          //height: 52.h,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) =>
+                                          Mysubscription())));
+                            },
+                            child: Image.asset(
+                              "assets/images/BannerNew.png",
+                              fit: BoxFit.cover,
                             ),
-                          )),
-                    );
-                  }),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            selectedLabelStyle: TextStyle(color:  Color(0xFFF78104)),
-            unselectedLabelStyle: TextStyle(color: Colors.grey),
-            unselectedIconTheme: IconThemeData(color: Colors.grey),
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  CustomIcons.path_3177,
-                  // color:
+                          ),
+                        )),
+                  );
+                }),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          selectedLabelStyle: TextStyle(color:  Color(0xFFF78104)),
+          unselectedLabelStyle: TextStyle(color: Colors.grey),
+          unselectedIconTheme: IconThemeData(color: Colors.grey),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.path_3177,
+                // color:
+                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Icon(
+                  CustomIcons.path_4346,
+                  //  color:
                   //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
                 ),
-                label: 'Home',
               ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: Icon(
-                    CustomIcons.path_4346,
-                    //  color:
-                    //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-                  ),
-                ),
-                label: 'Explore',
+              label: 'Explore',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.group_2369,
+                // color:
+                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  CustomIcons.group_2369,
-                  // color:
-                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-                ),
-                label: 'Subscribe',
+              label: 'Subscribe',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.date_range,
+                //  color:
+                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  CustomIcons.date_range,
-                  //  color:
-                  //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-                ),
-                label: 'Calendar',
+              label: 'Calendar',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                CustomIcons.bottombarbagicon,
+                //  color:
+                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
+                size: 22.5,
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  CustomIcons.bottombarbagicon,
-                  //  color:
-                  //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
-                  size: 22.5,
-                ),
-                label: 'Dashboard',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            unselectedItemColor: Colors.grey,
-            selectedItemColor: Color(0xFFF78104),
-            backgroundColor: Colors.white,
-            onTap: (index) {
-              print(index);
-              _selectedTab(index);
-            },
-            type: BottomNavigationBarType.fixed,
+              label: 'Dashboard',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Color(0xFFF78104),
+          backgroundColor: Colors.white,
+          onTap: (index) {
+            print(index);
+            _selectedTab(index);
+          },
+          type: BottomNavigationBarType.fixed,
+        ),
+        appBar: AppBar(
+          backgroundColor: Colors.white, elevation: 2,
+          shadowColor: Colors.black,
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
+          // centerTitle: true,
+          title: SizedBox(
+            // width: 110,
+            child: Image.asset(
+              'assets/images/Newlogo.png',
+              height: 30.h,
+              alignment: Alignment.centerLeft,
+            ),
+            // SvgPicture.asset(
+            //   'assets/images/Newlogo.svg',
+            //   height: 30.h,
+            //   alignment: Alignment.centerLeft,
+            // ),
           ),
-          appBar: AppBar(
-            backgroundColor: Colors.white, elevation: 2,
-            shadowColor: Colors.black,
-            automaticallyImplyLeading: false,
-            titleSpacing: 0,
-            // centerTitle: true,
-            title: SizedBox(
-              // width: 110,
-              child: Image.asset(
-                'assets/images/Newlogo.png',
-                height: 30.h,
-                alignment: Alignment.centerLeft,
-              ),
-              // SvgPicture.asset(
-              //   'assets/images/Newlogo.svg',
-              //   height: 30.h,
-              //   alignment: Alignment.centerLeft,
-              // ),
-            ),
-            leading: Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    _key.currentState!.openDrawer();
-                  },
-                  icon: Icon(
-                    Icons.menu,
-                    color: Get.isDarkMode ? Colors.black : Colors.black,
-                  ),
-                  iconSize: 25,
-                ),
-              ],
-            ),
-            actions: [
-              // IconButton(
-              //   onPressed: () {
-              //     // buildsmallcase();
-              //   },
-              //   icon: SvgPicture.asset(
-              //     'assets/images/search-icon.svg',
-              //   ),
-              //   iconSize: 22,
-              //   color: const Color(0xFF6B6B6B),
-              // ),
-              // IconButton(
-              //   onPressed: () {
-              //     Get.toNamed('/notification');
-              //   },
-              //   icon: SvgPicture.asset(
-              //     'assets/images/notification-icon.svg',
-              //   ),
-              //   iconSize: 22,
-              //   color: const Color(0xFF6B6B6B),
-              // ),
+          leading: Row(
+            children: [
               IconButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProfileMain()));
+                  _key.currentState!.openDrawer();
                 },
-                icon: SvgPicture.asset(
-                  'assets/images/Profile1.svg',
+                icon: Icon(
+                  Icons.menu,
+                  color: Get.isDarkMode ? Colors.black : Colors.black,
                 ),
-                iconSize: 22,
-                color: const Color(0xFF303030),
+                iconSize: 25,
               ),
             ],
           ),
-          body:
-              //   _networkcheck ?
-              //   Center(
-              //   child: Obx(() => Text(
-              //         _controller.connectionType.value == 1
-              //             ? "Wifi Connected"
-              //             : _controller.connectionType.value == 2
-              //                 ? 'Mobile Data Connected'
-              //                 : 'No Internet',
-              //         style: const TextStyle(fontSize: 20),
-              //       )),
-              // ):
-              FutureBuilder(
-            future: futureGroup.future,
-            builder: (ctx, snapshot) {
-              if (snapshot.data == null) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Lottie.asset(
-                        "assets/images/lf30_editor_jc6n8oqe.json",
-                        repeat: true,
-                        height: 150.h,
-                        width: 150.w,
-                      ),
+          actions: [
+            // IconButton(
+            //   onPressed: () {
+            //     // buildsmallcase();
+            //   },
+            //   icon: SvgPicture.asset(
+            //     'assets/images/search-icon.svg',
+            //   ),
+            //   iconSize: 22,
+            //   color: const Color(0xFF6B6B6B),
+            // ),
+            // IconButton(
+            //   onPressed: () {
+            //     Get.toNamed('/notification');
+            //   },
+            //   icon: SvgPicture.asset(
+            //     'assets/images/notification-icon.svg',
+            //   ),
+            //   iconSize: 22,
+            //   color: const Color(0xFF6B6B6B),
+            // ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileMain()));
+              },
+              icon: SvgPicture.asset(
+                'assets/images/Profile1.svg',
+              ),
+              iconSize: 22,
+              color: const Color(0xFF303030),
+            ),
+          ],
+        ),
+        body:
+            //   _networkcheck ?
+            //   Center(
+            //   child: Obx(() => Text(
+            //         _controller.connectionType.value == 1
+            //             ? "Wifi Connected"
+            //             : _controller.connectionType.value == 2
+            //                 ? 'Mobile Data Connected'
+            //                 : 'No Internet',
+            //         style: const TextStyle(fontSize: 20),
+            //       )),
+            // ):
+            FutureBuilder(
+          future: futureGroup.future,
+          builder: (ctx, snapshot) {
+            if (snapshot.data == null) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset(
+                      "assets/images/lf30_editor_jc6n8oqe.json",
+                      repeat: true,
+                      height: 150.h,
+                      width: 150.w,
                     ),
-                  ],
+                  ),
+                ],
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    '${snapshot.error} occured',
+                    style: TextStyle(fontSize: 18.sm),
+                  ),
                 );
               }
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      '${snapshot.error} occured',
-                      style: TextStyle(fontSize: 18.sm),
-                    ),
-                  );
-                }
-              }
-              return _buildBody(
-                context,
-              );
-            },
-          ),
+            }
+            return _buildBody(
+              context,
+            );
+          },
         ),
       ),
     );

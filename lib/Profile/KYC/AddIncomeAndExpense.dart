@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/ThankYouPage.dart';
 import 'package:piadvisory/Profile/KYC/KYCthankyou.dart';
@@ -157,7 +158,8 @@ class _AddIncomeAndExpenseDetailsState
                     "Income - Salary, Business, Post office MIS, Pension, Others",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  CustomTextFields(
+                  CustomTextFieldsIncomeExpense(
+                    txtinptype: TextInputType.text,
                     hint: "Enter Details",
                     controller: income,
                     errortext: "Enter Income",
@@ -175,7 +177,8 @@ class _AddIncomeAndExpenseDetailsState
                     "Expenses - Rent, Medical, Household exp, Vacations, Parties",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  CustomTextFields(
+                  CustomTextFieldsIncomeExpense(
+                    txtinptype: TextInputType.text,
                     hint: "Enter Details",
                     controller: expense,
                     errortext: "Enter Expenses",
@@ -204,7 +207,8 @@ class _AddIncomeAndExpenseDetailsState
                     "Assets - Equity, Debt, Gold, Liquid invest., Real estate (self-occupied/rented)",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  CustomTextFields(
+                  CustomTextFieldsIncomeExpense(
+                    txtinptype: TextInputType.text,
                     hint: "Enter Details",
                     controller: assets,
                     errortext: "Enter Assets",
@@ -222,7 +226,8 @@ class _AddIncomeAndExpenseDetailsState
                     "Liabilities - Housing, Credit card, All types of Loans",
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  CustomTextFields(
+                  CustomTextFieldsIncomeExpense(
+                    txtinptype: TextInputType.text,
                     hint: "Enter Details",
                     controller: liabilities,
                     errortext: "Enter Liabilities",
@@ -479,3 +484,78 @@ class _AddIncomeAndExpenseDetailsState
     );
   }
 }
+
+
+class CustomTextFieldsIncomeExpense extends StatelessWidget {
+  const CustomTextFieldsIncomeExpense({
+    Key? key,
+    this.controller,
+    this.hint,
+    this.errortext,
+    this.ontap,
+    this.limitlength,
+    this.maxlength,
+    this.onchanged,
+    this.txtinptype,
+    this.sizefactor,
+    this.validator,
+    this.inputFormatters,
+    this.readonly,
+  }) : super(key: key);
+
+  final TextEditingController? controller;
+  final String? hint;
+  final String? errortext;
+  final Function(String)? ontap;
+  final int? limitlength;
+  final int? maxlength;
+  final Function(String)? onchanged;
+  final TextInputType? txtinptype;
+  final double? sizefactor;
+  final dynamic validator;
+  final dynamic inputFormatters;
+  final bool? readonly;
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      readOnly: readonly ?? false,
+      keyboardType: txtinptype ?? TextInputType.text,
+      maxLength: maxlength,
+      cursorColor: Colors.grey,
+      style: TextStyle(
+        //color: Colors.grey,
+        fontFamily: 'Product Sans',
+        fontSize: sizefactor ?? 16.sm,
+        fontWeight: FontWeight.w400,
+      ),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle:
+            //Theme.of(context).textTheme.headline2,
+            blackStyle(context).copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Get.isDarkMode
+                    ? Colors.white
+                    : Color(0xFF303030).withOpacity(0.3)),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(width: 1, color: Color(0xFF303030))),
+      ),
+      validator: validator,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(limitlength ?? 20),
+        FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+      ],
+      onSaved: (value) {
+        ontap?.call;
+      },
+      onChanged: (value) {
+        onchanged?.call(value);
+      },
+    );
+  }
+}
+

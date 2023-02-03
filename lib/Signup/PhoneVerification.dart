@@ -270,6 +270,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                         ),
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(10),
+                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                         ],
                         // onFieldSubmitted: (value) {
                         //   setState(() {
@@ -396,6 +397,9 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                   return null;
                 },
                 keyboardType: TextInputType.number,
+                inputFormatters: [
+                 FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 length: 4,
                 obscureText: false,

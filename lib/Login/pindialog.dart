@@ -858,19 +858,27 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
               errorStyle: const TextStyle(
                 fontSize: 16.0,
               ),
-              // suffixIcon: GestureDetector(
-              //   onTap: () {
-              //     UploadPinData();
-              //   },
-              //   child: Container(
-              //     padding: EdgeInsets.only(right: 25),
-              //     width: 10,
-              //     height: 10,
-              //     child: SvgPicture.asset(
-              //       'assets/images/nextbuttonicon.svg',
-              //     ),
-              //   ),
-              // ),
+
+    
+              maxLength: 4,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                 FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (val) {
+                if (val == null || val.isEmpty) {
+                  return 'Pin is Empty';
+                } else {
+                  return null;
+                }
+              },
+              //onEditingComplete:() => UploadPinData(),
+              //onFieldSubmitted:(value) => UploadPinData(),
+            ),
+            SizedBox(
+              height: 22,
+
             ),
 
             maxLength: 4,

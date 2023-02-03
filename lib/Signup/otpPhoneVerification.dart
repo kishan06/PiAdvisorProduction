@@ -21,6 +21,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:timer_button/timer_button.dart';
 import '../Common/app_bar.dart';
 import '../Utils/textStyles.dart';
 
@@ -37,6 +38,8 @@ class _otpPhoneVerificationState extends State<otpPhoneVerification> {
   TextEditingController? pincode = TextEditingController();
 
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
+
+  bool _sendOTPclicked = false;
 
   String? num;
   void _validateData() {
@@ -176,6 +179,9 @@ class _otpPhoneVerificationState extends State<otpPhoneVerification> {
                     return null;
                   },
                   keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                  ],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   length: 4,
                   obscureText: false,
@@ -227,21 +233,76 @@ class _otpPhoneVerificationState extends State<otpPhoneVerification> {
                     SizedBox(
                       width: 5,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        pincode!.clear();
-                        Map<String, dynamic> updata2 = {"mob_number": num};
-                        // SendOtp().sendotp(updata);
-                        SendOtp().SendOtpExotel(updata2);
-                        Flushbar(
-                          message: "Otp has been sent successfully",
-                          duration: const Duration(seconds: 3),
-                        ).show(context);
-                      },
-                      child: Text("Resend",
-                          style: blackStyle(context)
-                              .copyWith(color: Color.fromRGBO(218, 6, 0, 1))),
-                    )
+                    !_sendOTPclicked
+                        ? TextButton(
+                            style: TextButton.styleFrom(
+                                backgroundColor: Colors.white
+                                 //Color(0xFFF78104)
+                                 ),
+                            onPressed: () {
+                              setState(() {
+                                _sendOTPclicked = true;
+                              });
+                              pincode!.clear();
+                              Map<String, dynamic> updata2 = {
+                                "mob_number": num
+                              };
+                              // SendOtp().sendotp(updata);
+                              SendOtp().SendOtpExotel(updata2);
+                              Flushbar(
+                                message: "Otp has been sent successfully",
+                                duration: const Duration(seconds: 3),
+                              ).show(context);
+                            },
+                            child: Text(
+                              "Resend",
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.red),
+                            ),
+                          )
+                        : TimerButton(
+                            disabledTextStyle: TextStyle(color: Colors.white),
+                            activeTextStyle: TextStyle(color: Colors.red),
+                            buttonType: ButtonType.TextButton,
+                            label: "Resend",
+                            timeOutInSeconds: 60,
+                            //mobile.text.isEmpty ?  1 : 60,
+                            onPressed: () {
+                              setState(() {
+                                _sendOTPclicked = true;
+                              });
+                              pincode!.clear();
+                              Map<String, dynamic> updata2 = {
+                                "mob_number": num
+                              };
+                              // SendOtp().sendotp(updata);
+                              SendOtp().SendOtpExotel(updata2);
+                              Flushbar(
+                                message: "Otp has been sent successfully",
+                                duration: const Duration(seconds: 3),
+                              ).show(context);
+                            },
+                            disabledColor: Colors.grey,
+                            color: Colors.white,
+                            // Color(0xFFF78104),
+                          ),
+                    // GestureDetector(
+                    //     onTap: () {
+                    //       pincode!.clear();
+                    //       Map<String, dynamic> updata2 = {
+                    //         "mob_number": num
+                    //       };
+                    //       // SendOtp().sendotp(updata);
+                    //       SendOtp().SendOtpExotel(updata2);
+                    //       Flushbar(
+                    //         message: "Otp has been sent successfully",
+                    //         duration: const Duration(seconds: 3),
+                    //       ).show(context);
+                    //     },
+                    //     child: Text("Resend",
+                    //         style: blackStyle(context).copyWith(
+                    //             color: Color.fromRGBO(218, 6, 0, 1))),
+                    //   )
                   ],
                 ),
                 SizedBox(

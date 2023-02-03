@@ -12,6 +12,7 @@ import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
 import 'package:piadvisory/HomePage/Stock/stock.dart';
 import 'package:piadvisory/Portfolio/PortfolioMainUI.dart';
 import 'package:piadvisory/Profile/Assets/Assets.dart';
+import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
 import 'package:piadvisory/Profile/BankDetails.dart';
 import 'package:piadvisory/Profile/BankdetailsRepository/storeBankdetails.dart';
 import 'package:piadvisory/Profile/CustomRiskAssessment.dart';
@@ -118,6 +119,7 @@ class _ProfileMainState extends State<ProfileMain> {
       getRiskQuestions().getAnswers(),
       Storegoalsdetails().checkGoals(),
       StorebasickycuserDetails().getBasicKycDetails(),
+      StoreAssetsform().getAssetsMF(),
     ]);
     setState(() {});
   }
@@ -385,45 +387,45 @@ class _ProfileMainState extends State<ProfileMain> {
           const Divider(
             thickness: 1,
           ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
-          // CustomListTiles(
-          //   showTrailingText: false,
-          //   sizefactor: 20,
-          //   isimage: false,
-          //   isupdate: false,
-          //   leadingimage: "assets/images/Group 12.svg",
-          //   title: "My Assets",
-          //   ontap: () {
-          //      Navigator.push(context,
-          //         MaterialPageRoute(builder: (context) => const Assets()));
-          //   },
-          // ),
-          // const Divider(
-          //   thickness: 1,
-          // ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
-          //  CustomListTiles(
-          //   showTrailingText: false,
-          //   sizefactor: 20,
-          //   isimage: false,
-          //   isupdate: false,
-          //   leadingimage: "assets/images/Group 11.svg",
-          //   title: "My Liabilities",
-          //   ontap: () {
-          //      Navigator.push(context,
-          //         MaterialPageRoute(builder: (context) => const Liabilities()));
-          //   },
-          // ),
-          // const Divider(
-          //   thickness: 1,
-          // ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomListTiles(
+            showTrailingText: false,
+            sizefactor: 20,
+            isimage: false,
+            isupdate: false,
+            leadingimage: "assets/images/Group 12.svg",
+            title: "My Assets",
+            ontap: () {
+               Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Assets()));
+            },
+          ),
+          const Divider(
+            thickness: 1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+           CustomListTiles(
+            showTrailingText: false,
+            sizefactor: 20,
+            isimage: false,
+            isupdate: false,
+            leadingimage: "assets/images/Group 11.svg",
+            title: "My Liabilities",
+            ontap: () {
+               Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Liabilities()));
+            },
+          ),
+          const Divider(
+            thickness: 1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
         ],
       ),
     ));

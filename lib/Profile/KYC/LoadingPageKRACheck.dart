@@ -61,7 +61,7 @@ class _LoadingPageKRACheckState extends State<LoadingPageKRACheck> {
               );
             }
             if (kraStatus!['status'] == "KRA Verified") {
-              Future.microtask(() => Get.offAllNamed('/digi_locker'));
+              Future.microtask(() => Get.offAllNamed('/digi_locker', arguments: {"kra_ckyc_verified": true}));
             } else {
               Future.microtask(() => Get.offAllNamed('/loading_ckyc'));
             }

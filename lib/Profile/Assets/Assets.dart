@@ -10,7 +10,10 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/app_bar.dart';
+import 'package:piadvisory/HomePage/Stock/MutualFundsTab.dart';
+import 'package:piadvisory/Profile/Assets/AssetsRepository/Model/UserFixdeposit.dart';
 import 'package:piadvisory/Profile/Assets/AssetsRepository/Model/UserMutualfund.dart';
+import 'package:piadvisory/Profile/Assets/AssetsRepository/Model/UserRealestate.dart';
 import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
 import 'package:piadvisory/Profile/Assets/Fixdeposit.dart';
 import 'package:piadvisory/Profile/Assets/Mutualfund.dart';
@@ -22,6 +25,8 @@ import 'package:piadvisory/Utils/textStyles.dart';
 import '/Utils/Dialogs.dart';
 
 List<User>? globalMutualfund = [];
+List<Userfd>? globalFixdeposit = [];
+List<UserRe>? globalRealestate = [];
 
 class Assets extends StatefulWidget {
   const Assets({super.key});
@@ -32,20 +37,48 @@ class Assets extends StatefulWidget {
 
 class _AssetsState extends State<Assets> {
   List<User>? _Mutualfund = [];
+  List<Userfd>? _Fixdeposit = [];
+  List<UserRe>? _Realestate = [];
 
-  //FutureGroup futureGroup = FutureGroup();
+  FutureGroup futureGroup = FutureGroup();
 
   @override
   void initState() {
-    //futureGroup.add(StoreAssetsform().getAssetsMF());
-
-    Timer(Duration(seconds: 2), () {
-      setState(() {});
-    });
+    futureGroup.add(StoreAssetsform().getAssetsMF());
+    futureGroup.add(StoreAssetsform().getAssetsFD());
+    futureGroup.add(StoreAssetsform().getAssetsRE());
+    futureGroup.close();
     super.initState();
   }
 
-  void deleteMutualfunds(int goalId) async { // need to change this code for deleteMutual funds
+  void deleteMutualfunds(int goalId) async {
+    // need to change this code for deleteMutual funds
+    Map<String, dynamic> updata = {
+      "goal_id": goalId,
+    };
+    print("updats is $updata");
+    final data = await StoreAssetsform().postStoreAssetsformMF(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+    } else {
+      return utils.showToast(data.message);
+    }
+  }
+
+  void deleteFixdeposit(int goalId) async {
+    // need to change this code for deletefix deposit
+    Map<String, dynamic> updata = {
+      "goal_id": goalId,
+    };
+    print("updats is $updata");
+    final data = await StoreAssetsform().postStoreAssetsformFD(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+    } else {
+      return utils.showToast(data.message);
+    }
+  }
+
+  void deleteRealestate(int goalId) async {
+    // need to change this code for deleteRealestate
     Map<String, dynamic> updata = {
       "goal_id": goalId,
     };
@@ -59,248 +92,89 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(
-    BuildContext context,) {
+    BuildContext context,
+  ) {
     return Scaffold(
       appBar: CustomAppBar(
         titleTxt: "My Assets",
         bottomtext: false,
       ),
-      body: 
-       Card(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: SingleChildScrollView(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // SizedBox(
-            //   height: 12.h,
-            // ),
-            // Text(
-            //   "My Total Invstments ₹0.00",
-            //   style: TextStyle(
-            //       color: Colors.black,
-            //       fontSize: 15,
-            //       fontWeight: FontWeight.w600),
-            // ),
-            SizedBox(
-              height: 12.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    IconButton(
-                      icon: SvgPicture.asset("assets/images/Group 9.svg"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Mutualfund()));
-                      },
-                    ),
-                    // SizedBox(
-                    //   height: 2.h,
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Mutualfund()));
-                        },
-                        child: Text(
-                          "Mutual Fund",
-                          style: TextStyle(fontSize: 13, color: Colors.black),
-                        ),
-                      ),
-                    ),
-                    // SizedBox(
-                    //   height: 6.h,
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 12),
-                    //   child: Text("₹99.k",
-                    //   style: TextStyle(
-                    //     fontSize: 13,
-                    //     color: Colors.black
-                    //   ),
-                    //   ),
-                    // )
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    IconButton(
-                     icon: SvgPicture.asset("assets/images/Group 10.svg"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FixDeposit()));
-                      },
-                    ),
-                    // SizedBox(
-                    //   height: 2.h,
-                    // ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FixDeposit()));
-                      },
-                      child: Text(
-                        "Fix Deposit",
-                        style: TextStyle(fontSize: 13, color: Colors.black),
-                      ),
-                    ),
-                    // SizedBox(
-                    //   height: 6.h,
-                    // ),
-                    // Text("₹99.k",
-                    // style: TextStyle(
-                    //   fontSize: 13,
-                    //   color: Colors.black
-                    // ),
-                    // )
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    IconButton(
-                     icon: SvgPicture.asset("assets/images/Group 8.svg"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RealEstate()));
-                      },
-                    ),
-                    // SizedBox(
-                    //   height: 2.h,
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RealEstate()));
-                        },
-                        child: Text(
-                          "Real Estate",
-                          style: TextStyle(fontSize: 13, color: Colors.black),
-                        ),
-                      ),
-                    ),
-                    // SizedBox(
-                    //   height: 6.h,
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(right: 12),
-                    //   child: Text("₹99.k",
-                    //   style: TextStyle(
-                    //     fontSize: 13,
-                    //     color: Colors.black
-                    //   ),
-                    //   ),
-                    // )
-                  ],
+      body: FutureBuilder(
+        future: futureGroup.future,
+        //StoreAssetsform().getAssetsMF(),
+        builder: (ctx, snapshot) {
+          if (snapshot.data == null) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: Lottie.asset(
+                    "assets/images/lf30_editor_jc6n8oqe.json",
+                    repeat: true,
+                    height: 150,
+                    width: 150,
+                  ),
                 ),
               ],
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            // Column(
-            //   children: [
-            //     Container(
-            //       color: Colors.red,
-            //     )
-            //   ],
-            // )
-          ],
-        ),
-        ),
-      ),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            _Mutualfund = userMutualfund.user!;
+            globalMutualfund = _Mutualfund;
 
-      // FutureBuilder(
-      //   future: StoreAssetsform().getAssetsMF(),
-      //   //futureGroup.future,
-      //   builder: (ctx, snapshot) {
-      //     if (snapshot.data == null) {
-      //       return Column(
-      //         mainAxisAlignment: MainAxisAlignment.center,
-      //         crossAxisAlignment: CrossAxisAlignment.center,
-      //         children: [
-      //           Center(
-      //             child: Lottie.asset(
-      //               "assets/images/lf30_editor_jc6n8oqe.json",
-      //               repeat: true,
-      //               height: 150,
-      //               width: 150,
-      //             ),
-      //           ),
-      //         ],
-      //       );
-      //     }
-      //     if (snapshot.connectionState == ConnectionState.done) {
-      //       _Mutualfund = userMutualfund.user!;
-      //      globalMutualfund = _Mutualfund;
-      //       if (snapshot.hasError) {
-      //         return Center(
-      //           child: Text(
-      //             '${snapshot.error} occured',
-      //             style: TextStyle(fontSize: 18),
-      //           ),
-      //         );
-      //       }
-      //     }
-      //    if (_Mutualfund != null && _Mutualfund!.isEmpty) {
-      //       return _buildNodataBody(context);
-      //     } else {
-      //       return _buildBody(context, _Mutualfund);
-      //     }
-      //   },
-      //   ),
+            _Fixdeposit = userFixdeposit.userfd!;
+            globalFixdeposit = _Fixdeposit;
+
+            _Realestate = userRealestate.userRe!;
+            globalRealestate = _Realestate;
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  '${snapshot.error} occured',
+                  style: TextStyle(fontSize: 18),
+                ),
+              );
+            }
+          }
+          //if (_Mutualfund != null && _Mutualfund!.isEmpty) {
+          //  return _buildNodataBody(context);
+          //  } else {
+          return _buildBody(context, _Mutualfund, _Fixdeposit, _Realestate);
+          // }
+        },
+      ),
     );
   }
 
-  // Widget slideRightBackground() {
-  //   return Container(
-  //     color: Colors.red,
-  //     child: Align(
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.end,
-  //         children: <Widget>[
-  //           Icon(
-  //             Icons.close_outlined,
-  //             color: Colors.white,
-  //           ),
-  //           Text(
-  //             "Remove",
-  //             style: TextStyle(
-  //               color: Colors.white,
-  //               fontWeight: FontWeight.w700,
-  //             ),
-  //             textAlign: TextAlign.left,
-  //           ),
-  //           SizedBox(
-  //             width: 20,
-  //           ),
-  //         ],
-  //       ),
-  //       alignment: Alignment.centerLeft,
-  //     ),
-  //   );
-  // }
+  Widget slideRightBackground() {
+    return Container(
+      color: Colors.red,
+      child: Align(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Icon(
+              Icons.close_outlined,
+              color: Colors.white,
+            ),
+            Text(
+              "Remove",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              width: 20,
+            ),
+          ],
+        ),
+        alignment: Alignment.centerLeft,
+      ),
+    );
+  }
 
   //   Widget _buildNodataBody(context) {
   //   return SingleChildScrollView(
@@ -354,8 +228,535 @@ class _AssetsState extends State<Assets> {
   //   );
   // }
 
+  Widget _buildBody(context, List<User>? _Mutualfund, List<Userfd>? _Fixdeposit,
+      List<UserRe>? _Realestate) {
+    return Column(
+      children: [
+        Card(
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // SizedBox(
+                //   height: 12.h,
+                // ),
+                // Text(
+                //   "My Total Invstments ₹0.00",
+                //   style: TextStyle(
+                //       color: Colors.black,
+                //       fontSize: 15,
+                //       fontWeight: FontWeight.w600),
+                // ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        IconButton(
+                          icon: SvgPicture.asset("assets/images/Group 9.svg"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Mutualfund()));
+                          },
+                        ),
+                        // SizedBox(
+                        //   height: 2.h,
+                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Mutualfund()));
+                            },
+                            child: Text(
+                              "Mutual Fund",
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        // SizedBox(
+                        //   height: 6.h,
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 12),
+                        //   child: Text("₹99.k",
+                        //   style: TextStyle(
+                        //     fontSize: 13,
+                        //     color: Colors.black
+                        //   ),
+                        //   ),
+                        // )
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        IconButton(
+                          icon: SvgPicture.asset("assets/images/Group 10.svg"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FixDeposit()));
+                          },
+                        ),
+                        // SizedBox(
+                        //   height: 2.h,
+                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FixDeposit()));
+                          },
+                          child: Text(
+                            "Fix Deposit",
+                            style: TextStyle(fontSize: 13, color: Colors.black),
+                          ),
+                        ),
+                        // SizedBox(
+                        //   height: 6.h,
+                        // ),
+                        // Text("₹99.k",
+                        // style: TextStyle(
+                        //   fontSize: 13,
+                        //   color: Colors.black
+                        // ),
+                        // )
+                      ],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        IconButton(
+                          icon: SvgPicture.asset("assets/images/Group 8.svg"),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RealEstate()));
+                          },
+                        ),
+                        // SizedBox(
+                        //   height: 2.h,
+                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RealEstate()));
+                            },
+                            child: Text(
+                              "Real Estate",
+                              style:
+                                  TextStyle(fontSize: 13, color: Colors.black),
+                            ),
+                          ),
+                        ),
+                        // SizedBox(
+                        //   height: 6.h,
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(right: 12),
+                        //   child: Text("₹99.k",
+                        //   style: TextStyle(
+                        //     fontSize: 13,
+                        //     color: Colors.black
+                        //   ),
+                        //   ),
+                        // )
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Card(
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Mutual Funds",
+                          style: blackStyle(context).copyWith(
+                              fontWeight: FontWeight.w600,
+                              color:
+                                  Get.isDarkMode ? Colors.white : Colors.black),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                      ],
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _Mutualfund!.length,
+                        itemBuilder: (context, index) {
+                          return Dismissible(
+                            background: slideRightBackground(),
+                            key: UniqueKey(),
+                            onDismissed: (direction) {
+                              setState(() {
+                                deleteMutualfunds(_Mutualfund[index].id!);
+                                _Mutualfund.removeAt(index);
+                              });
+                              Flushbar(
+                                message: "Mutual Funds deleted",
+                                duration: Duration(seconds: 3),
+                              ).show(context);
+                            },
+                            child: Card(
+                              elevation: 2,
+                              child: ListTile(
+                                title: Text('${_Mutualfund[index].schemeName}'),
+                                subtitle: Text(
+                                    '${_Mutualfund[index].dateOfInvestment.toString()}'),
+                                trailing: PopupMenuButton(
+                                    offset: Offset(0, 50),
+                                    color: Color(0xFF6B6B6B),
+                                    tooltip: '',
+                                    icon: Icon(Icons.more_vert),
+                                    onSelected: (value) {
+                                      if (value == '/delete') {
+                                        setState(() {
+                                          deleteMutualfunds(
+                                              _Mutualfund[index].id!);
+                                          _Mutualfund.removeAt(index);
+                                          Flushbar(
+                                            message: "Mutual Funds deleted",
+                                            duration: Duration(seconds: 3),
+                                          ).show(context);
+                                        });
+                                      } else if (value == "/edit") {
+                                        Get.toNamed("/editMutualfund",
+                                            arguments: {
+                                              "id": _Mutualfund[index].id,
+                                              "scheme_name":
+                                                  _Mutualfund[index].schemeName,
+                                              "investment_amount":
+                                                  _Mutualfund[index]
+                                                      .investmentAmount,
+                                              "date_of_investment":
+                                                  _Mutualfund[index]
+                                                      .dateOfInvestment,
+                                              "current_value":
+                                                  _Mutualfund[index]
+                                                      .currentValue
+                                            });
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext bc) {
+                                      return [
+                                        PopupMenuItem(
+                                          child: Text(
+                                            "Edit",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          value: '/edit',
+                                        ),
+                                        PopupMenuItem(
+                                          child: Text(
+                                            "Delete",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          value: '/delete',
+                                        )
+                                      ];
+                                    }),
+                              ),
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        Card(
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Fix Deposit",
+                      style: blackStyle(context).copyWith(
+                          fontWeight: FontWeight.w600,
+                          color:
+                              Get.isDarkMode ? Colors.white : Colors.black),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _Fixdeposit!.length,
+                    itemBuilder: (context, index) {
+                      return Dismissible(
+                        background: slideRightBackground(),
+                        key: UniqueKey(),
+                        onDismissed: (direction) {
+                          setState(() {
+                            deleteFixdeposit(_Fixdeposit[index].id!);
+                            _Fixdeposit.removeAt(index);
+                          });
+                          Flushbar(
+                            message: "Fix Deposit deleted",
+                            duration: Duration(seconds: 3),
+                          ).show(context);
+                        },
+                        child: Card(
+                          elevation: 2,
+                          child: ListTile(
+                            title: Text('${_Fixdeposit[index].bankName}'),
+                            subtitle: Text(
+                                '${_Fixdeposit[index].startDate.toString()}'),
+                            trailing: PopupMenuButton(
+                                offset: Offset(0, 50),
+                                color: Color(0xFF6B6B6B),
+                                tooltip: '',
+                                icon: Icon(Icons.more_vert),
+                                onSelected: (value) {
+                                  if (value == '/delete') {
+                                    setState(() {
+                                      deleteFixdeposit(
+                                          _Fixdeposit[index].id!);
+                                      _Fixdeposit.removeAt(index);
+                                      Flushbar(
+                                        message: "Fix Deposit deleted",
+                                        duration: Duration(seconds: 3),
+                                      ).show(context);
+                                    });
+                                  } else if (value == "/edit") {
+                                    Get.toNamed("/editFixdeposit",
+                                        arguments: {
+                                          "id": _Fixdeposit[index].id,
+                                          "bank_name":
+                                              _Fixdeposit[index].bankName,
+                                          "investment_amount":
+                                              _Fixdeposit[index]
+                                                  .investmentAmount,
+                                          "annual_rate":
+                                              _Fixdeposit[index].annualRate,
+                                          "start_date":
+                                              _Fixdeposit[index].startDate,
+                                          "tenure":
+                                              _Fixdeposit[index].tenure,
+                                        });
+                                  }
+                                },
+                                itemBuilder: (BuildContext bc) {
+                                  return [
+                                    PopupMenuItem(
+                                      child: Text(
+                                        "Edit",
+                                        style:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      value: '/edit',
+                                    ),
+                                    PopupMenuItem(
+                                      child: Text(
+                                        "Delete",
+                                        style:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      value: '/delete',
+                                    )
+                                  ];
+                                }),
+                          ),
+                        ),
+                      );
+                    }),
+              ],
+            ),
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Card(
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Real Estate",
+                          style: blackStyle(context).copyWith(
+                              fontWeight: FontWeight.w600,
+                              color:
+                                  Get.isDarkMode ? Colors.white : Colors.black),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                      ],
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _Realestate!.length,
+                        itemBuilder: (context, index) {
+                          return Dismissible(
+                            background: slideRightBackground(),
+                            key: UniqueKey(),
+                            onDismissed: (direction) {
+                              setState(() {
+                                deleteRealestate(_Realestate[index].id!);
+                                _Realestate.removeAt(index);
+                              });
+                              Flushbar(
+                                message: "Real Estate deleted",
+                                duration: Duration(seconds: 3),
+                              ).show(context);
+                            },
+                            child: Card(
+                              elevation: 2,
+                              child: ListTile(
+                                title:
+                                    Text('${_Realestate[index].propertyName}'),
+                                subtitle: Text(
+                                    '${_Realestate[index].dateOfInvestment.toString()}'),
+                                trailing: PopupMenuButton(
+                                    offset: Offset(0, 50),
+                                    color: Color(0xFF6B6B6B),
+                                    tooltip: '',
+                                    icon: Icon(Icons.more_vert),
+                                    onSelected: (value) {
+                                      if (value == '/delete') {
+                                        setState(() {
+                                          deleteRealestate(
+                                              _Realestate[index].id!);
+                                          _Realestate.removeAt(index);
+                                          Flushbar(
+                                            message: "Real Estate deleted",
+                                            duration: Duration(seconds: 3),
+                                          ).show(context);
+                                        });
+                                      } else if (value == "/edit") {
+                                        Get.toNamed("/editRealestate",
+                                            arguments: {
+                                              "id": _Realestate[index].id,
+                                              "property_name":
+                                                  _Realestate[index]
+                                                      .propertyName,
+                                              "invested_value":
+                                                  _Realestate[index]
+                                                      .investedValue,
+                                              "date_of_investment":
+                                                  _Realestate[index]
+                                                      .dateOfInvestment,
+                                              "current_value":
+                                                  _Realestate[index]
+                                                      .currentValue
+                                            });
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext bc) {
+                                      return [
+                                        PopupMenuItem(
+                                          child: Text(
+                                            "Edit",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          value: '/edit',
+                                        ),
+                                        PopupMenuItem(
+                                          child: Text(
+                                            "Delete",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          value: '/delete',
+                                        )
+                                      ];
+                                    }),
+                              ),
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
   // Widget _buildBody(context, List<User>? _Mutualfund) {
-  //   return 
+  //   return
   //  Column(
   //       children: [
   //         Card(
@@ -632,8 +1033,6 @@ class _AssetsState extends State<Assets> {
   //       ],
   //     );
   // }
-
-
 
 //Previous widget for assets do not remove this
 

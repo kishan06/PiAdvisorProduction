@@ -28,7 +28,9 @@ import 'package:piadvisory/Login/forgotPIN2.dart';
 import 'package:piadvisory/Login/pindialog.dart';
 import 'package:piadvisory/PaymentSuccess.dart';
 import 'package:piadvisory/Profile/AddBankDetails.dart';
+import 'package:piadvisory/Profile/Assets/Fixdeposit.dart';
 import 'package:piadvisory/Profile/Assets/Mutualfund.dart';
+import 'package:piadvisory/Profile/Assets/Realestate.dart';
 
 import 'package:piadvisory/Profile/CustomRiskAssessment.dart';
 
@@ -228,6 +230,9 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: '/digi_locker_start', page: () => KYCDigiLocker()),
 
           GetPage(name: '/editMutualfund', page: () => Mutualfund()),
+           GetPage(name: '/editFixdeposit', page: () => FixDeposit()),
+            GetPage(name: '/editRealestate', page: () => RealEstate()),
+          
         ],
       ),
       designSize: Size(390, 844),

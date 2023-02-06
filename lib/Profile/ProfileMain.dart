@@ -120,6 +120,8 @@ class _ProfileMainState extends State<ProfileMain> {
       Storegoalsdetails().checkGoals(),
       StorebasickycuserDetails().getBasicKycDetails(),
       StoreAssetsform().getAssetsMF(),
+      StoreAssetsform().getAssetsFD(),
+      StoreAssetsform().getAssetsRE()
     ]);
     setState(() {});
   }

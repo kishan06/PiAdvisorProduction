@@ -1,53 +1,56 @@
-class UserMutualfund {
-  List<User>? user;
+class UserFixdeposit {
+  List<Userfd>? userfd;
 
-  UserMutualfund({this.user});
+  UserFixdeposit({this.userfd});
 
-  UserMutualfund.fromJson(Map<String, dynamic> json) {
+  UserFixdeposit.fromJson(Map<String, dynamic> json) {
     if (json['user'] != null) {
-      user = <User>[];
+      userfd = <Userfd>[];
       json['user'].forEach((v) {
-        user!.add(new User.fromJson(v));
+        userfd!.add(new Userfd.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.user != null) {
-      data['user'] = this.user!.map((v) => v.toJson()).toList();
+    if (this.userfd != null) {
+      data['user'] = this.userfd!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class User {
+class Userfd {
   int? id;
   int? userId;
-  String? schemeName;
+  String? bankName;
   int? investmentAmount;
-  String? dateOfInvestment;
-  int? currentValue;
+  int? annualRate;
+  String? startDate;
+  String? tenure;
   String? createdAt;
   String? updatedAt;
 
-  User(
+  Userfd(
       {this.id,
       this.userId,
-      this.schemeName,
+      this.bankName,
       this.investmentAmount,
-      this.dateOfInvestment,
-      this.currentValue,
+      this.annualRate,
+      this.startDate,
+      this.tenure,
       this.createdAt,
       this.updatedAt});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Userfd.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    schemeName = json['scheme_name'];
+    bankName = json['bank_name'];
     investmentAmount = json['investment_amount'];
-    dateOfInvestment = json['date_of_investment'];
-    currentValue = json['current_value'];
+    annualRate = json['annual_rate'];
+    startDate = json['start_date'];
+    tenure = json['tenure'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -56,10 +59,11 @@ class User {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
-    data['scheme_name'] = this.schemeName;
+    data['bank_name'] = this.bankName;
     data['investment_amount'] = this.investmentAmount;
-    data['date_of_investment'] = this.dateOfInvestment;
-    data['current_value'] = this.currentValue;
+    data['annual_rate'] = this.annualRate;
+    data['start_date'] = this.startDate;
+    data['tenure'] = this.tenure;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

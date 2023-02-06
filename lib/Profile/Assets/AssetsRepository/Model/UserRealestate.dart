@@ -1,51 +1,51 @@
-class UserMutualfund {
-  List<User>? user;
+class UserRealestate {
+  List<UserRe>? userRe;
 
-  UserMutualfund({this.user});
+  UserRealestate({this.userRe});
 
-  UserMutualfund.fromJson(Map<String, dynamic> json) {
+  UserRealestate.fromJson(Map<String, dynamic> json) {
     if (json['user'] != null) {
-      user = <User>[];
+      userRe = <UserRe>[];
       json['user'].forEach((v) {
-        user!.add(new User.fromJson(v));
+        userRe!.add(new UserRe.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.user != null) {
-      data['user'] = this.user!.map((v) => v.toJson()).toList();
+    if (this.userRe != null) {
+      data['user'] = this.userRe!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class User {
+class UserRe {
   int? id;
   int? userId;
-  String? schemeName;
-  int? investmentAmount;
+  String? propertyName;
+  int? investedValue;
   String? dateOfInvestment;
   int? currentValue;
   String? createdAt;
   String? updatedAt;
 
-  User(
+  UserRe(
       {this.id,
       this.userId,
-      this.schemeName,
-      this.investmentAmount,
+      this.propertyName,
+      this.investedValue,
       this.dateOfInvestment,
       this.currentValue,
       this.createdAt,
       this.updatedAt});
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserRe.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    schemeName = json['scheme_name'];
-    investmentAmount = json['investment_amount'];
+    propertyName = json['property_name'];
+    investedValue = json['invested_value'];
     dateOfInvestment = json['date_of_investment'];
     currentValue = json['current_value'];
     createdAt = json['created_at'];
@@ -56,8 +56,8 @@ class User {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
-    data['scheme_name'] = this.schemeName;
-    data['investment_amount'] = this.investmentAmount;
+    data['property_name'] = this.propertyName;
+    data['invested_value'] = this.investedValue;
     data['date_of_investment'] = this.dateOfInvestment;
     data['current_value'] = this.currentValue;
     data['created_at'] = this.createdAt;

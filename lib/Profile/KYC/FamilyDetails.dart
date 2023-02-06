@@ -188,8 +188,44 @@ class _FamilyDetailsState extends State<FamilyDetails> {
         throw new FormatException();
       },
       child: Scaffold(
-          appBar:
-              const CustomAppBar(titleTxt: "Family Details", bottomtext: false),
+          appBar: AppBar(
+            flexibleSpace: Container(
+              height: 50,
+              decoration: const BoxDecoration(),
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            // centerTitle: true,
+            title: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Text(
+                "Family Details",
+                softWrap: true,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    //  fontFamily: 'Helvetica',
+                    fontSize: 20.sm,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
+            ),
+            leading: IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => const ProfileMain())));
+              },
+              icon: Icon(
+                Icons.arrow_back,
+              ),
+              iconSize: 22.sm,
+              color: Color(0xFF6B6B6B),
+            ),
+          ),
+          //const CustomAppBar(titleTxt: "Family Details", bottomtext: false),
           body: _buildBody(context)
           // FutureBuilder(
           //   future: myFuture,
@@ -428,7 +464,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
             CustomTextFields(
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please Enter Mother Name";
+                  return "Please Enter Husband/Wife Name";
                 } else
                   return null;
               },

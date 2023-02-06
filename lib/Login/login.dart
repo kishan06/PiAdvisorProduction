@@ -6,7 +6,9 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:piadvisory/Common/ConnectivityService.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
+import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/Common/VideoYoutube.dart';
 import 'package:piadvisory/Login/Repository/LoginMethod.dart';
 import 'package:piadvisory/Login/Repository/UserVerified.dart';
@@ -27,6 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Common/CustomTextFormFields.dart';
@@ -339,11 +342,17 @@ class _LoginState extends State<Login> {
       isSignInBtnLoaderVisible = false;
     });
   }
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     ImageProvider logo = AssetImage("assets/images/loginlogo.png");
-    return WillPopScope(
+    return 
+    // StreamProvider<ConnectivityStatus>.value(
+    //   initialData: ConnectivityStatus.Cellular,
+    //   value: ConnectivityService().connectionStatusController.stream,
+    //   child: 
+      WillPopScope(
       onWillPop: () async {
         final difference = DateTime.now().difference(timebackPressed);
         final isExitWarning = difference >= Duration(seconds: 2);
@@ -609,8 +618,10 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+   // );
   }
 }
+   
 
 class CustomTextFormFieldPhone extends StatelessWidget {
   const CustomTextFormFieldPhone({
@@ -698,6 +709,8 @@ class CustomTextFormFieldPhone extends StatelessWidget {
       },
       inputFormatters: [
         LengthLimitingTextInputFormatter(limitlength ?? 20),
+
+        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
         // FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
       ],
       onSaved: (value) {

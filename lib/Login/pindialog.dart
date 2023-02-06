@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
+import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/HomePage/Stock/MutualFundsTab.dart';
 import 'package:piadvisory/Login/Repository/LoginMethod.dart';
 
@@ -790,6 +791,8 @@ class _PinDialogState extends State<PinDialog> {
     );
   }
 
+final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -855,23 +858,34 @@ class _PinDialogState extends State<PinDialog> {
               errorStyle: const TextStyle(
                 fontSize: 16.0,
               ),
-              // suffixIcon: GestureDetector(
-              //   onTap: () {
-              //     UploadPinData();
-              //   },
-              //   child: Container(
-              //     padding: EdgeInsets.only(right: 25),
-              //     width: 10,
-              //     height: 10,
-              //     child: SvgPicture.asset(
-              //       'assets/images/nextbuttonicon.svg',
-              //     ),
-              //   ),
-              // ),
+
+    
+              maxLength: 4,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                 FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (val) {
+                if (val == null || val.isEmpty) {
+                  return 'Pin is Empty';
+                } else {
+                  return null;
+                }
+              },
+              //onEditingComplete:() => UploadPinData(),
+              //onFieldSubmitted:(value) => UploadPinData(),
+            ),
+            SizedBox(
+              height: 22,
+
             ),
 
             maxLength: 4,
             keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+            ],
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (val) {
               if (val == null || val.isEmpty) {

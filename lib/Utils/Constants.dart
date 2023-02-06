@@ -126,4 +126,12 @@ class ApiConstant {
 
   static const String gettellusabout = base + 'api/get_ur_about_yourself_data';
   static const String pirecommeded = base + 'api/get_manage_advisors';
+
+  static const String postAssetsformMF = base + 'api/user_mutual_fund_detail';
+  static const String postAssetsformFD = base + 'api/user_fix_deposit';
+  static const String postAssetsformRE = base + 'api/user_real_estate';
+
+  static const String postLiabiltiesformHL = base + 'api/user_home_loan_details';
+  static const String postLiabiltiesformPL = base + 'api/user_personal_loan_details';
+  static const String postLiabiltiesformCL = base + 'api/user_car_loan_details';
 }

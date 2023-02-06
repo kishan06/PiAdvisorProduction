@@ -226,6 +226,9 @@ class _AddGoalsState extends State<AddGoals> {
                                 : const Color(0xFF6B6B6B),
                             fontSize: 14),
                       ),
+                      inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                          ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please Enter Amount";

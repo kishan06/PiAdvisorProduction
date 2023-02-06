@@ -12,6 +12,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
+import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/Common/VideoYoutube.dart';
 //import 'package:piadvisory/Common/network.dart';
 import 'package:piadvisory/HomePage/Blog%20Repository/blogrepo.dart';
@@ -794,17 +795,18 @@ class _HomePageState extends State<HomePage> {
     ));
   }
 
+final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    return  WillPopScope(
       //onWillPop: () => Future.value(false),
       onWillPop: () async {
         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
         final difference = DateTime.now().difference(timebackPressed);
         final isExitWarning = difference >= Duration(seconds: 2);
-
+    
         timebackPressed = DateTime.now();
-
+    
         if (isExitWarning) {
           final message = "Press back again to exit";
           print("reached here");
@@ -812,11 +814,11 @@ class _HomePageState extends State<HomePage> {
             msg: message,
             fontSize: 18,
           );
-
+    
           return false;
         } else {
           Fluttertoast.cancel();
-
+    
           SystemNavigator.pop();
           return true;
         }
@@ -843,7 +845,7 @@ class _HomePageState extends State<HomePage> {
                 tooltip: 'Subscribe',
                 elevation: 2.0,
                 child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",               
+                  "assets/images/product sans logo wh new.svg",
                   color: Colors.white,
                   fit: BoxFit.contain,
                   width: 28,
@@ -907,7 +909,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
+          selectedLabelStyle: TextStyle(color:  Color(0xFFF78104)),
           unselectedLabelStyle: TextStyle(color: Colors.grey),
           unselectedIconTheme: IconThemeData(color: Colors.grey),
           items: [

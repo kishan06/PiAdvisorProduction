@@ -169,6 +169,7 @@ class _SecurityFirstState extends State<SecurityFirst> {
                                   ),
                                   inputFormatters: [
                                     LengthLimitingTextInputFormatter(4),
+                                     FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                                   ],
                                   validator: (val) {
                                     if (val == null || val.isEmpty) {
@@ -218,6 +219,7 @@ class _SecurityFirstState extends State<SecurityFirst> {
                                     ),
                                     inputFormatters: [
                                       LengthLimitingTextInputFormatter(4),
+                                       FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                                     ],
                                     validator: (val) {
                                       if (val == null || val.isEmpty) {

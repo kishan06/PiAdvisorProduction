@@ -204,6 +204,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                                   ),
                                   inputFormatters: [
                                     LengthLimitingTextInputFormatter(4),
+                                    FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                                   ],
                                   validator: (val) {
                                     if (val == null || val.isEmpty) {
@@ -251,6 +252,7 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                                     ),
                                     inputFormatters: [
                                       LengthLimitingTextInputFormatter(4),
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                                     ],
                                     validator: (val) {
                                       if (val == null || val.isEmpty) {
@@ -587,6 +589,9 @@ class _ForgotPIN2 extends State<ForgotPIN2> {
                     return null;
                   },
               keyboardType: TextInputType.number,
+               inputFormatters: [
+                 FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+              ],
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               length: 4,
               obscureText: false,

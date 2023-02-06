@@ -104,7 +104,7 @@ class _StocksWatchlistState extends State<StocksWatchlist> {
               ),
               Text(
                 textAlign: TextAlign.left,
-                "Price            ",
+                "Price   ",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,

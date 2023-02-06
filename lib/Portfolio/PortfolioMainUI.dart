@@ -267,7 +267,7 @@ class _PortfolioMainUIState extends State<PortfolioMainUI> {
           ],
         ),
         body: TabBarView(
-          physics: BouncingScrollPhysics(),
+          physics: ScrollPhysics(),
           dragStartBehavior: DragStartBehavior.down,
           children: [
             //net worth

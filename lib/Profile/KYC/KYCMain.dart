@@ -516,13 +516,14 @@ class _KYCMainState extends State<KYCMain> {
             ),
             Text(
               "Age*",
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               // blackStyle(context).copyWith(
               //   fontSize: 16.sp,
               //   fontWeight: FontWeight.w600,
               // ),
             ),
             CustomTextFields(
+           
               textCapitalization: TextCapitalization.none,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -917,6 +918,7 @@ class CustomTextFields extends StatelessWidget {
       this.txtinptype,
       this.inputFormatters,
       this.textCapitalization,
+      this.readOnly,
       this.validator})
       : super(key: key);
 
@@ -931,9 +933,11 @@ class CustomTextFields extends StatelessWidget {
   final dynamic inputFormatters;
   final dynamic textCapitalization;
   final dynamic validator;
+  final bool? readOnly;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly ?? false,
       textCapitalization: textCapitalization,
       keyboardType: txtinptype ?? TextInputType.text,
       maxLength: maxlength,

@@ -60,6 +60,12 @@ class _KYCMainState extends State<KYCMain> {
     return !phoneNumberExpression.hasMatch(phoneNumber);
   }
 
+   bool isValidPanNumber(String phoneNumber) {
+    final RegExp panNumberExpression = RegExp(r"^0{10}$");
+
+    return !panNumberExpression.hasMatch(phoneNumber);
+  }
+
   prefix.Dio dio = new prefix.Dio();
 
   Future<ResponseData> getKYCDetails() async {
@@ -449,6 +455,8 @@ class _KYCMainState extends State<KYCMain> {
                   return "Please Enter PAN Number in Capital";
                 } else if (value.length != 10) {
                   return "Please Enter Valid PAN Number";
+                } else if (!isValidPanNumber(value)) {
+                return 'Pan number cannot contain 10 zeros';
                 }
                 return null;
               },

@@ -160,6 +160,12 @@ class _PersonalProfileState extends State<PersonalProfile> {
     });
   }
 
+ bool isValidPhoneNumber(String phoneNumber) {
+  final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
+  
+  return !phoneNumberExpression.hasMatch(phoneNumber);
+}
+
   Future _showOccupationPicker() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
@@ -358,7 +364,9 @@ class _PersonalProfileState extends State<PersonalProfile> {
                   return "Please Enter Mobile Number";
                 } else if (value.length != 10) {
                   return "Please Enter Valid Mobile Number";
-                }
+                } else if (!isValidPhoneNumber(value)) {
+                            return 'Phone number cannot contain 10 zeros';
+                          }
                 return null;
               },
             ),

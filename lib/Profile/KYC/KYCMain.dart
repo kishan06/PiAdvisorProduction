@@ -54,6 +54,12 @@ class _KYCMainState extends State<KYCMain> {
     getKYCDetails();
   }
 
+  bool isValidPhoneNumber(String phoneNumber) {
+    final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
+
+    return !phoneNumberExpression.hasMatch(phoneNumber);
+  }
+
   prefix.Dio dio = new prefix.Dio();
 
   Future<ResponseData> getKYCDetails() async {
@@ -103,6 +109,8 @@ class _KYCMainState extends State<KYCMain> {
         _selectedDate = pickedDate;
         datecontroller.text =
             "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
+            var currentTime = DateTime.now();
+           agecontroller.text = (currentTime.year - _selectedDate!.year).toString(); 
       });
     });
   }
@@ -477,6 +485,8 @@ class _KYCMainState extends State<KYCMain> {
                   return "Please Enter Phone Number";
                 } else if (value.length != 10) {
                   return "Please Enter Valid Phone Number";
+                } else if (!isValidPhoneNumber(value)) {
+                  return 'Phone number cannot contain 10 zeros';
                 }
                 return null;
               },
@@ -523,7 +533,7 @@ class _KYCMainState extends State<KYCMain> {
               // ),
             ),
             CustomTextFields(
-           
+              readOnly: true,
               textCapitalization: TextCapitalization.none,
               validator: (value) {
                 if (value == null || value.isEmpty) {

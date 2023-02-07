@@ -101,6 +101,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     }
   }
 
+  
+  bool isValidPhoneNumber(String phoneNumber) {
+  final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
+  
+  return !phoneNumberExpression.hasMatch(phoneNumber);
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -160,7 +167,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         return "Please Enter Mobile Number";
                       } else if (value.length < 10) {
                         return "Please Enter Correct Mobile Number";
-                      }
+                      } else if (!isValidPhoneNumber(value)) {
+                            return 'Phone number cannot contain 10 zeros';
+                          }
                       return null;
                     },
                   ),

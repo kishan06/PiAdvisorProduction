@@ -134,4 +134,8 @@ class ApiConstant {
   static const String postLiabiltiesformHL = base + 'api/user_home_loan_details';
   static const String postLiabiltiesformPL = base + 'api/user_personal_loan_details';
   static const String postLiabiltiesformCL = base + 'api/user_car_loan_details';
+
+
+  static const String getliabilitieshl = base + 'api/gethomeloandetails';
+  static const String deleteLiabilitieshl =  base + 'api/deletehomeloandetails';
 }

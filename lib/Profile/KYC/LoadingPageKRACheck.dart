@@ -40,6 +40,7 @@ class _LoadingPageKRACheckState extends State<LoadingPageKRACheck> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Text("Checking for KRA"),
                 Center(
                   child: Lottie.asset(
                     "assets/images/lf30_editor_jc6n8oqe.json",
@@ -61,7 +62,8 @@ class _LoadingPageKRACheckState extends State<LoadingPageKRACheck> {
               );
             }
             if (kraStatus!['status'] == "KRA Verified") {
-              Future.microtask(() => Get.offAllNamed('/digi_locker', arguments: {"kra_ckyc_verified": true}));
+              Future.microtask(() => Get.offAllNamed('/digi_locker',
+                  arguments: {"kra_ckyc_verified": true}));
             } else {
               Future.microtask(() => Get.offAllNamed('/loading_ckyc'));
             }

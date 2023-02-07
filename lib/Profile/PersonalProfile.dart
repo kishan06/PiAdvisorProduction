@@ -503,6 +503,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
               disableCountry: true,
               showStates: true,
               showCities: true,
+              currentState: stateValue,
+              currentCity: cityValue,
               flagState: CountryFlag.DISABLE,
               defaultCountry: DefaultCountry.India,
               dropdownDecoration: BoxDecoration(

@@ -8,16 +8,23 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Common/app_bar.dart';
+import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
 import 'package:piadvisory/Profile/Liabilities/CarLoan.dart';
 import 'package:piadvisory/Profile/Liabilities/Homeloan.dart';
+import 'package:piadvisory/Profile/Liabilities/LiabilitiesRepository/Model/UserLiabilitiesCL.dart';
 import 'package:piadvisory/Profile/Liabilities/LiabilitiesRepository/Model/UserLiabilitiesHL.dart';
+import 'package:piadvisory/Profile/Liabilities/LiabilitiesRepository/Model/UserLiabilitiesPL.dart';
 import 'package:piadvisory/Profile/Liabilities/LiabilitiesRepository/liabilitiesform.dart';
 import 'package:piadvisory/Profile/Liabilities/PersonalLoan.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
 import 'package:piadvisory/Utils/textStyles.dart';
 import '/Utils/Dialogs.dart';
+import 'package:async/src/future_group.dart';
 
 List<User>? globalHomeLoan = [];
+List<Userpl>? globalPersonalLoan = [];
+List<Usercl>? globalCarLoan = [];
+
 
 class Liabilities extends StatefulWidget {
   const Liabilities({super.key});
@@ -28,6 +35,19 @@ class Liabilities extends StatefulWidget {
 
 class _LiabilitiesState extends State<Liabilities> {
   List<User>? _HomeLoan = [];
+  List<Userpl>? _PersonalLoan = [];
+  List<Usercl>? _CarLoan = [];
+
+  FutureGroup futureGroup = FutureGroup();
+
+   @override
+  void initState() {
+    futureGroup.add(StoreLiabilitiesform().getLiabilitiesHL());
+    futureGroup.add(StoreLiabilitiesform().getLiabilitiesPL());
+    futureGroup.add(StoreLiabilitiesform().getLiabilitiesCL());
+    futureGroup.close();
+    super.initState();
+  }
 
   void deleteHomeLoans(int goalId) async {
     Map<String, dynamic> updata = {
@@ -35,6 +55,30 @@ class _LiabilitiesState extends State<Liabilities> {
     };
     print("updats is $updata");
     final data = await StoreLiabilitiesform().deleteLiabilitiesHL(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+    } else {
+      return utils.showToast(data.message);
+    }
+  }
+
+    void deletePersonalLoans(int goalId) async {
+    Map<String, dynamic> updata = {
+      "goal_id": goalId,
+    };
+    print("updats is $updata");
+    final data = await StoreLiabilitiesform().deleteLiabilitiesPL(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+    } else {
+      return utils.showToast(data.message);
+    }
+  }
+
+   void deleteCarLoans(int goalId) async {
+    Map<String, dynamic> updata = {
+      "goal_id": goalId,
+    };
+    print("updats is $updata");
+    final data = await StoreLiabilitiesform().deleteLiabilitiesCL(updata);
     if (data.status == ResponseStatus.SUCCESS) {
     } else {
       return utils.showToast(data.message);
@@ -49,9 +93,9 @@ class _LiabilitiesState extends State<Liabilities> {
         bottomtext: false,
       ),
       body: FutureBuilder(
-        future: StoreLiabilitiesform().getLiabilitiesHL(),
-        //futureGroup.future,
-        //StoreAssetsform().getAssetsMF(),
+        future: 
+        //StoreLiabilitiesform().getLiabilitiesHL(),
+        futureGroup.future,
         builder: (ctx, snapshot) {
           if (snapshot.data == null) {
             return Column(
@@ -73,11 +117,11 @@ class _LiabilitiesState extends State<Liabilities> {
             _HomeLoan = userHomeLoan.user!;
             globalHomeLoan = _HomeLoan;
 
-            // _Fixdeposit = userFixdeposit.userfd!;
-            // globalFixdeposit = _Fixdeposit;
+            _PersonalLoan = userPersonalLoan.userpl!;
+            globalPersonalLoan = _PersonalLoan;
 
-            // _Realestate = userRealestate.userRe!;
-            // globalRealestate = _Realestate;
+            _CarLoan = userCarLoan.usercl!;
+            globalCarLoan = _CarLoan;
             if (snapshot.hasError) {
               return Center(
                 child: Text(
@@ -90,7 +134,7 @@ class _LiabilitiesState extends State<Liabilities> {
           //if (_Mutualfund != null && _Mutualfund!.isEmpty) {
           //  return _buildNodataBody(context);
           //  } else {
-          return _buildBody(context, _HomeLoan, 
+          return _buildBody(context, _HomeLoan, _PersonalLoan, _CarLoan
           //_Fixdeposit, _Realestate
           );
           // }
@@ -129,7 +173,7 @@ class _LiabilitiesState extends State<Liabilities> {
     );
   }
 
-   Widget _buildBody(context, List<User>? _HomeLoan ) {
+   Widget _buildBody(context, List<User>? _HomeLoan, List<Userpl>? _PersonalLoan, List<Usercl>? _CarLoan) {
         return 
         Column(
           children: [
@@ -308,7 +352,7 @@ class _LiabilitiesState extends State<Liabilities> {
                           height: 10,
                         ),
                         Text(
-                          "Mutual Funds",
+                          "Home Loan",
                           style: blackStyle(context).copyWith(
                               fontWeight: FontWeight.w600,
                               color:
@@ -335,7 +379,7 @@ class _LiabilitiesState extends State<Liabilities> {
                                 _HomeLoan.removeAt(index);
                               });
                               Flushbar(
-                                message: "Mutual Funds deleted",
+                                message: "Home Loan deleted",
                                 duration: Duration(seconds: 3),
                               ).show(context);
                             },
@@ -357,12 +401,12 @@ class _LiabilitiesState extends State<Liabilities> {
                                               _HomeLoan[index].id!);
                                           _HomeLoan.removeAt(index);
                                           Flushbar(
-                                            message: "Mutual Funds deleted",
+                                            message: "Home Loan deleted",
                                             duration: Duration(seconds: 3),
                                           ).show(context);
                                         });
                                       } else if (value == "/edit") {
-                                        Get.toNamed("/editMutualfund",
+                                        Get.toNamed("/editHomeloan",
                                             arguments: {
                                               "id": _HomeLoan[index].id,
                                               "total_loan":
@@ -381,6 +425,255 @@ class _LiabilitiesState extends State<Liabilities> {
                                                       .frequencyPayment,  
                                                "rate_of_interest":
                                                   _HomeLoan[index]
+                                                      .rateOfInterest,                
+                                            });
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext bc) {
+                                      return [
+                                        PopupMenuItem(
+                                          child: Text(
+                                            "Edit",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          value: '/edit',
+                                        ),
+                                        PopupMenuItem(
+                                          child: Text(
+                                            "Delete",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          value: '/delete',
+                                        )
+                                      ];
+                                    }),
+                              ),
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      Card(
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Personal Loan",
+                      style: blackStyle(context).copyWith(
+                          fontWeight: FontWeight.w600,
+                          color:
+                              Get.isDarkMode ? Colors.white : Colors.black),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                  ],
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _PersonalLoan!.length,
+                    itemBuilder: (context, index) {
+                      return Dismissible(
+                        background: slideRightBackground(),
+                        key: UniqueKey(),
+                        onDismissed: (direction) {
+                          setState(() {
+                            deletePersonalLoans(_PersonalLoan[index].id!);
+                            _PersonalLoan.removeAt(index);
+                          });
+                          Flushbar(
+                            message: "Personal Loan deleted",
+                            duration: Duration(seconds: 3),
+                          ).show(context);
+                        },
+                        child: Card(
+                          elevation: 2,
+                          child: ListTile(
+                            title: Text('${_PersonalLoan[index].totalLoan}'),
+                            subtitle: Text(
+                                '${_PersonalLoan[index].loanIssuedOn.toString()}'),
+                            trailing: PopupMenuButton(
+                                offset: Offset(0, 50),
+                                color: Color(0xFF6B6B6B),
+                                tooltip: '',
+                                icon: Icon(Icons.more_vert),
+                                onSelected: (value) {
+                                  if (value == '/delete') {
+                                    setState(() {
+                                      deletePersonalLoans(
+                                          _PersonalLoan[index].id!);
+                                      _PersonalLoan.removeAt(index);
+                                      Flushbar(
+                                        message: "Personal Loan deleted",
+                                        duration: Duration(seconds: 3),
+                                      ).show(context);
+                                    });
+                                  } else if (value == "/edit") {
+                                    Get.toNamed("/editPersonalloan",
+                                        arguments: {
+                                          "id": _PersonalLoan[index].id,
+                                              "total_loan":
+                                                  _PersonalLoan[index].totalLoan,
+                                              "loan_issued_on":
+                                                  _PersonalLoan[index]
+                                                      .loanIssuedOn,
+                                              "loan_tenure":
+                                                  _PersonalLoan[index]
+                                                      .loanTenure,
+                                              "installment_amount":
+                                                  _PersonalLoan[index]
+                                                      .installmentAmount,
+                                              "frequency_payment":
+                                                  _PersonalLoan[index]
+                                                      .frequencyPayment,  
+                                               "rate_of_interest":
+                                                  _PersonalLoan[index]
+                                                      .rateOfInterest,
+                                        });
+                                  }
+                                },
+                                itemBuilder: (BuildContext bc) {
+                                  return [
+                                    PopupMenuItem(
+                                      child: Text(
+                                        "Edit",
+                                        style:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      value: '/edit',
+                                    ),
+                                    PopupMenuItem(
+                                      child: Text(
+                                        "Delete",
+                                        style:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      value: '/delete',
+                                    )
+                                  ];
+                                }),
+                          ),
+                        ),
+                      );
+                    }),
+              ],
+            ),
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Card(
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Car Loan",
+                          style: blackStyle(context).copyWith(
+                              fontWeight: FontWeight.w600,
+                              color:
+                                  Get.isDarkMode ? Colors.white : Colors.black),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                      ],
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _CarLoan!.length,
+                        itemBuilder: (context, index) {
+                          return Dismissible(
+                            background: slideRightBackground(),
+                            key: UniqueKey(),
+                            onDismissed: (direction) {
+                              setState(() {
+                                deleteCarLoans(_CarLoan[index].id!);
+                                _CarLoan.removeAt(index);
+                              });
+                              Flushbar(
+                                message: "Car Loan deleted",
+                                duration: Duration(seconds: 3),
+                              ).show(context);
+                            },
+                            child: Card(
+                              elevation: 2,
+                              child: ListTile(
+                                title: Text('${_CarLoan[index].totalLoan}'),
+                                subtitle: Text(
+                                    '${_CarLoan[index].loanIssuedOn.toString()}'),
+                                trailing: PopupMenuButton(
+                                    offset: Offset(0, 50),
+                                    color: Color(0xFF6B6B6B),
+                                    tooltip: '',
+                                    icon: Icon(Icons.more_vert),
+                                    onSelected: (value) {
+                                      if (value == '/delete') {
+                                        setState(() {
+                                          deleteCarLoans(
+                                              _CarLoan[index].id!);
+                                          _CarLoan.removeAt(index);
+                                          Flushbar(
+                                            message: "Car Loan deleted",
+                                            duration: Duration(seconds: 3),
+                                          ).show(context);
+                                        });
+                                      } else if (value == "/edit") {
+                                        Get.toNamed("/editCarloan",
+                                            arguments: {
+                                              "id": _CarLoan[index].id,
+                                              "total_loan":
+                                                  _CarLoan[index].totalLoan,
+                                              "loan_issued_on":
+                                                  _CarLoan[index]
+                                                      .loanIssuedOn,
+                                              "loan_tenure":
+                                                  _CarLoan[index]
+                                                      .loanTenure,
+                                              "installment_amount":
+                                                  _CarLoan[index]
+                                                      .installmentAmount,
+                                              "frequency_payment":
+                                                  _CarLoan[index]
+                                                      .frequencyPayment,  
+                                               "rate_of_interest":
+                                                  _CarLoan[index]
                                                       .rateOfInterest,                
                                             });
                                       }

@@ -138,4 +138,10 @@ class ApiConstant {
 
   static const String getliabilitieshl = base + 'api/gethomeloandetails';
   static const String deleteLiabilitieshl =  base + 'api/deletehomeloandetails';
+
+  static const String getliabilitiespl = base + 'api/getpersonalloandetails';
+  static const String deleteLiabilitiespl =  base + 'api/deletepersonalloandetails';
+
+  static const String getliabilitiescl = base + 'api/getcarloandetails';
+  static const String deleteLiabilitiescl =  base + 'api/deletecarloandetails';
 }

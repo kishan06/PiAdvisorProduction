@@ -119,7 +119,9 @@ class _ProfileMainState extends State<ProfileMain> {
       getRiskQuestions().getAnswers(),
       Storegoalsdetails().checkGoals(),
       StorebasickycuserDetails().getBasicKycDetails(),
-      StoreLiabilitiesform().getLiabilitiesHL()
+      StoreLiabilitiesform().getLiabilitiesHL(),
+      StoreLiabilitiesform().getLiabilitiesPL(),
+      StoreLiabilitiesform().getLiabilitiesCL(),
     ]);
     setState(() {});
   }

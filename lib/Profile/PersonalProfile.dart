@@ -514,7 +514,7 @@ class _PersonalProfileState extends State<PersonalProfile> {
               currentState: stateValue,
               currentCity: cityValue,
               flagState: CountryFlag.DISABLE,
-              defaultCountry: DefaultCountry.India,
+              defaultCountry: CscCountry.India,
               dropdownDecoration: BoxDecoration(
                 // borderRadius: BorderRadius.all(Radius.circular(2)),
                 color: Get.isDarkMode ? Colors.grey : Colors.white,

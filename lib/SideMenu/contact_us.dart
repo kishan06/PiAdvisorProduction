@@ -27,6 +27,12 @@ class _ContactState extends State<Contact> {
   TextEditingController subject = TextEditingController();
   TextEditingController message = TextEditingController();
 
+  bool isValidPhoneNumber(String phoneNumber) {
+  final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
+  
+  return !phoneNumberExpression.hasMatch(phoneNumber);
+}
+
   void UploadData() async {
     final isValid = _form.currentState?.validate();
     if (isValid!) {
@@ -171,6 +177,8 @@ class _ContactState extends State<Contact> {
                             return "Please Enter Phone Number";
                           } else if (value.length != 10) {
                             return "Please Enter Valid Phone Number";
+                          } else if (!isValidPhoneNumber(value)) {
+                            return 'Phone number cannot contain 10 zeros';
                           }
                           return null;
                         },

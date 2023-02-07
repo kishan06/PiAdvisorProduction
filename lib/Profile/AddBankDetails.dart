@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Profile/BankdetailsRepository/storeBankdetails.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '/Common/CustomNextButton.dart';
 import '/Utils/textStyles.dart';
@@ -31,9 +32,14 @@ class _AddBankDetailsState extends State<AddBankDetails> {
   bool _valueExists = false;
   late final Future? myFuture;
   final args = Get.arguments;
+
+    final RoundedLoadingButtonController _btnController1 =
+      RoundedLoadingButtonController();
+
   @override
   void initState() {
     super.initState();
+    _btnController1.stateStream.listen((value) {});
     setControllerValues();
   }
 
@@ -269,34 +275,58 @@ class _AddBankDetailsState extends State<AddBankDetails> {
             SizedBox(
               width: double.infinity,
               height: 60,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  backgroundColor: const Color.fromRGBO(247, 129, 4, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {
-                  args != null ? editGoal() : UploadData();
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 136, right: 136),
-                      child: Text(
-                        " Save ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFFFFFFFF),
-                          fontSize: 18.sm,
+              child: 
+               RoundedLoadingButton(
+                        elevation: 0,
+                        height: 60,
+                        resetAfterDuration: true,
+                        resetDuration: Duration(seconds: 2),
+                        width: MediaQuery.of(context).size.width * 1,
+                        color: const Color.fromRGBO(247, 129, 4, 1),
+                        successColor: const Color.fromRGBO(247, 129, 4, 1),
+                        controller: _btnController1,
+                        onPressed: (){
+                           args != null ? editGoal() : UploadData();
+                        },
+                        valueColor: Colors.black,
+                        borderRadius: 10,
+                        child: Text(
+                          "Save",
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 18.sm,
+                            fontFamily: 'Productsans',
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     elevation: 0,
+              //     backgroundColor: const Color.fromRGBO(247, 129, 4, 1),
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //   ),
+              //   onPressed: () {
+              //     args != null ? editGoal() : UploadData();
+              //   },
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Padding(
+              //         padding: const EdgeInsets.only(left: 136, right: 136),
+              //         child: Text(
+              //           " Save ",
+              //           textAlign: TextAlign.center,
+              //           style: TextStyle(
+              //             color: Color(0xFFFFFFFF),
+              //             fontSize: 18.sm,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ),
             SizedBox(
               height: 20,

@@ -7,9 +7,9 @@ import 'package:piadvisory/Utils/base_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-late UserMutualfund userMutualfund;
-late UserFixdeposit userFixdeposit;
-late UserRealestate userRealestate;
+ UserMutualfund? userMutualfund;
+ UserFixdeposit? userFixdeposit;
+ UserRealestate? userRealestate;
 
 class StoreAssetsform {
   Dio dio = new Dio();

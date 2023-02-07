@@ -1,5 +1,5 @@
 class ApiConstant {
-  static const String base = "https://app.piadvisors.in/";
+  static const String base = "https://pi.betadelivery.com/pi_advisors/";
 
   static const String basetesting = "https://pi.betadelivery.com/pi_advisors/";
 
@@ -131,11 +131,13 @@ class ApiConstant {
   static const String postAssetsformFD = base + 'api/user_fix_deposit';
   static const String postAssetsformRE = base + 'api/user_real_estate';
 
-  static const String postLiabiltiesformHL = base + 'api/user_home_loan_details';
-  static const String postLiabiltiesformPL = base + 'api/user_personal_loan_details';
+  static const String postLiabiltiesformHL =
+      base + 'api/user_home_loan_details';
+  static const String postLiabiltiesformPL =
+      base + 'api/user_personal_loan_details';
   static const String postLiabiltiesformCL = base + 'api/user_car_loan_details';
 
   static const String getAssetsmf = base + 'api/getmutualfunddetails';
   static const String getAssetsfd = base + 'api/getfixdepositsdetails';
-   static const String getAssetsre = base + 'api/getrealestatedetails';
+  static const String getAssetsre = base + 'api/getrealestatedetails';
 }

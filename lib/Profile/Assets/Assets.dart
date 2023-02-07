@@ -101,7 +101,7 @@ class _AssetsState extends State<Assets> {
       ),
       body: FutureBuilder(
         future: futureGroup.future,
-        //StoreAssetsform().getAssetsMF(),
+        // StoreAssetsform().getAssetsMF(),
         builder: (ctx, snapshot) {
           if (snapshot.data == null) {
             return Column(
@@ -120,14 +120,15 @@ class _AssetsState extends State<Assets> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            _Mutualfund = userMutualfund.user!;
-            globalMutualfund = _Mutualfund;
+            // _Mutualfund = userMutualfund?.user!;
+            print("mutual fubd data is ${userMutualfund?.user}");
+            // globalMutualfund = _Mutualfund;
 
-            _Fixdeposit = userFixdeposit.userfd!;
-            globalFixdeposit = _Fixdeposit;
+            // _Fixdeposit = userFixdeposit?.userfd!;
+            // globalFixdeposit = _Fixdeposit;
 
-            _Realestate = userRealestate.userRe!;
-            globalRealestate = _Realestate;
+            // _Realestate = userRealestate?.userRe!;
+            // globalRealestate = _Realestate;
             if (snapshot.hasError) {
               return Center(
                 child: Text(
@@ -532,8 +533,7 @@ class _AssetsState extends State<Assets> {
                       "Fix Deposit",
                       style: blackStyle(context).copyWith(
                           fontWeight: FontWeight.w600,
-                          color:
-                              Get.isDarkMode ? Colors.white : Colors.black),
+                          color: Get.isDarkMode ? Colors.white : Colors.black),
                     ),
                     SizedBox(
                       height: 15,
@@ -574,8 +574,7 @@ class _AssetsState extends State<Assets> {
                                 onSelected: (value) {
                                   if (value == '/delete') {
                                     setState(() {
-                                      deleteFixdeposit(
-                                          _Fixdeposit[index].id!);
+                                      deleteFixdeposit(_Fixdeposit[index].id!);
                                       _Fixdeposit.removeAt(index);
                                       Flushbar(
                                         message: "Fix Deposit deleted",
@@ -583,21 +582,17 @@ class _AssetsState extends State<Assets> {
                                       ).show(context);
                                     });
                                   } else if (value == "/edit") {
-                                    Get.toNamed("/editFixdeposit",
-                                        arguments: {
-                                          "id": _Fixdeposit[index].id,
-                                          "bank_name":
-                                              _Fixdeposit[index].bankName,
-                                          "investment_amount":
-                                              _Fixdeposit[index]
-                                                  .investmentAmount,
-                                          "annual_rate":
-                                              _Fixdeposit[index].annualRate,
-                                          "start_date":
-                                              _Fixdeposit[index].startDate,
-                                          "tenure":
-                                              _Fixdeposit[index].tenure,
-                                        });
+                                    Get.toNamed("/editFixdeposit", arguments: {
+                                      "id": _Fixdeposit[index].id,
+                                      "bank_name": _Fixdeposit[index].bankName,
+                                      "investment_amount":
+                                          _Fixdeposit[index].investmentAmount,
+                                      "annual_rate":
+                                          _Fixdeposit[index].annualRate,
+                                      "start_date":
+                                          _Fixdeposit[index].startDate,
+                                      "tenure": _Fixdeposit[index].tenure,
+                                    });
                                   }
                                 },
                                 itemBuilder: (BuildContext bc) {
@@ -605,16 +600,14 @@ class _AssetsState extends State<Assets> {
                                     PopupMenuItem(
                                       child: Text(
                                         "Edit",
-                                        style:
-                                            TextStyle(color: Colors.white),
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                       value: '/edit',
                                     ),
                                     PopupMenuItem(
                                       child: Text(
                                         "Delete",
-                                        style:
-                                            TextStyle(color: Colors.white),
+                                        style: TextStyle(color: Colors.white),
                                       ),
                                       value: '/delete',
                                     )

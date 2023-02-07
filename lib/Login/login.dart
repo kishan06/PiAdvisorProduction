@@ -342,17 +342,18 @@ class _LoginState extends State<Login> {
       isSignInBtnLoaderVisible = false;
     });
   }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     ImageProvider logo = AssetImage("assets/images/loginlogo.png");
-    return 
-    // StreamProvider<ConnectivityStatus>.value(
-    //   initialData: ConnectivityStatus.Cellular,
-    //   value: ConnectivityService().connectionStatusController.stream,
-    //   child: 
-      WillPopScope(
+    return
+        // StreamProvider<ConnectivityStatus>.value(
+        //   initialData: ConnectivityStatus.Cellular,
+        //   value: ConnectivityService().connectionStatusController.stream,
+        //   child:
+        WillPopScope(
       onWillPop: () async {
         final difference = DateTime.now().difference(timebackPressed);
         final isExitWarning = difference >= Duration(seconds: 2);
@@ -618,12 +619,17 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
-   // );
+    // );
   }
 }
-   
 
 class CustomTextFormFieldPhone extends StatelessWidget {
+  bool isValidPhoneNumber(String phoneNumber) {
+    final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
+
+    return !phoneNumberExpression.hasMatch(phoneNumber);
+  }
+
   const CustomTextFormFieldPhone({
     Key? key,
     this.controller,
@@ -704,6 +710,8 @@ class CustomTextFormFieldPhone extends StatelessWidget {
           return errortext ?? "Empty value";
         } else if (value.length != 10) {
           return "Please Enter Valid Phone Number";
+        } else if (!isValidPhoneNumber(value)) {
+          return 'Phone number cannot contain 10 zeros';
         }
         return null;
       },

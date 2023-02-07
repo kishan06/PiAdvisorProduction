@@ -70,6 +70,13 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
     });
   }
 
+  
+  bool isValidPhoneNumber(String phoneNumber) {
+  final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
+  
+  return !phoneNumberExpression.hasMatch(phoneNumber);
+}
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -210,7 +217,9 @@ class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
                               return "Please Enter Number";
                             } else if (value.length < 10) {
                               return "Please Enter Correct Phone Number";
-                            }
+                            } else if (!isValidPhoneNumber(value)) {
+                            return 'Phone number cannot contain 10 zeros';
+                          }
                             return null;
                           },
                           // onSubmitted: (value) {

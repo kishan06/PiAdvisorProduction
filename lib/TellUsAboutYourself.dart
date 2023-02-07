@@ -296,7 +296,7 @@ class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            CustomTextFieldsName(
+            CustomTextFieldsName(             
               errortext: "Enter Full Name",
               hint: "Enter Your Full Name",
               txtinptype: TextInputType.text,
@@ -633,6 +633,7 @@ class CustomTextFieldsName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: true,
       keyboardType: txtinptype ?? TextInputType.text,
       maxLength: maxlength,
       cursorColor: Colors.grey,

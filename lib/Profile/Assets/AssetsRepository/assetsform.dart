@@ -231,7 +231,7 @@ class StoreAssetsform {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token').toString();
     try {
-      response = await dio.post(ApiConstant.deleteGoals,
+      response = await dio.post(ApiConstant.deleteAssestsMF,
           data: updata,
           options: Options(headers: {"authorization": "Bearer $token"}));
     } on Exception catch (_) {
@@ -242,6 +242,178 @@ class StoreAssetsform {
     if (response.statusCode == 200) {
       // Map<String, dynamic> res = response.data;
       // await prefs.setString('token', res["token"]);
+
+      return ResponseData<dynamic>(
+        "success",
+        ResponseStatus.SUCCESS,
+      );
+    } else {
+      try {
+        return ResponseData<dynamic>(
+            response.data['message'].toString(), ResponseStatus.FAILED);
+      } catch (_) {
+        return ResponseData<dynamic>(
+            response.statusMessage!, ResponseStatus.FAILED);
+      }
+    }
+  }
+
+  Future<ResponseData> deleteFixdeposit(Map<String, dynamic> updata) async {
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token').toString();
+    try {
+      response = await dio.post(ApiConstant.deleteAssestsFD,
+          data: updata,
+          options: Options(headers: {"authorization": "Bearer $token"}));
+    } on Exception catch (_) {
+      return ResponseData<dynamic>(
+          'Oops something Went Wrong', ResponseStatus.FAILED);
+    }
+
+    if (response.statusCode == 200) {
+      // Map<String, dynamic> res = response.data;
+      // await prefs.setString('token', res["token"]);
+
+      return ResponseData<dynamic>(
+        "success",
+        ResponseStatus.SUCCESS,
+      );
+    } else {
+      try {
+        return ResponseData<dynamic>(
+            response.data['message'].toString(), ResponseStatus.FAILED);
+      } catch (_) {
+        return ResponseData<dynamic>(
+            response.statusMessage!, ResponseStatus.FAILED);
+      }
+    }
+  }
+
+  Future<ResponseData> deleteRealestate(Map<String, dynamic> updata) async {
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token').toString();
+    try {
+      response = await dio.post(ApiConstant.deleteAssestsRE,
+          data: updata,
+          options: Options(headers: {"authorization": "Bearer $token"}));
+    } on Exception catch (_) {
+      return ResponseData<dynamic>(
+          'Oops something Went Wrong', ResponseStatus.FAILED);
+    }
+
+    if (response.statusCode == 200) {
+      // Map<String, dynamic> res = response.data;
+      // await prefs.setString('token', res["token"]);
+
+      return ResponseData<dynamic>(
+        "success",
+        ResponseStatus.SUCCESS,
+      );
+    } else {
+      try {
+        return ResponseData<dynamic>(
+            response.data['message'].toString(), ResponseStatus.FAILED);
+      } catch (_) {
+        return ResponseData<dynamic>(
+            response.statusMessage!, ResponseStatus.FAILED);
+      }
+    }
+  }
+
+    Future<ResponseData> updateMutualfund(Map<String, dynamic> updata) async {
+    print("reached till here");
+    print(updata);
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token').toString();
+    try {
+      response = await dio.post(ApiConstant.updatemutualfund,
+          data: updata,
+          options: Options(headers: {"authorization": "Bearer $token"}));
+    } on Exception catch (_) {
+      return ResponseData<dynamic>(
+          'Oops something Went Wrong', ResponseStatus.FAILED);
+    }
+    print(" resp is $response");
+    if (response.statusCode == 200) {
+      // Map<String, dynamic> res = response.data;
+      // await prefs.setString('token', res["token"]);
+
+      print(response);
+
+      return ResponseData<dynamic>(
+        "success",
+        ResponseStatus.SUCCESS,
+      );
+    } else {
+      try {
+        return ResponseData<dynamic>(
+            response.data['message'].toString(), ResponseStatus.FAILED);
+      } catch (_) {
+        return ResponseData<dynamic>(
+            response.statusMessage!, ResponseStatus.FAILED);
+      }
+    }
+  }
+
+  Future<ResponseData> updateRealestate(Map<String, dynamic> updata) async {
+    print("reached till here");
+    print(updata);
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token').toString();
+    try {
+      response = await dio.post(ApiConstant.updaterealestate,
+          data: updata,
+          options: Options(headers: {"authorization": "Bearer $token"}));
+    } on Exception catch (_) {
+      return ResponseData<dynamic>(
+          'Oops something Went Wrong', ResponseStatus.FAILED);
+    }
+    print(" resp is $response");
+    if (response.statusCode == 200) {
+      // Map<String, dynamic> res = response.data;
+      // await prefs.setString('token', res["token"]);
+
+      print(response);
+
+      return ResponseData<dynamic>(
+        "success",
+        ResponseStatus.SUCCESS,
+      );
+    } else {
+      try {
+        return ResponseData<dynamic>(
+            response.data['message'].toString(), ResponseStatus.FAILED);
+      } catch (_) {
+        return ResponseData<dynamic>(
+            response.statusMessage!, ResponseStatus.FAILED);
+      }
+    }
+  }
+
+    Future<ResponseData> updateFixdeposit(Map<String, dynamic> updata) async {
+    print("reached till here");
+    print(updata);
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token').toString();
+    try {
+      response = await dio.post(ApiConstant.updatefixdeposit,
+          data: updata,
+          options: Options(headers: {"authorization": "Bearer $token"}));
+    } on Exception catch (_) {
+      return ResponseData<dynamic>(
+          'Oops something Went Wrong', ResponseStatus.FAILED);
+    }
+    print(" resp is $response");
+    if (response.statusCode == 200) {
+      // Map<String, dynamic> res = response.data;
+      // await prefs.setString('token', res["token"]);
+
+      print(response);
 
       return ResponseData<dynamic>(
         "success",

@@ -27,7 +27,26 @@ class _RealEstateState extends State<RealEstate> {
   TextEditingController datecontroller = TextEditingController();
   TextEditingController Current = TextEditingController();
   DateTime? _selectedDate;
+
   final args = Get.arguments;
+  int realId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    setValues();
+  }
+
+  
+    setValues() {
+    if (args != null) {
+      realId = Get.arguments["id"];
+      PropertyName.text = Get.arguments["property_name"].toString();
+      Invested.text = Get.arguments["invested_value"].toString();
+      datecontroller.text = Get.arguments["date_of_investment"].toString();
+      Current.text = Get.arguments["current_value"].toString();
+    }
+  }
 
   void _presentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -50,8 +69,8 @@ class _RealEstateState extends State<RealEstate> {
   }
 
   void UploadData() async {
-    final isValid = _form.currentState?.validate();
-    if (isValid!) {
+    // final isValid = _form.currentState?.validate();
+    // if (isValid!) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int? user_id = await prefs.getInt('user_id');
       replaceAssetsBtnWithLoader();
@@ -72,8 +91,31 @@ class _RealEstateState extends State<RealEstate> {
         replaceLoaderWithAssetsBtn();
         return utils.showToast(data.message);
       }
+    //}
+  }
+
+    void editRealestate() async {
+    replaceAssetsBtnWithLoader();
+    Map<String, dynamic> updata = {
+      "id": realId,
+      "property_name": PropertyName.text,
+      "invested_value": Invested.text,
+      "date_of_investment": datecontroller.text,
+      "current_value": Current.text
+    };
+    print("updats is $updata");
+    final data = await StoreAssetsform().updateRealestate(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      utils.showToast("Real estate Added!");
+      replaceLoaderWithAssetsBtn();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+    } else {
+       replaceLoaderWithAssetsBtn();
+      return utils.showToast(data.message);
     }
   }
+
 
   bool isSaveBtnVisible = true;
   bool isSaveBtnLoaderVisible = false;
@@ -259,15 +301,11 @@ class _RealEstateState extends State<RealEstate> {
                           child: CustomNextButton(
                             text: "Save",
                             ontap: () {
-                              UploadData();
-                              // final isValid = _form.currentState?.validate();
-                              // if (isValid!) {
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) => ProfileMain()));
-                              //   //args ! = null ? editGoal() : UploadData();
-                              // }
+                              //UploadData();
+                              final isValid = _form.currentState?.validate();
+                              if (isValid!) {
+                               args != null? editRealestate() : UploadData();
+                              }
                             },
                           ),
                         ),

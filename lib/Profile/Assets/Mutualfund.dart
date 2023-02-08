@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/app_bar.dart';
 import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
+import 'package:piadvisory/Profile/GoalsRepository/storeGoals.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
 import 'package:piadvisory/Utils/textStyles.dart';
@@ -27,7 +28,25 @@ class _MutualfundState extends State<Mutualfund> {
   TextEditingController datecontroller = TextEditingController();
   TextEditingController Current = TextEditingController();
   DateTime? _selectedDate;
+
   final args = Get.arguments;
+  int mutualId = 0;
+
+@override
+  void initState() {
+    super.initState();
+     setValues();
+  }
+
+    setValues() {
+    if (args != null) {
+      mutualId = Get.arguments["id"];
+      SchemeName.text = Get.arguments["scheme_name"].toString();
+      Ammount.text = Get.arguments["investment_amount"].toString();
+      datecontroller.text = Get.arguments["date_of_investment"].toString();
+      Current.text = Get.arguments["current_value"].toString();
+    }
+  }
 
   void _presentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -50,8 +69,8 @@ class _MutualfundState extends State<Mutualfund> {
   }
 
   void UploadData() async {
-    final isValid = _form.currentState?.validate();
-    if (isValid!) {
+    // final isValid = _form.currentState?.validate();
+    // if (isValid!) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int? user_id = await prefs.getInt('user_id');
       replaceAssetsBtnWithLoader();
@@ -72,6 +91,28 @@ class _MutualfundState extends State<Mutualfund> {
         replaceLoaderWithAssetsBtn();
         return utils.showToast(data.message);
       }
+   // }
+  }
+
+    void editMutualfunds() async {
+    replaceAssetsBtnWithLoader();
+    Map<String, dynamic> updata = {
+      "id": mutualId,
+      "scheme_name": SchemeName.text,
+      "investment_amount": Ammount.text,
+      "date_of_investment": datecontroller.text,
+      "current_value": Current.text
+    };
+    print("updats is $updata");
+    final data = await StoreAssetsform().updateMutualfund(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      utils.showToast("Mutual funds Added!");
+      replaceLoaderWithAssetsBtn();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+    } else {
+       replaceLoaderWithAssetsBtn();
+      return utils.showToast(data.message);
     }
   }
 
@@ -262,15 +303,11 @@ class _MutualfundState extends State<Mutualfund> {
                           child: CustomNextButton(
                             text: "Save",
                             ontap: () {
-                              UploadData();
-                              // final isValid = _form.currentState?.validate();
-                              // if (isValid!) {
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) => ProfileMain()));
-                              //   //args ! = null ? editGoal() : UploadData();
-                              // }
+                              //UploadData();
+                              final isValid = _form.currentState?.validate();
+                              if (isValid!) {
+                                args != null ? editMutualfunds() : UploadData();
+                              }
                             },
                           ),
                         ),

@@ -28,7 +28,26 @@ class _FixDepositState extends State<FixDeposit> {
   TextEditingController datecontroller = TextEditingController();
   TextEditingController datecontroller2 = TextEditingController();
   DateTime? _selectedDate;
+
   final args = Get.arguments;
+  int FixId = 0;
+
+  @override
+  void initState() {
+    super.initState();
+      setValues();
+  }
+
+    setValues() {
+    if (args != null) {
+      FixId = Get.arguments["id"];
+      BankName.text = Get.arguments["bank_name"].toString();
+      Ammount.text = Get.arguments["investment_amount"].toString();
+      Annual.text = Get.arguments["annual_rate"].toString();
+      datecontroller.text = Get.arguments["start_date"].toString();
+      datecontroller2.text = Get.arguments["tenure"].toString();
+    }
+  }
 
   void _presentDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -71,8 +90,8 @@ class _FixDepositState extends State<FixDeposit> {
   }
 
   void UploadData() async {
-    final isValid = _form.currentState?.validate();
-    if (isValid!) {
+    // final isValid = _form.currentState?.validate();
+    // if (isValid!) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int? user_id = await prefs.getInt('user_id');
       replaceAssetsBtnWithLoader();
@@ -94,6 +113,29 @@ class _FixDepositState extends State<FixDeposit> {
         replaceLoaderWithAssetsBtn();
         return utils.showToast(data.message);
       }
+    //}
+  }
+
+    void editFixdeposit() async {
+    replaceAssetsBtnWithLoader();
+    Map<String, dynamic> updata = {
+      "id": FixId,
+      "bank_name": BankName.text,
+      "investment_amount": Ammount.text,
+      "annual_rate": Annual.text,
+      "start_date": datecontroller.text,
+      "tenure": datecontroller2.text
+    };
+    print("updats is $updata");
+    final data = await StoreAssetsform().updateFixdeposit(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      utils.showToast("Fix deposit Added!");
+      replaceLoaderWithAssetsBtn();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+    } else {
+       replaceLoaderWithAssetsBtn();
+      return utils.showToast(data.message);
     }
   }
 
@@ -303,14 +345,11 @@ class _FixDepositState extends State<FixDeposit> {
                           child: CustomNextButton(
                             text: "Save",
                             ontap: () {
-                              UploadData();
-                              // final isValid = _form.currentState?.validate();
-                              // if (isValid!) {
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) => ProfileMain()));
-                              //args ! = null ? editGoal() : UploadData();
+                              //UploadData();
+                              final isValid = _form.currentState?.validate();
+                              if (isValid!) {
+                              args != null ? editFixdeposit() : UploadData();
+                              }
                             },
                           ),
                         ),

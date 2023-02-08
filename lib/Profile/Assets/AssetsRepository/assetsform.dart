@@ -7,9 +7,9 @@ import 'package:piadvisory/Utils/base_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
- UserMutualfund? userMutualfund;
- UserFixdeposit? userFixdeposit;
- UserRealestate? userRealestate;
+UserMutualfund? userMutualfund;
+UserFixdeposit? userFixdeposit;
+UserRealestate? userRealestate;
 
 class StoreAssetsform {
   Dio dio = new Dio();
@@ -75,7 +75,7 @@ class StoreAssetsform {
       // Map<String, dynamic> res = response.data;
       // await prefs.setString('token', res["token"]);
 
-    print("mf response is ${response.data}");
+      print("mf response is ${response.data}");
 
       return ResponseData<dynamic>(
         "success",
@@ -103,7 +103,7 @@ class StoreAssetsform {
           data: updata,
           options: Options(headers: {"authorization": "Bearer $token"}));
       print(updata);
-      print("token is $token");     
+      print("token is $token");
     } on Exception catch (_) {
       print("task failed");
       return ResponseData<dynamic>(
@@ -114,7 +114,7 @@ class StoreAssetsform {
       // Map<String, dynamic> res = response.data;
       // await prefs.setString('token', res["token"]);
 
-    print("mf response is ${response.data}");
+      print("mf response is ${response.data}");
 
       return ResponseData<dynamic>(
         "success",
@@ -138,7 +138,6 @@ class StoreAssetsform {
     try {
       response = await dio.get(ApiConstant.getAssetsmf,
           options: Options(headers: {"authorization": "Bearer $token"}));
-          print("$token");
     } on Exception catch (_) {
       print("error occured");
       return ResponseData<dynamic>(
@@ -146,8 +145,8 @@ class StoreAssetsform {
     }
 
     if (response.statusCode == 200) {
-      userFixdeposit = UserFixdeposit.fromJson(response.data);
-      print(response.data);
+      userMutualfund = UserMutualfund.fromJson(response.data);
+      print(" mutual fund resp are  ${response.data} ");
       return ResponseData<dynamic>(
         "success",
         ResponseStatus.SUCCESS,
@@ -170,7 +169,7 @@ class StoreAssetsform {
     try {
       response = await dio.get(ApiConstant.getAssetsfd,
           options: Options(headers: {"authorization": "Bearer $token"}));
-          print("$token");
+      print("$token");
     } on Exception catch (_) {
       print("error occured");
       return ResponseData<dynamic>(
@@ -195,14 +194,14 @@ class StoreAssetsform {
     }
   }
 
-    Future<ResponseData> getAssetsRE() async {
+  Future<ResponseData> getAssetsRE() async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token').toString();
     try {
       response = await dio.get(ApiConstant.getAssetsre,
           options: Options(headers: {"authorization": "Bearer $token"}));
-          print("$token");
+      print("$token");
     } on Exception catch (_) {
       print("error occured");
       return ResponseData<dynamic>(
@@ -227,4 +226,35 @@ class StoreAssetsform {
     }
   }
 
+  Future<ResponseData> deleteMutualFunds(Map<String, dynamic> updata) async {
+    Response response;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token').toString();
+    try {
+      response = await dio.post(ApiConstant.deleteGoals,
+          data: updata,
+          options: Options(headers: {"authorization": "Bearer $token"}));
+    } on Exception catch (_) {
+      return ResponseData<dynamic>(
+          'Oops something Went Wrong', ResponseStatus.FAILED);
+    }
+
+    if (response.statusCode == 200) {
+      // Map<String, dynamic> res = response.data;
+      // await prefs.setString('token', res["token"]);
+
+      return ResponseData<dynamic>(
+        "success",
+        ResponseStatus.SUCCESS,
+      );
+    } else {
+      try {
+        return ResponseData<dynamic>(
+            response.data['message'].toString(), ResponseStatus.FAILED);
+      } catch (_) {
+        return ResponseData<dynamic>(
+            response.statusMessage!, ResponseStatus.FAILED);
+      }
+    }
+  }
 }

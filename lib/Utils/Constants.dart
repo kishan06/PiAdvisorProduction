@@ -140,4 +140,6 @@ class ApiConstant {
   static const String getAssetsmf = base + 'api/getmutualfunddetails';
   static const String getAssetsfd = base + 'api/getfixdepositsdetails';
   static const String getAssetsre = base + 'api/getrealestatedetails';
+  static const String deleteAssestsMF = base + 'api/updatemutualfunddetails';
+  
 }

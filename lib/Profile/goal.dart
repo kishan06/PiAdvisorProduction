@@ -42,7 +42,7 @@ class _goalState extends State<goal> {
     Map<String, dynamic> updata = {
       "goal_id": goalId,
     };
-    print("updats is $updata");
+
     final data = await Storegoalsdetails().deleteGoals(updata);
     if (data.status == ResponseStatus.SUCCESS) {
     } else {

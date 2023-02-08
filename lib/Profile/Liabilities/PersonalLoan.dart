@@ -31,6 +31,27 @@ class _PersonalLoanState extends State<PersonalLoan> {
   TextEditingController Interest = TextEditingController();
   DateTime? _selectedDate;
 
+  final args = Get.arguments;
+  int personalid = 0;
+
+@override
+  void initState() {
+    super.initState();
+    setValues();
+  }
+
+    setValues() {
+    if (args != null) {
+      personalid = Get.arguments["id" ];
+      LoanAmmount.text = Get.arguments["total_loan"].toString();
+      datecontroller.text = Get.arguments["loan_issued_on"].toString();
+      TenureMonths.text = Get.arguments["loan_tenure"].toString();
+      InstallmentAmount.text = Get.arguments["installment_amount"].toString();
+      Frequency.text = Get.arguments["frequency_payment"].toString();
+      Interest.text = Get.arguments["rate_of_interest"].toString();
+    }
+  }
+
   void _presentpastDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
     showDatePicker(
@@ -52,11 +73,11 @@ class _PersonalLoanState extends State<PersonalLoan> {
   }
 
     void UploadData() async {
-    final isValid = _form.currentState?.validate();
-    if (isValid!) {
+    //final isValid = _form.currentState?.validate();
+    //if (isValid!) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int? user_id = await prefs.getInt('user_id');
-      replaceAssetsBtnWithLoader();
+      replaceLiabilitiesBtnWithLoader();
       Map<String, dynamic> updata = {
         "user_id": user_id,
         "total_loan": LoanAmmount.text,
@@ -69,27 +90,51 @@ class _PersonalLoanState extends State<PersonalLoan> {
       print(updata);
       final data = await StoreLiabilitiesform().postStoreLiabilitiesformPL(updata);
       if (data.status == ResponseStatus.SUCCESS) {
-        replaceLoaderWithAssetsBtn();
+        replaceLoaderWithLiabilitiesBtn();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileMain()));
       } else {
-        replaceLoaderWithAssetsBtn();
+        replaceLoaderWithLiabilitiesBtn();
         return utils.showToast(data.message);
       }
+    //}
+  }
+
+  
+    void editPersonalloan() async {
+      replaceLiabilitiesBtnWithLoader();
+    Map<String, dynamic> updata = {
+      "id" : personalid,
+      "total_loan": LoanAmmount.text,
+      "loan_issued_on": datecontroller.text,
+      "loan_tenure": TenureMonths.text,
+      "installment_amount": InstallmentAmount.text,
+      "frequency_payment": Frequency.text,
+      "rate_of_interest": Interest.text
+    };
+    print("updats is $updata");
+    final data = await StoreLiabilitiesform().updatePersonalloan(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      utils.showToast("Personal loan Added!");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+    } else {
+        replaceLoaderWithLiabilitiesBtn();
+        return utils.showToast(data.message);
     }
   }
 
   bool isSaveBtnVisible = true;
   bool isSaveBtnLoaderVisible = false;
 
-  void replaceAssetsBtnWithLoader() {
+  void replaceLiabilitiesBtnWithLoader() {
     setState(() {
       isSaveBtnVisible = false;
       isSaveBtnLoaderVisible = true;
     });
   }
 
-  void replaceLoaderWithAssetsBtn() {
+  void replaceLoaderWithLiabilitiesBtn() {
     setState(() {
       isSaveBtnVisible = true;
       isSaveBtnLoaderVisible = false;
@@ -379,15 +424,11 @@ class _PersonalLoanState extends State<PersonalLoan> {
                         child: CustomNextButton(
                           text: "Save",
                           ontap: () {
-                            UploadData();
-                            // final isValid = _form.currentState?.validate();
-                            // if (isValid!) {
-                            //   Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => ProfileMain()));
-                            //   //args ! = null ? editGoal() : UploadData();
-                            // }
+                            //UploadData();
+                            final isValid = _form.currentState?.validate();
+                            if (isValid!) {
+                              args != null? editPersonalloan() : UploadData();
+                            }
                           },
                         ),
                       ),

@@ -21,15 +21,104 @@ class CarLoan extends StatefulWidget {
 }
 
 class _CarLoanState extends State<CarLoan> {
-  final GlobalKey<FormState> _form = GlobalKey<FormState>();
+  TextEditingController Frequency = TextEditingController();
+  TextEditingController InstallmentAmount = TextEditingController();
+  TextEditingController Interest = TextEditingController();
   TextEditingController LoanAmmount = TextEditingController();
-  TextEditingController datecontroller = TextEditingController();
   //TextEditingController datecontroller2 = TextEditingController();
   TextEditingController TenureMonths = TextEditingController();
-  TextEditingController InstallmentAmount = TextEditingController();
-  TextEditingController Frequency = TextEditingController();
-  TextEditingController Interest = TextEditingController();
+  TextEditingController datecontroller = TextEditingController();
+  bool isSaveBtnLoaderVisible = false;
+  bool isSaveBtnVisible = true;
+
+  final GlobalKey<FormState> _form = GlobalKey<FormState>();
   DateTime? _selectedDate;
+
+   final args = Get.arguments;
+   int carid = 0;
+
+   @override
+  void initState() {
+    super.initState();
+    setValues();
+  }
+
+  setValues() {
+    if (args != null) {
+      carid = Get.arguments["id" ];
+      LoanAmmount.text = Get.arguments["total_loan"].toString();
+      datecontroller.text = Get.arguments["loan_issued_on"].toString();
+      TenureMonths.text = Get.arguments["loan_tenure"].toString();
+      InstallmentAmount.text = Get.arguments["installment_amount"].toString();
+      Frequency.text = Get.arguments["frequency_payment"].toString();
+      Interest.text = Get.arguments["rate_of_interest"].toString();
+    }
+  }
+
+    void UploadData() async {
+    //final isValid = _form.currentState?.validate();
+   // if (isValid!) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? user_id = await prefs.getInt('user_id');
+      replaceLiabilitiesBtnWithLoader();
+      Map<String, dynamic> updata = {
+        "user_id": user_id,
+        "total_loan": LoanAmmount.text,
+        "loan_issued_on": datecontroller.text,
+        "loan_tenure": TenureMonths.text,
+        "installment_amount": InstallmentAmount.text,
+        "frequency_payment": Frequency.text,
+        "rate_of_interest": Interest.text
+      };
+      print(updata);
+      final data = await StoreLiabilitiesform().postStoreLiabilitiesformCL(updata);
+      if (data.status == ResponseStatus.SUCCESS) {
+        replaceLoaderWithLiabilitiesBtn();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ProfileMain()));
+      } else {
+        replaceLoaderWithLiabilitiesBtn();
+        return utils.showToast(data.message);
+      }
+   // }
+  }
+
+    void editCarloan() async {
+      replaceLiabilitiesBtnWithLoader();
+    Map<String, dynamic> updata = {
+      "id" : carid,
+      "total_loan": LoanAmmount.text,
+      "loan_issued_on": datecontroller.text,
+      "loan_tenure": TenureMonths.text,
+      "installment_amount": InstallmentAmount.text,
+      "frequency_payment": Frequency.text,
+      "rate_of_interest": Interest.text
+    };
+    print("updats is $updata");
+    final data = await StoreLiabilitiesform().updateCarloan(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      utils.showToast("Personal loan Added!");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+    } else {
+        replaceLoaderWithLiabilitiesBtn();
+        return utils.showToast(data.message);
+    }
+  }
+
+  void replaceLiabilitiesBtnWithLoader() {
+    setState(() {
+      isSaveBtnVisible = false;
+      isSaveBtnLoaderVisible = true;
+    });
+  }
+
+  void replaceLoaderWithLiabilitiesBtn() {
+    setState(() {
+      isSaveBtnVisible = true;
+      isSaveBtnLoaderVisible = false;
+    });
+  }
 
   void _presentpastDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -48,50 +137,6 @@ class _CarLoanState extends State<CarLoan> {
         datecontroller.text =
             "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
       });
-    });
-  }
-    void UploadData() async {
-    final isValid = _form.currentState?.validate();
-    if (isValid!) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      int? user_id = await prefs.getInt('user_id');
-      replaceAssetsBtnWithLoader();
-      Map<String, dynamic> updata = {
-        "user_id": user_id,
-        "total_loan": LoanAmmount.text,
-        "loan_issued_on": datecontroller.text,
-        "loan_tenure": TenureMonths.text,
-        "installment_amount": InstallmentAmount.text,
-        "frequency_payment": Frequency.text,
-        "rate_of_interest": Interest.text
-      };
-      print(updata);
-      final data = await StoreLiabilitiesform().postStoreLiabilitiesformCL(updata);
-      if (data.status == ResponseStatus.SUCCESS) {
-        replaceLoaderWithAssetsBtn();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProfileMain()));
-      } else {
-        replaceLoaderWithAssetsBtn();
-        return utils.showToast(data.message);
-      }
-    }
-  }
-
-  bool isSaveBtnVisible = true;
-  bool isSaveBtnLoaderVisible = false;
-
-  void replaceAssetsBtnWithLoader() {
-    setState(() {
-      isSaveBtnVisible = false;
-      isSaveBtnLoaderVisible = true;
-    });
-  }
-
-  void replaceLoaderWithAssetsBtn() {
-    setState(() {
-      isSaveBtnVisible = true;
-      isSaveBtnLoaderVisible = false;
     });
   }
 
@@ -378,15 +423,11 @@ class _CarLoanState extends State<CarLoan> {
                         child: CustomNextButton(
                           text: "Save",
                           ontap: () {
-                            UploadData();
-                            // final isValid = _form.currentState?.validate();
-                            // if (isValid!) {
-                            //   Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => ProfileMain()));
-                            //   //args ! = null ? editGoal() : UploadData();
-                            // }
+                            //UploadData();
+                            final isValid = _form.currentState?.validate();
+                            if (isValid!) {
+                              args != null? editCarloan() : UploadData();
+                            }
                           },
                         ),
                       ),
@@ -418,9 +459,9 @@ class CarLoanDatePicker extends StatelessWidget {
   }) : super(key: key);
 
   final TextEditingController datecontroller;
+  final String? hintText;
   final GestureTapCallback ontap;
   final dynamic validator;
-  final String? hintText;
 
   @override
   Widget build(BuildContext context) {

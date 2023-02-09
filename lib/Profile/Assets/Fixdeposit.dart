@@ -32,6 +32,18 @@ class _FixDepositState extends State<FixDeposit> {
   final args = Get.arguments;
   int FixId = 0;
 
+  bool isValidInvestment(String investment) {
+  final RegExp investmentExpression = RegExp(r"^0{3}$");
+  
+  return !investmentExpression.hasMatch(investment);
+}
+
+   bool isValidTenure(String tenure) {
+  final RegExp tenureExpression = RegExp(r"^0{1}$");
+  
+  return !tenureExpression.hasMatch(tenure);
+}
+
   @override
   void initState() {
     super.initState();
@@ -69,25 +81,26 @@ class _FixDepositState extends State<FixDeposit> {
     });
   }
 
-  void _TenurepresentDatePicker() {
-    // showDatePicker is a pre-made funtion of Flutter
-    showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2099))
-        .then((pickedDate) {
-      // Check if no date is selected
-      if (pickedDate == null) {
-        return;
-      }
-      setState(() {
-        _selectedDate = pickedDate;
-        datecontroller2.text =
-            "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
-      });
-    });
-  }
+  // void _TenurepresentDatePicker() {
+  //  DateTime now = DateTime.now();
+  //   DateTime firstDate = now.add(Duration(days: 1));
+  //   showDatePicker(
+  //           context: context,
+  //           initialDate: firstDate,
+  //           firstDate: firstDate,
+  //           lastDate: DateTime(2099))
+  //       .then((pickedDate) {
+  //     // Check if no date is selected
+  //     if (pickedDate == null) {
+  //       return;
+  //     }
+  //     setState(() {
+  //       _selectedDate = pickedDate;
+  //       datecontroller2.text =
+  //           "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
+  //     });
+  //   });
+  // }
 
   void UploadData() async {
     // final isValid = _form.currentState?.validate();
@@ -106,6 +119,7 @@ class _FixDepositState extends State<FixDeposit> {
       print(updata);
       final data = await StoreAssetsform().postStoreAssetsformFD(updata);
       if (data.status == ResponseStatus.SUCCESS) {
+        utils.showToast("Fix deposit Added!");
         replaceLoaderWithAssetsBtn();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileMain()));
@@ -205,6 +219,7 @@ class _FixDepositState extends State<FixDeposit> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                               RegExp('[a-zA-Z ]')),
+                         LengthLimitingTextInputFormatter(25),   
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -248,9 +263,15 @@ class _FixDepositState extends State<FixDeposit> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter amount";
+                          }else if (!isValidInvestment(value)) {
+                            return 'Investment amount cannot contain zeros';
                           }
                           return null;
                         },
+                        inputFormatters: [
+                           LengthLimitingTextInputFormatter(20),
+                          FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                        ],
                       ),
                       SizedBox(
                         height: 30.h,
@@ -290,6 +311,10 @@ class _FixDepositState extends State<FixDeposit> {
                           }
                           return null;
                         },
+                        inputFormatters: [
+                           LengthLimitingTextInputFormatter(5),
+                          FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                        ],
                       ),
                       SizedBox(
                         height: 30.h,
@@ -316,24 +341,58 @@ class _FixDepositState extends State<FixDeposit> {
                         height: 30.h,
                       ),
                       Text(
-                        "Tenure*",
+                        "Tenure*(In years)",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Get.isDarkMode ? Colors.white : Colors.black,
                         ),
                       ),
-                      FixDEpositDatePicker(
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: datecontroller2,
+                        keyboardType: TextInputType.number,
+                        cursorColor: Colors.grey,
+                        decoration: InputDecoration(
+                          // prefixIcon: Text(
+                          //   "₹",
+                          //   style: TextStyle(color: Colors.black, fontSize: 18),
+                          // ),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: Color(0xFF303030))),
+                          hintText: "Enter Tenure in years",
+                          helperText: "",
+                          hintStyle: blackStyle(context).copyWith(
+                              color: Get.isDarkMode
+                                  ? Colors.white
+                                  : const Color(0xFF6B6B6B),
+                              fontSize: 14),
+                        ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please select tenure";
+                            return "Please enter tenure in years";
+                          }else if (!isValidTenure(value)) {
+                            return 'Tenure cannot contain zeros';
                           }
                           return null;
                         },
-                        datecontroller: datecontroller2,
-                        ontap: () => _TenurepresentDatePicker(),
-                        hintText: "Select tenure",
+                        inputFormatters: [
+                           LengthLimitingTextInputFormatter(3),
+                          FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                        ],
                       ),
+                      // FixDEpositDatePicker(
+                      //   validator: (value) {
+                      //     if (value == null || value.isEmpty) {
+                      //       return "Please select tenure";
+                      //     }
+                      //     return null;
+                      //   },
+                      //   datecontroller: datecontroller2,
+                      //   ontap: () => _TenurepresentDatePicker(),
+                      //   hintText: "Select tenure",
+                      // ),
                       SizedBox(
                         height: 50.h,
                       ),

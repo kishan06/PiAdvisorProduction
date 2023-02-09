@@ -39,7 +39,7 @@ class _FixDepositState extends State<FixDeposit> {
 }
 
    bool isValidTenure(String tenure) {
-  final RegExp tenureExpression = RegExp(r"^0{1}$");
+  final RegExp tenureExpression = RegExp(r"^0{2}$");
   
   return !tenureExpression.hasMatch(tenure);
 }
@@ -269,7 +269,7 @@ class _FixDepositState extends State<FixDeposit> {
                           return null;
                         },
                         inputFormatters: [
-                           LengthLimitingTextInputFormatter(20),
+                           LengthLimitingTextInputFormatter(12),
                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                         ],
                       ),

@@ -250,7 +250,7 @@ class _HomeloanState extends State<Homeloan> {
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                        LengthLimitingTextInputFormatter(20),
+                        LengthLimitingTextInputFormatter(12),
                       ],
                     ),
                     SizedBox(
@@ -373,7 +373,7 @@ class _HomeloanState extends State<Homeloan> {
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                        LengthLimitingTextInputFormatter(20),
+                        LengthLimitingTextInputFormatter(12),
                       ],
                     ),
                     SizedBox(

@@ -11,7 +11,6 @@ late UserLiabilitiesHL userHomeLoan;
 late UserLiabilitiesPL userPersonalLoan;
 late UserLiabilitiesCL userCarLoan;
 
-
 class StoreLiabilitiesform {
   Dio dio = new Dio();
 
@@ -24,8 +23,7 @@ class StoreLiabilitiesform {
       print("I am here");
       response = await dio.post(ApiConstant.postLiabiltiesformHL,
           data: updata,
-          options: Options(headers: {"authorization": "Bearer $token"})
-          );
+          options: Options(headers: {"authorization": "Bearer $token"}));
       print(updata);
       print("token is $token");
     } on Exception catch (_) {
@@ -33,12 +31,12 @@ class StoreLiabilitiesform {
       return ResponseData<dynamic>(
           'Oops something Went Wrong', ResponseStatus.FAILED);
     }
-    print(" resp is $response");
+
     if (response.statusCode == 200) {
       // Map<String, dynamic> res = response.data;
       // await prefs.setString('token', res["token"]);
 
-     print("hl response is ${response.data}");
+      print("hl response is ${response.data}");
 
       return ResponseData<dynamic>(
         "success",
@@ -55,7 +53,7 @@ class StoreLiabilitiesform {
     }
   }
 
-    Future<ResponseData> postStoreLiabilitiesformPL(
+  Future<ResponseData> postStoreLiabilitiesformPL(
       Map<String, dynamic> updata) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -64,9 +62,8 @@ class StoreLiabilitiesform {
       print("I am here");
       response = await dio.post(ApiConstant.postLiabiltiesformPL,
           data: updata,
-          options: Options(headers: {"authorization": "Bearer $token"})
-          );
-      print(updata);
+          options: Options(headers: {"authorization": "Bearer $token"}));
+
       print("token is $token");
     } on Exception catch (_) {
       print("task failed");
@@ -95,7 +92,7 @@ class StoreLiabilitiesform {
     }
   }
 
-      Future<ResponseData> postStoreLiabilitiesformCL(
+  Future<ResponseData> postStoreLiabilitiesformCL(
       Map<String, dynamic> updata) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -104,8 +101,7 @@ class StoreLiabilitiesform {
       print("I am here");
       response = await dio.post(ApiConstant.postLiabiltiesformCL,
           data: updata,
-          options: Options(headers: {"authorization": "Bearer $token"})
-          );
+          options: Options(headers: {"authorization": "Bearer $token"}));
       print(updata);
       print("token is $token");
     } on Exception catch (_) {
@@ -118,7 +114,7 @@ class StoreLiabilitiesform {
       // Map<String, dynamic> res = response.data;
       // await prefs.setString('token', res["token"]);
 
-     print("cl response is ${response.data}");
+      print("cl response is ${response.data}");
 
       return ResponseData<dynamic>(
         "success",
@@ -142,7 +138,7 @@ class StoreLiabilitiesform {
     try {
       response = await dio.get(ApiConstant.getliabilitieshl,
           options: Options(headers: {"authorization": "Bearer $token"}));
-          print("status success");
+      print("status success");
     } on Exception catch (_) {
       print("error occured");
       return ResponseData<dynamic>(
@@ -182,7 +178,7 @@ class StoreLiabilitiesform {
 
     if (response.statusCode == 200) {
       userPersonalLoan = UserLiabilitiesPL.fromJson(response.data);
-      print(response.data);
+      print("resp for personal loan is ${response.data}");
       return ResponseData<dynamic>(
         "success",
         ResponseStatus.SUCCESS,
@@ -198,7 +194,7 @@ class StoreLiabilitiesform {
     }
   }
 
-    Future<ResponseData> getLiabilitiesCL() async {
+  Future<ResponseData> getLiabilitiesCL() async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token').toString();
@@ -229,8 +225,7 @@ class StoreLiabilitiesform {
     }
   }
 
-
-    Future<ResponseData> deleteLiabilitiesHL(Map<String, dynamic> updata) async {
+  Future<ResponseData> deleteLiabilitiesHL(Map<String, dynamic> updata) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token').toString();
@@ -294,7 +289,7 @@ class StoreLiabilitiesform {
     }
   }
 
-    Future<ResponseData> deleteLiabilitiesCL(Map<String, dynamic> updata) async {
+  Future<ResponseData> deleteLiabilitiesCL(Map<String, dynamic> updata) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token').toString();
@@ -326,7 +321,7 @@ class StoreLiabilitiesform {
     }
   }
 
-    Future<ResponseData> updateHomeloan(Map<String, dynamic> updata) async {
+  Future<ResponseData> updateHomeloan(Map<String, dynamic> updata) async {
     print("reached till here");
     print(updata);
     Response response;
@@ -398,7 +393,7 @@ class StoreLiabilitiesform {
     }
   }
 
-   Future<ResponseData> updateCarloan(Map<String, dynamic> updata) async {
+  Future<ResponseData> updateCarloan(Map<String, dynamic> updata) async {
     print("reached till here");
     print(updata);
     Response response;

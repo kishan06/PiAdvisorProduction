@@ -34,10 +34,10 @@ class _CarLoanState extends State<CarLoan> {
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   DateTime? _selectedDate;
 
-   final args = Get.arguments;
-   int carid = 0;
+  final args = Get.arguments;
+  int carid = 0;
 
-   @override
+  @override
   void initState() {
     super.initState();
     setValues();
@@ -45,7 +45,7 @@ class _CarLoanState extends State<CarLoan> {
 
   setValues() {
     if (args != null) {
-      carid = Get.arguments["id" ];
+      carid = Get.arguments["id"];
       LoanAmmount.text = Get.arguments["total_loan"].toString();
       datecontroller.text = Get.arguments["loan_issued_on"].toString();
       TenureMonths.text = Get.arguments["loan_tenure"].toString();
@@ -55,38 +55,39 @@ class _CarLoanState extends State<CarLoan> {
     }
   }
 
-    void UploadData() async {
+  void UploadData() async {
     //final isValid = _form.currentState?.validate();
-   // if (isValid!) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      int? user_id = await prefs.getInt('user_id');
-      replaceLiabilitiesBtnWithLoader();
-      Map<String, dynamic> updata = {
-        "user_id": user_id,
-        "total_loan": LoanAmmount.text,
-        "loan_issued_on": datecontroller.text,
-        "loan_tenure": TenureMonths.text,
-        "installment_amount": InstallmentAmount.text,
-        "frequency_payment": Frequency.text,
-        "rate_of_interest": Interest.text
-      };
-      print(updata);
-      final data = await StoreLiabilitiesform().postStoreLiabilitiesformCL(updata);
-      if (data.status == ResponseStatus.SUCCESS) {
-        replaceLoaderWithLiabilitiesBtn();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProfileMain()));
-      } else {
-        replaceLoaderWithLiabilitiesBtn();
-        return utils.showToast(data.message);
-      }
-   // }
+    // if (isValid!) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? user_id = await prefs.getInt('user_id');
+    replaceLiabilitiesBtnWithLoader();
+    Map<String, dynamic> updata = {
+      "user_id": user_id,
+      "total_loan": LoanAmmount.text,
+      "loan_issued_on": datecontroller.text,
+      "loan_tenure": TenureMonths.text,
+      "installment_amount": InstallmentAmount.text,
+      "frequency_payment": Frequency.text,
+      "rate_of_interest": Interest.text
+    };
+
+    final data =
+        await StoreLiabilitiesform().postStoreLiabilitiesformCL(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      replaceLoaderWithLiabilitiesBtn();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+    } else {
+      replaceLoaderWithLiabilitiesBtn();
+      return utils.showToast(data.message);
+    }
+    // }
   }
 
-    void editCarloan() async {
-      replaceLiabilitiesBtnWithLoader();
+  void editCarloan() async {
+    replaceLiabilitiesBtnWithLoader();
     Map<String, dynamic> updata = {
-      "id" : carid,
+      "id": carid,
       "total_loan": LoanAmmount.text,
       "loan_issued_on": datecontroller.text,
       "loan_tenure": TenureMonths.text,
@@ -101,8 +102,8 @@ class _CarLoanState extends State<CarLoan> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => ProfileMain()));
     } else {
-        replaceLoaderWithLiabilitiesBtn();
-        return utils.showToast(data.message);
+      replaceLoaderWithLiabilitiesBtn();
+      return utils.showToast(data.message);
     }
   }
 
@@ -426,15 +427,15 @@ class _CarLoanState extends State<CarLoan> {
                             //UploadData();
                             final isValid = _form.currentState?.validate();
                             if (isValid!) {
-                              args != null? editCarloan() : UploadData();
+                              args != null ? editCarloan() : UploadData();
                             }
                           },
                         ),
                       ),
                     ),
                     Visibility(
-                      visible:  isSaveBtnLoaderVisible,
-                      child: Center(child: CircularProgressIndicator())),
+                        visible: isSaveBtnLoaderVisible,
+                        child: Center(child: CircularProgressIndicator())),
                     SizedBox(
                       height: 30.h,
                     ),

@@ -1,27 +1,27 @@
 class UserLiabilitiesPL {
-  List<Userpl>? userpl;
+  List<UserPL>? user;
 
-  UserLiabilitiesPL({this.userpl});
+  UserLiabilitiesPL({this.user});
 
   UserLiabilitiesPL.fromJson(Map<String, dynamic> json) {
     if (json['user'] != null) {
-      userpl = <Userpl>[];
+      user = <UserPL>[];
       json['user'].forEach((v) {
-        userpl!.add(new Userpl.fromJson(v));
+        user!.add(new UserPL.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.userpl != null) {
-      data['user'] = this.userpl!.map((v) => v.toJson()).toList();
+    if (this.user != null) {
+      data['user'] = this.user!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Userpl {
+class UserPL {
   int? id;
   int? userId;
   int? totalLoan;
@@ -33,7 +33,7 @@ class Userpl {
   String? createdAt;
   String? updatedAt;
 
-  Userpl(
+  UserPL(
       {this.id,
       this.userId,
       this.totalLoan,
@@ -45,7 +45,7 @@ class Userpl {
       this.createdAt,
       this.updatedAt});
 
-  Userpl.fromJson(Map<String, dynamic> json) {
+  UserPL.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
     totalLoan = json['total_loan'];

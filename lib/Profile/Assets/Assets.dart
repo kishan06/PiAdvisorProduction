@@ -122,7 +122,7 @@ class _AssetsState extends State<Assets> {
 
             // globalMutualfund = _Mutualfund;
 
-            _Fixdeposit = userFixdeposit?.userfd;
+            _Fixdeposit = userFixdeposit?.user;
             // globalFixdeposit = _Fixdeposit;
 
             _Realestate = userRealestate?.userRe;

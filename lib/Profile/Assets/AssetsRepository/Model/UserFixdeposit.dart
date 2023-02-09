@@ -1,21 +1,21 @@
 class UserFixdeposit {
-  List<Userfd>? userfd;
+  List<Userfd>? user;
 
-  UserFixdeposit({this.userfd});
+  UserFixdeposit({this.user});
 
   UserFixdeposit.fromJson(Map<String, dynamic> json) {
     if (json['user'] != null) {
-      userfd = <Userfd>[];
+      user = <Userfd>[];
       json['user'].forEach((v) {
-        userfd!.add(new Userfd.fromJson(v));
+        user!.add(new Userfd.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.userfd != null) {
-      data['user'] = this.userfd!.map((v) => v.toJson()).toList();
+    if (this.user != null) {
+      data['user'] = this.user!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -25,8 +25,8 @@ class Userfd {
   int? id;
   int? userId;
   String? bankName;
-  int? investmentAmount;
-  int? annualRate;
+  String? investmentAmount;
+  String? annualRate;
   String? startDate;
   String? tenure;
   String? createdAt;

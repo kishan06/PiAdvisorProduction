@@ -24,12 +24,12 @@ class UserLiabilitiesPL {
 class UserPL {
   int? id;
   int? userId;
-  int? totalLoan;
+  String? totalLoan;
   String? loanIssuedOn;
-  int? loanTenure;
-  int? installmentAmount;
-  int? frequencyPayment;
-  int? rateOfInterest;
+  String? loanTenure;
+  String? installmentAmount;
+  String? frequencyPayment;
+  String? rateOfInterest;
   String? createdAt;
   String? updatedAt;
 

@@ -25,9 +25,9 @@ class User {
   int? id;
   int? userId;
   String? schemeName;
-  int? investmentAmount;
+  String? investmentAmount;
   String? dateOfInvestment;
-  int? currentValue;
+  String? currentValue;
   String? createdAt;
   String? updatedAt;
 

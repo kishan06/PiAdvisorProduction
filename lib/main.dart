@@ -47,6 +47,9 @@ import 'package:piadvisory/Profile/KYC/Repository/LoadingPageKYC.dart';
 import 'package:piadvisory/Profile/KYC/SchduleAppointment.dart';
 
 import 'package:piadvisory/Profile/KYC/SelectTimeAndDate.dart';
+import 'package:piadvisory/Profile/Liabilities/CarLoan.dart';
+import 'package:piadvisory/Profile/Liabilities/Homeloan.dart';
+import 'package:piadvisory/Profile/Liabilities/PersonalLoan.dart';
 import 'package:piadvisory/Profile/PersonalProfile.dart';
 import 'package:piadvisory/Profile/Personalprofilerepository/Model/familybasicdetails.dart';
 import 'package:piadvisory/Profile/add-goal.dart';
@@ -232,6 +235,9 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: '/editMutualfund', page: () => Mutualfund()),
            GetPage(name: '/editFixdeposit', page: () => FixDeposit()),
             GetPage(name: '/editRealestate', page: () => RealEstate()),
+          GetPage(name: '/editHomeloan', page: () => Homeloan()),
+          GetPage(name: '/editPersonalloan', page: () => PersonalLoan()),
+         GetPage(name: '/editCarloan', page: () => CarLoan()),
           
         ],
       ),

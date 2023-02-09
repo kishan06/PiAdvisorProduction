@@ -1,7 +1,8 @@
 class ApiConstant {
   static const String base = "https://pi.betadelivery.com/pi_advisors/";
 
-  static const String basetesting = "https://pi.betadelivery.com/pi_advisors/";
+
+  static const String basetesting = "https://app.piadvisors.in/";
 
   static const String loginAPI = base + 'api/loginv2';
 
@@ -149,4 +150,18 @@ class ApiConstant {
   static const String updaterealestate = base + 'api/updaterealestatedetails';
   static const String updatefixdeposit = base + 'api/updatefixdepositsdetails';
   
+
+  static const String getliabilitieshl = base + 'api/gethomeloandetails';
+  static const String deleteLiabilitieshl =  base + 'api/deletehomeloandetails';
+  static const String updateHomeloan= base + 'api/updatehomeloandetails';
+
+  static const String getliabilitiespl = base + 'api/getpersonalloandetails';
+  static const String deleteLiabilitiespl =  base + 'api/deletepersonalloandetails';
+  static const String updatePersonalloan= base + 'api/updatepersonalloandetails';
+
+  static const String getliabilitiescl = base + 'api/getcarloandetails';
+  static const String deleteLiabilitiescl =  base + 'api/deletecarloandetails';
+  static const String updateCarloan= base + 'api/updatecarloandetails';
+
+ 
 }

@@ -736,7 +736,7 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                       SizedBox(
                         width: 5,
                       ),
-                      SvgPicture.asset("assets/images/updownarrow.svg"),
+                      //SvgPicture.asset("assets/images/updownarrow.svg"),
                     ],
                   ),
                   SizedBox(
@@ -899,7 +899,7 @@ class _MutualFundsGraphState extends State<MutualFundsGraph> {
                       SizedBox(
                         width: 5,
                       ),
-                      SvgPicture.asset("assets/images/updownarrow.svg"),
+                      //SvgPicture.asset("assets/images/updownarrow.svg"),
                     ],
                   ),
                   SizedBox(

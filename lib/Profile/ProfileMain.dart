@@ -23,6 +23,7 @@ import 'package:piadvisory/Profile/KYC/Repository/storebasicfamilydetails.dart';
 import 'package:piadvisory/Profile/KYC/Repository/storebasickycuserdetails.dart';
 import 'package:piadvisory/Profile/KYC/SchduleAppointment.dart';
 import 'package:piadvisory/Profile/Liabilities/Liabilities.dart';
+import 'package:piadvisory/Profile/Liabilities/LiabilitiesRepository/liabilitiesform.dart';
 import 'package:piadvisory/Profile/PasswordAndSecurity/PasswordAndSecurity.dart';
 import 'package:piadvisory/Profile/PersonalProfile.dart';
 import 'package:piadvisory/Profile/Personalprofilerepository/storePersonalprofile.dart';
@@ -121,7 +122,10 @@ class _ProfileMainState extends State<ProfileMain> {
       StorebasickycuserDetails().getBasicKycDetails(),
       StoreAssetsform().getAssetsMF(),
       StoreAssetsform().getAssetsFD(),
-      StoreAssetsform().getAssetsRE()
+      StoreAssetsform().getAssetsRE(),
+      StoreLiabilitiesform().getLiabilitiesHL(),
+      StoreLiabilitiesform().getLiabilitiesPL(),
+      StoreLiabilitiesform().getLiabilitiesCL(),
     ]);
     setState(() {});
   }

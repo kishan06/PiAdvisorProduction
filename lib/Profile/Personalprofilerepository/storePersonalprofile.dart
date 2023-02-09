@@ -19,6 +19,8 @@ class StorePersonalprofile {
       response = await dio.post(ApiConstant.postStorePersonalprofile,
           data: updata,
           options: Options(headers: {"authorization": "Bearer $token"}));
+          print(updata);
+          print("token is $token");
     } on Exception catch (_) {
       return ResponseData<dynamic>(
           'Oops something Went Wrong', ResponseStatus.FAILED);
@@ -28,7 +30,7 @@ class StorePersonalprofile {
       // Map<String, dynamic> res = response.data;
       // await prefs.setString('token', res["token"]);
 
-      print(response);
+      print("profile response is ${response.data}");
 
       return ResponseData<dynamic>(
         "success",

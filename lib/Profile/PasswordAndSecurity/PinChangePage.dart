@@ -199,6 +199,7 @@ class _PinChangePageState extends State<PinChangePage> {
                 ),
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(4),
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                 ],
                 validator: (val) {
                   if (val == null || val.isEmpty) {
@@ -339,6 +340,7 @@ class _PinChangePageState extends State<PinChangePage> {
                 ),
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(4),
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                 ],
                 validator: (val) {
                   if (val == null || val.isEmpty) {
@@ -405,6 +407,7 @@ class _PinChangePageState extends State<PinChangePage> {
                 ),
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(4),
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                 ],
                 validator: (val) {
                   if (val == null || val.isEmpty) {

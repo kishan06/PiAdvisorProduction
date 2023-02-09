@@ -1756,6 +1756,8 @@ class _TopGainerState extends State<TopGainer>
             addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
+              num percentageChange =
+                  num.parse(data.table![index].nETCHG! ?? "0");
               String dateStart = data.table![index].uPDTIME!;
               DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
               DateTime now = inputFormat.parse(dateStart);
@@ -1769,6 +1771,7 @@ class _TopGainerState extends State<TopGainer>
                   setState(() {
                     searchingStarted = false;
                   });
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -1792,7 +1795,7 @@ class _TopGainerState extends State<TopGainer>
                   subtitle1: convertedDateTime,
                   title2: data.table![index].cLOSEPRICE!,
                   subtitle2: "Vol:${data.table![index].vOLUME!}",
-                  title3: "+${data.table![index].nETCHG!}",
+                  title3: "+${percentageChange.toStringAsFixed(1)}",
                   subtitle3: "(${data.table![index].pERCHG!} %)",
                 ),
               );
@@ -1929,6 +1932,8 @@ class _TopLoserState extends State<TopLoser>
             addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
+              num percentageChange =
+                  num.parse(data.table![index].nETCHG! ?? "0");
               String dateStart = data.table![index].uPDTIME!;
               DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
               DateTime now = inputFormat.parse(dateStart);
@@ -1965,7 +1970,7 @@ class _TopLoserState extends State<TopLoser>
                   subtitle1: convertedDateTime,
                   title2: data.table![index].cLOSEPRICE!,
                   subtitle2: "Vol:${data.table![index].vOLUME!}",
-                  title3: data.table![index].nETCHG!,
+                  title3: percentageChange.toStringAsFixed(1),
                   subtitle3: "(${data.table![index].pERCHG!} %)",
                 ),
               );
@@ -2101,6 +2106,7 @@ class _ActiveByValueState extends State<ActiveByValue>
             addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
+              num percentageChange = num.parse(data.table![index].change!);
               String dateStart = data.table![index].uPDTIME!;
               DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
               DateTime now = inputFormat.parse(dateStart);
@@ -2136,7 +2142,7 @@ class _ActiveByValueState extends State<ActiveByValue>
                   subtitle1: convertedDateTime,
                   title2: data.table![index].price!,
                   subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: data.table![index].change!,
+                  title3: percentageChange.toStringAsFixed(1),
                   subtitle3: "(${data.table![index].perChange!} %)",
                 ),
               );
@@ -2272,6 +2278,7 @@ class _ActiveByVolumeState extends State<ActiveByVolume>
             addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
+              num percentageChange = num.parse(data.table![index].change!);
               String dateStart = data.table![index].uPDTIME!;
               DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
               DateTime now = inputFormat.parse(dateStart);
@@ -2307,7 +2314,7 @@ class _ActiveByVolumeState extends State<ActiveByVolume>
                   subtitle1: convertedDateTime,
                   title2: data.table![index].price!,
                   subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: data.table![index].change!,
+                  title3: percentageChange.toStringAsFixed(1),
                   subtitle3: "(${data.table![index].perChange!} %)",
                 ),
               );
@@ -2440,6 +2447,7 @@ class _Week52State extends State<Week52>
             addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
+              num percentageChange = num.parse(data.table![index].change!);
               String dateStart = data.table![index].uPDTIME!;
               DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
               DateTime now = inputFormat.parse(dateStart);
@@ -2464,7 +2472,7 @@ class _Week52State extends State<Week52>
                               openPrice: data.table![index].openPrice,
                               // prevClose: data.table![index].prevPrice,
                               volume: data.table![index].volume,
-                              // value: data.table![index].vALUE,
+                              value: data.table![index].value,
                               perChange: data.table![index].perChange,
                               lowPrice: data.table![index].lOWPrice,
                               highPrice: data.table![index].highPrice,
@@ -2475,7 +2483,7 @@ class _Week52State extends State<Week52>
                   subtitle1: convertedDateTime,
                   title2: data.table![index].lastPrice!,
                   subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: data.table![index].change!,
+                  title3: percentageChange.toStringAsFixed(1),
                   subtitle3: "(${data.table![index].perChange!} %)",
                 ),
               );
@@ -2608,6 +2616,7 @@ class _Week52LowState extends State<Week52Low>
             addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
+              num percentageChange = num.parse(data.table![index].change!);
               String dateStart = data.table![index].uPDTIME!;
               DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
               DateTime now = inputFormat.parse(dateStart);
@@ -2632,7 +2641,7 @@ class _Week52LowState extends State<Week52Low>
                               openPrice: data.table![index].openPrice,
                               // prevClose: data.table![index].prevPrice,
                               volume: data.table![index].volume,
-                              // value: data.table![index].vALUE,
+                              value: data.table![index].value,
                               perChange: data.table![index].perChange,
                               lowPrice: data.table![index].lOWPrice,
                               highPrice: data.table![index].highPrice,
@@ -2643,7 +2652,7 @@ class _Week52LowState extends State<Week52Low>
                   subtitle1: convertedDateTime,
                   title2: data.table![index].lastPrice!,
                   subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: data.table![index].change!,
+                  title3: percentageChange.toStringAsFixed(1),
                   subtitle3: "(${data.table![index].perChange!} %)",
                 ),
               );
@@ -2778,6 +2787,7 @@ class _OnlyBuyersState extends State<OnlyBuyers>
             addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
+              num percentageChange = num.parse(data.table![index].perChng!);
               // String dateStart = data.table![index].uPDTIME!;
               // DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
               // DateTime now = inputFormat.parse(dateStart);
@@ -2813,7 +2823,7 @@ class _OnlyBuyersState extends State<OnlyBuyers>
                   // subtitle1: convertedDateTime,
                   title2: data.table![index].lastPrice!,
                   subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: data.table![index].chng!,
+                  title3: percentageChange.toStringAsFixed(1),
                   subtitle3: "(${data.table![index].perChng!} %)",
                 ),
               );
@@ -2948,6 +2958,7 @@ class _OnlySellersState extends State<OnlySellers>
             addAutomaticKeepAlives: true,
             itemCount: data.table!.length,
             itemBuilder: (BuildContext context, int index) {
+              num percentageChange = num.parse(data.table![index].perChng!);
               // String dateStart = data.table![index].uPDTIME!;
               // DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
               // DateTime now = inputFormat.parse(dateStart);
@@ -2983,7 +2994,7 @@ class _OnlySellersState extends State<OnlySellers>
                   // subtitle1: convertedDateTime,
                   title2: data.table![index].lastPrice!,
                   subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: data.table![index].chng!,
+                  title3: percentageChange.toStringAsFixed(1),
                   subtitle3: "(${data.table![index].perChng!} %)",
                 ),
               );

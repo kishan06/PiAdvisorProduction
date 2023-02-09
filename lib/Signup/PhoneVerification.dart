@@ -58,6 +58,13 @@ class _PhoneVerificationState extends State<PhoneVerification> {
   bool pinfiledshow = false;
   bool _sendOTPclicked = false;
 
+  
+  bool isValidPhoneNumber(String phoneNumber) {
+  final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
+  
+  return !phoneNumberExpression.hasMatch(phoneNumber);
+}
+
   void _validateData() {
     final isValid = _form.currentState?.validate();
     if (isValid!) {
@@ -238,6 +245,8 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                             return "Please Enter Number";
                           } else if (value.length < 10) {
                             return "Please Enter Correct Phone Number";
+                          } else if (!isValidPhoneNumber(value)) {
+                            return 'Phone number cannot contain 10 zeros';
                           }
                           return null;
                         },
@@ -270,6 +279,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                         ),
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(10),
+                          FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                         ],
                         // onFieldSubmitted: (value) {
                         //   setState(() {
@@ -396,6 +406,9 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                   return null;
                 },
                 keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                ],
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 length: 4,
                 obscureText: false,
@@ -439,7 +452,6 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                   ),
               SizedBox(
                 height: 30,
-                
               ),
               Row(
                 children: [

@@ -129,12 +129,19 @@ class _FamilyDetailsState extends State<FamilyDetails> {
         if (isFather) {
           datecontrollerFather.text =
               "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
+          var currentTime = DateTime.now();
+          age.text = (currentTime.year - _selectedDate!.year).toString();
         } else if (isHusbandWife) {
           datecontrollerHusbandWife.text =
               "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
+          var currentTime = DateTime.now();
+          ageHusbandWife.text =
+              (currentTime.year - _selectedDate!.year).toString();
         } else {
           datecontrollerMother.text =
               "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
+          var currentTime = DateTime.now();
+          ageMother.text = (currentTime.year - _selectedDate!.year).toString();
         }
       });
     });
@@ -339,6 +346,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             CustomTextFields(
+              readOnly: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
@@ -431,6 +439,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             CustomTextFields(
+              readOnly: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";
@@ -523,6 +532,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
               ),
             ),
             CustomTextFields(
+              readOnly: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please Enter Age";

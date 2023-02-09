@@ -54,6 +54,18 @@ class _KYCMainState extends State<KYCMain> {
     getKYCDetails();
   }
 
+  bool isValidPhoneNumber(String phoneNumber) {
+    final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
+
+    return !phoneNumberExpression.hasMatch(phoneNumber);
+  }
+
+   bool isValidPanNumber(String phoneNumber) {
+    final RegExp panNumberExpression = RegExp(r"^0{10}$");
+
+    return !panNumberExpression.hasMatch(phoneNumber);
+  }
+
   prefix.Dio dio = new prefix.Dio();
 
   Future<ResponseData> getKYCDetails() async {
@@ -103,6 +115,8 @@ class _KYCMainState extends State<KYCMain> {
         _selectedDate = pickedDate;
         datecontroller.text =
             "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
+            var currentTime = DateTime.now();
+           agecontroller.text = (currentTime.year - _selectedDate!.year).toString(); 
       });
     });
   }
@@ -130,7 +144,7 @@ class _KYCMainState extends State<KYCMain> {
         replaceLoaderWithKycBtn();
         _storePanAndDob();
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => LoadingPageCKYCCheck()));
+            MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
       } else {
@@ -441,6 +455,8 @@ class _KYCMainState extends State<KYCMain> {
                   return "Please Enter PAN Number in Capital";
                 } else if (value.length != 10) {
                   return "Please Enter Valid PAN Number";
+                } else if (!isValidPanNumber(value)) {
+                return 'Pan number cannot contain 10 zeros';
                 }
                 return null;
               },
@@ -477,6 +493,8 @@ class _KYCMainState extends State<KYCMain> {
                   return "Please Enter Phone Number";
                 } else if (value.length != 10) {
                   return "Please Enter Valid Phone Number";
+                } else if (!isValidPhoneNumber(value)) {
+                  return 'Phone number cannot contain 10 zeros';
                 }
                 return null;
               },
@@ -516,13 +534,14 @@ class _KYCMainState extends State<KYCMain> {
             ),
             Text(
               "Age*",
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
               // blackStyle(context).copyWith(
               //   fontSize: 16.sp,
               //   fontWeight: FontWeight.w600,
               // ),
             ),
             CustomTextFields(
+              readOnly: true,
               textCapitalization: TextCapitalization.none,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -917,6 +936,7 @@ class CustomTextFields extends StatelessWidget {
       this.txtinptype,
       this.inputFormatters,
       this.textCapitalization,
+      this.readOnly,
       this.validator})
       : super(key: key);
 
@@ -931,9 +951,11 @@ class CustomTextFields extends StatelessWidget {
   final dynamic inputFormatters;
   final dynamic textCapitalization;
   final dynamic validator;
+  final bool? readOnly;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly ?? false,
       textCapitalization: textCapitalization,
       keyboardType: txtinptype ?? TextInputType.text,
       maxLength: maxlength,

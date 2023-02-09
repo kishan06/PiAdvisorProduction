@@ -8,6 +8,7 @@ import 'package:piadvisory/Profile/GoalsRepository/storeGoals.dart';
 import 'package:piadvisory/Profile/goal.dart';
 import 'package:piadvisory/SideMenu/Subscribe/Mysubscription.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '/Common/CustomNextButton.dart';
 import '/Profile/ProfileMain.dart';
 import '/Utils/textStyles.dart';
@@ -32,14 +33,19 @@ class _AddGoalsState extends State<AddGoals> {
   final args = Get.arguments;
   int goalId = 0;
   bool addGoalbtnvisible = true;
-   bool progressindicatorvisible = false;
-  
+  bool progressindicatorvisible = false;
+
+  final RoundedLoadingButtonController _btnController1 =
+      RoundedLoadingButtonController();
+
   @override
   void initState() {
     super.initState();
+   _btnController1.stateStream.listen((value) {});
     setValues();
   }
- void replaceAddGoalBtnWithLoader() {
+
+  void replaceAddGoalBtnWithLoader() {
     setState(() {
       addGoalbtnvisible = false;
       progressindicatorvisible = true;
@@ -52,6 +58,7 @@ class _AddGoalsState extends State<AddGoals> {
       progressindicatorvisible = false;
     });
   }
+
   setValues() {
     //var _idExists = Get.arguments["id"];
 
@@ -65,11 +72,11 @@ class _AddGoalsState extends State<AddGoals> {
 
   void _yearMonthPicker() async {
     showMonthPicker(
-      context: context,
-      initialDate: _selected ?? DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate:  DateTime(2075)
-    ).then((date) {
+            context: context,
+            initialDate: _selected ?? DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2075))
+        .then((date) {
       if (date != null) {
         setState(() {
           _selected = date;
@@ -81,20 +88,20 @@ class _AddGoalsState extends State<AddGoals> {
 
   void UploadData() async {
     print("upload goals method called");
-      Map<String, dynamic> updata = {
-        "type": GoalName.text,
-        "amount": Ammount.text,
-        "duration": datecontroller.text,
-      };
-      final data = await Storegoalsdetails().postStoregoalsdetails(updata);
-      if (data.status == ResponseStatus.SUCCESS) {
-        utils.showToast("Goal Added!");
-        showGoalsDialog();
-        replaceLoaderWithAddGoalBtn();
-      } else { replaceLoaderWithAddGoalBtn();
-        return utils.showToast(data.message);
-      }
-   
+    Map<String, dynamic> updata = {
+      "type": GoalName.text,
+      "amount": Ammount.text,
+      "duration": datecontroller.text,
+    };
+    final data = await Storegoalsdetails().postStoregoalsdetails(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      utils.showToast("Goal Added!");
+      showGoalsDialog();
+      replaceLoaderWithAddGoalBtn();
+    } else {
+      replaceLoaderWithAddGoalBtn();
+      return utils.showToast(data.message);
+    }
   }
 
   void editGoal() async {
@@ -124,13 +131,10 @@ class _AddGoalsState extends State<AddGoals> {
       builder: (context) {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: GoalsDialog(
-            ontap: () {
-              Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ProfileMain()));
-            }
-         
-          ),
+          child: GoalsDialog(ontap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfileMain()));
+          }),
         );
       },
       shape: const RoundedRectangleBorder(
@@ -186,7 +190,8 @@ class _AddGoalsState extends State<AddGoals> {
                         ),
                       ),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[a-zA-ZS0-9 ]')),
+                        FilteringTextInputFormatter.allow(
+                            RegExp('[a-zA-ZS0-9 ]')),
                       ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -226,6 +231,9 @@ class _AddGoalsState extends State<AddGoals> {
                                 : const Color(0xFF6B6B6B),
                             fontSize: 14),
                       ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                      ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please Enter Amount";
@@ -288,11 +296,17 @@ class _AddGoalsState extends State<AddGoals> {
                     SizedBox(
                       width: double.infinity,
                       height: 60,
-                      child: CustomNextButton(
-                        text: "Add Goal",
-                        ontap: () {
-                          //  print(Get.arguments["id"].toString());
-
+                      child: 
+                      RoundedLoadingButton(
+                        elevation: 0,
+                        height: 60,
+                        resetAfterDuration: true,
+                        resetDuration: Duration(seconds: 2),
+                        width: MediaQuery.of(context).size.width * 1,
+                        color: const Color.fromRGBO(247, 129, 4, 1),
+                        successColor: const Color.fromRGBO(247, 129, 4, 1),
+                        controller: _btnController1,
+                        onPressed: (){
                           final isValid = _form.currentState?.validate();
                           if (isValid!) {
                            // replaceAddGoalBtnWithLoader();
@@ -300,7 +314,30 @@ class _AddGoalsState extends State<AddGoals> {
                             args != null ? editGoal() : UploadData();
                           }
                         },
+                        valueColor: Colors.black,
+                        borderRadius: 10,
+                        child: Text(
+                          "Add Goal",
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 16,
+                            fontFamily: 'Productsans',
+                          ),
+                        ),
                       ),
+                      //  CustomNextButton(
+                      //   text: "Add Goal",
+                      //   ontap: () {
+                      //     //  print(Get.arguments["id"].toString());
+
+                      //     final isValid = _form.currentState?.validate();
+                      //     if (isValid!) {
+                      //      // replaceAddGoalBtnWithLoader();
+                      //      // showGoalsDialog();
+                      //       args != null ? editGoal() : UploadData();
+                      //     }
+                      //   },
+                      // ),
                     )
                   ],
                 ),
@@ -314,12 +351,14 @@ class _AddGoalsState extends State<AddGoals> {
 }
 
 class GoalsDialog extends StatefulWidget {
-  GoalsDialog({Key? key, this.ontap, }) : super(key: key);
+  GoalsDialog({
+    Key? key,
+    this.ontap,
+  }) : super(key: key);
 
   @override
   State<GoalsDialog> createState() => _GoalsDialogState();
   final void Function()? ontap;
-
 }
 
 class _GoalsDialogState extends State<GoalsDialog> {
@@ -402,7 +441,7 @@ class _GoalsDialogState extends State<GoalsDialog> {
               //   child: GestureDetector(
               //     onTap: () {
               //       widget.ontap!();
-              
+
               //       // Navigator.push(context,
               //       //     MaterialPageRoute(builder: (context) => ProfileMain()));
               //     },

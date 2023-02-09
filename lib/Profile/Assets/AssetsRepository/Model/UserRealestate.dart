@@ -25,9 +25,9 @@ class UserRe {
   int? id;
   int? userId;
   String? propertyName;
-  int? investedValue;
+  String? investedValue;
   String? dateOfInvestment;
-  int? currentValue;
+  String? currentValue;
   String? createdAt;
   String? updatedAt;
 

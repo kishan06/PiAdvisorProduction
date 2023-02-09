@@ -31,6 +31,17 @@ class _RealEstateState extends State<RealEstate> {
   final args = Get.arguments;
   int realId = 0;
 
+ bool isValidInvested(String invesyed) {
+  final RegExp invesyedExpression = RegExp(r"^0{3}$");
+  
+  return !invesyedExpression.hasMatch(invesyed);
+}
+
+  bool isValidCurrent(String current) {
+  final RegExp currentExpression = RegExp(r"^0{3}$");
+  
+  return !currentExpression.hasMatch(current);
+}
   @override
   void initState() {
     super.initState();
@@ -84,6 +95,7 @@ class _RealEstateState extends State<RealEstate> {
       print(updata);
       final data = await StoreAssetsform().postStoreAssetsformRE(updata);
       if (data.status == ResponseStatus.SUCCESS) {
+        utils.showToast("Real estate Added!");
         replaceLoaderWithAssetsBtn();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileMain()));
@@ -183,6 +195,7 @@ class _RealEstateState extends State<RealEstate> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                               RegExp('[a-zA-ZS0-9 ]')),
+                          LengthLimitingTextInputFormatter(25),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -222,10 +235,13 @@ class _RealEstateState extends State<RealEstate> {
                         ),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                           LengthLimitingTextInputFormatter(20),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter invested value";
+                          }else if (!isValidInvested(value)) {
+                            return 'Invested value cannot contain zeros';
                           }
                           return null;
                         },
@@ -282,10 +298,13 @@ class _RealEstateState extends State<RealEstate> {
                         ),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                           LengthLimitingTextInputFormatter(20),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter current value";
+                          }else if (!isValidCurrent(value)) {
+                            return 'Current value cannot contain zeros';
                           }
                           return null;
                         },

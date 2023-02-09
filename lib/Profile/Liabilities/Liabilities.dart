@@ -370,106 +370,108 @@ class _LiabilitiesState extends State<Liabilities> {
                               ),
                             ],
                           ),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: _HomeLoan!.length,
-                              itemBuilder: (context, index) {
-                                return Dismissible(
-                                  background: slideRightBackground(),
-                                  key: UniqueKey(),
-                                  onDismissed: (direction) {
-                                    setState(() {
-                                      deleteHomeLoans(_HomeLoan[index].id!);
-                                      _HomeLoan.removeAt(index);
-                                    });
-                                    Flushbar(
-                                      message: "Home Loan deleted",
-                                      duration: Duration(seconds: 3),
-                                    ).show(context);
-                                  },
-                                  child: Card(
-                                    elevation: 2,
-                                    child: ListTile(
-                                      title:
-                                          Text('${_HomeLoan[index].totalLoan}'),
-                                      subtitle: Text(
-                                          '${_HomeLoan[index].loanIssuedOn.toString()}'),
-                                      trailing: PopupMenuButton(
-                                          offset: Offset(0, 50),
-                                          color: Color(0xFF6B6B6B),
-                                          tooltip: '',
-                                          icon: Icon(Icons.more_vert),
-                                          onSelected: (value) {
-                                            if (value == '/delete') {
-                                              setState(() {
-                                                deleteHomeLoans(
-                                                    _HomeLoan[index].id!);
-                                                _HomeLoan.removeAt(index);
-                                                Flushbar(
-                                                  message: "Home Loan deleted",
-                                                  duration:
-                                                      Duration(seconds: 3),
-                                                ).show(context);
-                                              });
-                                            } else if (value == "/edit") {
-                                              Get.toNamed("/editHomeloan",
-                                                  arguments: {
-                                                    "id": _HomeLoan[index].id,
-                                                    "total_loan":
-                                                        _HomeLoan[index]
-                                                            .totalLoan,
-                                                    "loan_issued_on":
-                                                        _HomeLoan[index]
-                                                            .loanIssuedOn,
-                                                    "loan_tenure":
-                                                        _HomeLoan[index]
-                                                            .loanTenure,
-                                                    "installment_amount":
-                                                        _HomeLoan[index]
-                                                            .installmentAmount,
-                                                    "frequency_payment":
-                                                        _HomeLoan[index]
-                                                            .frequencyPayment,
-                                                    "rate_of_interest":
-                                                        _HomeLoan[index]
-                                                            .rateOfInterest,
-                                                  });
-                                            }
-                                          },
-                                          itemBuilder: (BuildContext bc) {
-                                            return [
-                                              PopupMenuItem(
-                                                child: Text(
-                                                  "Edit",
-                                                  style: TextStyle(
-                                                      color: Colors.white),
+                          SizedBox(
+                            height: 100,
+                            child: ListView.builder(
+                                itemCount: _HomeLoan!.length,
+                                itemBuilder: (context, index) {
+                                  return Dismissible(
+                                    background: slideRightBackground(),
+                                    key: UniqueKey(),
+                                    onDismissed: (direction) {
+                                      setState(() {
+                                        deleteHomeLoans(_HomeLoan[index].id!);
+                                        _HomeLoan.removeAt(index);
+                                      });
+                                      Flushbar(
+                                        message: "Home Loan deleted",
+                                        duration: Duration(seconds: 3),
+                                      ).show(context);
+                                    },
+                                    child: Card(
+                                      elevation: 2,
+                                      child: ListTile(
+                                        title:
+                                            Text('${_HomeLoan[index].totalLoan}'),
+                                        subtitle: Text(
+                                            '${_HomeLoan[index].loanIssuedOn.toString()}'),
+                                        trailing: PopupMenuButton(
+                                            offset: Offset(0, 50),
+                                            color: Color(0xFF6B6B6B),
+                                            tooltip: '',
+                                            icon: Icon(Icons.more_vert),
+                                            onSelected: (value) {
+                                              if (value == '/delete') {
+                                                setState(() {
+                                                  deleteHomeLoans(
+                                                      _HomeLoan[index].id!);
+                                                  _HomeLoan.removeAt(index);
+                                                  Flushbar(
+                                                    message: "Home Loan deleted",
+                                                    duration:
+                                                        Duration(seconds: 3),
+                                                  ).show(context);
+                                                });
+                                              } else if (value == "/edit") {
+                                                Get.toNamed("/editHomeloan",
+                                                    arguments: {
+                                                      "id": _HomeLoan[index].id,
+                                                      "total_loan":
+                                                          _HomeLoan[index]
+                                                              .totalLoan,
+                                                      "loan_issued_on":
+                                                          _HomeLoan[index]
+                                                              .loanIssuedOn,
+                                                      "loan_tenure":
+                                                          _HomeLoan[index]
+                                                              .loanTenure,
+                                                      "installment_amount":
+                                                          _HomeLoan[index]
+                                                              .installmentAmount,
+                                                      "frequency_payment":
+                                                          _HomeLoan[index]
+                                                              .frequencyPayment,
+                                                      "rate_of_interest":
+                                                          _HomeLoan[index]
+                                                              .rateOfInterest,
+                                                    });
+                                              }
+                                            },
+                                            itemBuilder: (BuildContext bc) {
+                                              return [
+                                                PopupMenuItem(
+                                                  child: Text(
+                                                    "Edit",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  value: '/edit',
                                                 ),
-                                                value: '/edit',
-                                              ),
-                                              PopupMenuItem(
-                                                child: Text(
-                                                  "Delete",
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                                value: '/delete',
-                                              )
-                                            ];
-                                          }),
+                                                PopupMenuItem(
+                                                  child: Text(
+                                                    "Delete",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  value: '/delete',
+                                                )
+                                              ];
+                                            }),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }),
+                                  );
+                                }),
+                          ),
                         ],
                       ),
                     ),
                   ),
                 )
               : Container(),
-          SizedBox(
-            height: 150,
-            child: _PersonalLoan != null && _PersonalLoan.isNotEmpty
-                ? Card(
+          _PersonalLoan != null && _PersonalLoan.isNotEmpty
+              ? SizedBox(
+                height: 150,
+                child: Card(
                     shape: RoundedRectangleBorder(
                       side:
                           const BorderSide(color: Color(0xFFEBEBEB), width: 1),
@@ -600,9 +602,9 @@ class _LiabilitiesState extends State<Liabilities> {
                         ],
                       ),
                     ),
-                  )
-                : Container(),
-          ),
+                  ),
+              )
+              : Container(),
           _CarLoan != null && _CarLoan.isNotEmpty
               ? SizedBox(
                   height: 150,

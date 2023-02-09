@@ -34,6 +34,36 @@ class _PersonalLoanState extends State<PersonalLoan> {
   final args = Get.arguments;
   int personalid = 0;
 
+    bool isValidLoan(String Loan) {
+  final RegExp LoanExpression = RegExp(r"^0{3}$");
+  
+  return !LoanExpression.hasMatch(Loan);
+}
+
+   bool isValidTenure(String tenure) {
+  final RegExp tenureExpression = RegExp(r"^0{3}$");
+  
+  return !tenureExpression.hasMatch(tenure);
+}
+
+   bool isValidInstallment(String installment) {
+  final RegExp installmentExpression = RegExp(r"^0{3}$");
+  
+  return !installmentExpression.hasMatch(installment);
+}
+
+   bool isValidFrequency(String frquency) {
+  final RegExp frquencyExpression = RegExp(r"^0{3}$");
+  
+  return !frquencyExpression.hasMatch(frquency);
+}
+
+   bool isValidInterest(String interest) {
+  final RegExp interestExpression = RegExp(r"^0{3}$");
+  
+  return !interestExpression.hasMatch(interest);
+}
+
 @override
   void initState() {
     super.initState();
@@ -90,6 +120,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
       print(updata);
       final data = await StoreLiabilitiesform().postStoreLiabilitiesformPL(updata);
       if (data.status == ResponseStatus.SUCCESS) {
+        utils.showToast("Personal loan Added!");
         replaceLoaderWithLiabilitiesBtn();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileMain()));
@@ -116,6 +147,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
     final data = await StoreLiabilitiesform().updatePersonalloan(updata);
     if (data.status == ResponseStatus.SUCCESS) {
       utils.showToast("Personal loan Added!");
+      replaceLoaderWithLiabilitiesBtn();
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => ProfileMain()));
     } else {
@@ -213,11 +245,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter loan amount";
-                        }
+                        }else if (!isValidLoan(value)) {
+                            return 'Loan amount cannot contain zeros';
+                          }
                         return null;
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                        LengthLimitingTextInputFormatter(20),
                       ],
                     ),
                     SizedBox(
@@ -266,7 +301,7 @@ class _PersonalLoanState extends State<PersonalLoan> {
                         focusedBorder: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(width: 1, color: Color(0xFF303030))),
-                        hintText: "Enter Tenure in months",
+                        hintText: "Enter Loan Tenure in months",
                         helperText: "",
                         hintStyle: blackStyle(context).copyWith(
                             color: Get.isDarkMode
@@ -276,12 +311,15 @@ class _PersonalLoanState extends State<PersonalLoan> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Please enter tenure in months";
-                        }
+                          return "Please enter loan tenure in months";
+                        }else if (!isValidTenure(value)) {
+                            return 'Loan tenure cannot contain zeros';
+                          }
                         return null;
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                         LengthLimitingTextInputFormatter(5),
                       ],
                     ),
                     // HomeLoanDatePicker(
@@ -330,11 +368,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter installment amount";
-                        }
+                        }else if (!isValidInstallment(value)) {
+                            return 'Installment amount cannot contain zeros';
+                          }
                         return null;
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                         LengthLimitingTextInputFormatter(20),
                       ],
                     ),
                     SizedBox(
@@ -368,11 +409,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter frequency of payment";
-                        }
+                        }else if (!isValidFrequency(value)) {
+                            return 'Frequency cannot contain zeros';
+                          }
                         return null;
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                        LengthLimitingTextInputFormatter(3),
                       ],
                     ),
                     SizedBox(
@@ -406,11 +450,14 @@ class _PersonalLoanState extends State<PersonalLoan> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Please enter rate of interest";
-                        }
+                        }else if (!isValidInterest(value)) {
+                            return 'Rate of interest cannot contain zeros';
+                          }
                         return null;
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                        LengthLimitingTextInputFormatter(4),
                       ],
                     ),
                     SizedBox(

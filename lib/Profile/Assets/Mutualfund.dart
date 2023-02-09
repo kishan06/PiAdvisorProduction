@@ -32,6 +32,18 @@ class _MutualfundState extends State<Mutualfund> {
   final args = Get.arguments;
   int mutualId = 0;
 
+   bool isValidInvestment(String investment) {
+  final RegExp investmentExpression = RegExp(r"^0{3}$");
+  
+  return !investmentExpression.hasMatch(investment);
+}
+
+  bool isValidCurrent(String current) {
+  final RegExp currentExpression = RegExp(r"^0{3}$");
+  
+  return !currentExpression.hasMatch(current);
+}
+
 @override
   void initState() {
     super.initState();
@@ -84,9 +96,10 @@ class _MutualfundState extends State<Mutualfund> {
       print(updata);
       final data = await StoreAssetsform().postStoreAssetsformMF(updata);
       if (data.status == ResponseStatus.SUCCESS) {
+        utils.showToast("Mutual funds Added!");
         replaceLoaderWithAssetsBtn();
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProfileMain()));
+            context, MaterialPageRoute(builder: (context) => ProfileMain()));    
       } else {
         replaceLoaderWithAssetsBtn();
         return utils.showToast(data.message);
@@ -182,6 +195,7 @@ class _MutualfundState extends State<Mutualfund> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                               RegExp('[a-zA-Z ]')),
+                          LengthLimitingTextInputFormatter(20),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -225,10 +239,13 @@ class _MutualfundState extends State<Mutualfund> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter investment amount";
+                          }else if (!isValidInvestment(value)) {
+                            return 'Investment amount cannot contain zeros';
                           }
                           return null;
                         },
                         inputFormatters: [
+                           LengthLimitingTextInputFormatter(20),
                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                         ],
                       ),
@@ -284,10 +301,13 @@ class _MutualfundState extends State<Mutualfund> {
                         ),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                          LengthLimitingTextInputFormatter(20),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter current value";
+                          }else if (!isValidCurrent(value)) {
+                            return 'Current value cannot contain zeros';
                           }
                           return null;
                         },

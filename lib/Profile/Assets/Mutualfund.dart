@@ -195,7 +195,8 @@ class _MutualfundState extends State<Mutualfund> {
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                               RegExp('[a-zA-Z ]')),
-                          LengthLimitingTextInputFormatter(12),
+                          LengthLimitingTextInputFormatter(20
+                          ),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {

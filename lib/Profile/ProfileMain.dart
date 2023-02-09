@@ -12,6 +12,7 @@ import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
 import 'package:piadvisory/HomePage/Stock/stock.dart';
 import 'package:piadvisory/Portfolio/PortfolioMainUI.dart';
 import 'package:piadvisory/Profile/Assets/Assets.dart';
+import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
 import 'package:piadvisory/Profile/BankDetails.dart';
 import 'package:piadvisory/Profile/BankdetailsRepository/storeBankdetails.dart';
 import 'package:piadvisory/Profile/CustomRiskAssessment.dart';
@@ -119,6 +120,9 @@ class _ProfileMainState extends State<ProfileMain> {
       getRiskQuestions().getAnswers(),
       Storegoalsdetails().checkGoals(),
       StorebasickycuserDetails().getBasicKycDetails(),
+      StoreAssetsform().getAssetsMF(),
+      StoreAssetsform().getAssetsFD(),
+      StoreAssetsform().getAssetsRE(),
       StoreLiabilitiesform().getLiabilitiesHL(),
       StoreLiabilitiesform().getLiabilitiesPL(),
       StoreLiabilitiesform().getLiabilitiesCL(),

@@ -1,6 +1,7 @@
 class ApiConstant {
   static const String base = "https://pi.betadelivery.com/pi_advisors/";
 
+
   static const String basetesting = "https://app.piadvisors.in/";
 
   static const String loginAPI = base + 'api/loginv2';
@@ -131,10 +132,24 @@ class ApiConstant {
   static const String postAssetsformFD = base + 'api/user_fix_deposit';
   static const String postAssetsformRE = base + 'api/user_real_estate';
 
-  static const String postLiabiltiesformHL = base + 'api/user_home_loan_details';
-  static const String postLiabiltiesformPL = base + 'api/user_personal_loan_details';
+  static const String postLiabiltiesformHL =
+      base + 'api/user_home_loan_details';
+  static const String postLiabiltiesformPL =
+      base + 'api/user_personal_loan_details';
   static const String postLiabiltiesformCL = base + 'api/user_car_loan_details';
 
+  static const String getAssetsmf = base + 'api/getmutualfunddetails';
+  static const String getAssetsfd = base + 'api/getfixdepositdetails';
+  static const String getAssetsre = base + 'api/getrealestatedetails';
+
+  static const String deleteAssestsMF = base + 'api/deletemutualfunddetails';
+  static const String deleteAssestsFD = base + 'api/deletefixdepositsdetails';
+  static const String deleteAssestsRE = base + 'api/deleterealestatedetails';
+
+  static const String updatemutualfund = base + 'api/updatemutualfunddetails';
+  static const String updaterealestate = base + 'api/updaterealestatedetails';
+  static const String updatefixdeposit = base + 'api/updatefixdepositsdetails';
+  
 
   static const String getliabilitieshl = base + 'api/gethomeloandetails';
   static const String deleteLiabilitieshl =  base + 'api/deletehomeloandetails';

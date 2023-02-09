@@ -269,7 +269,7 @@ class _FixDepositState extends State<FixDeposit> {
                           return null;
                         },
                         inputFormatters: [
-                           LengthLimitingTextInputFormatter(20),
+                           LengthLimitingTextInputFormatter(12),
                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
                         ],
                       ),

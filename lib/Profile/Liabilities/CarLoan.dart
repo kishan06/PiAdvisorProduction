@@ -252,7 +252,7 @@ class _CarLoanState extends State<CarLoan> {
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                         LengthLimitingTextInputFormatter(20),
+                         LengthLimitingTextInputFormatter(12),
                       ],
                     ),
                     SizedBox(
@@ -375,7 +375,7 @@ class _CarLoanState extends State<CarLoan> {
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                        LengthLimitingTextInputFormatter(20),
+                        LengthLimitingTextInputFormatter(12),
                       ],
                     ),
                     SizedBox(

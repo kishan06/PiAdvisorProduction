@@ -235,7 +235,7 @@ class _RealEstateState extends State<RealEstate> {
                         ),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                           LengthLimitingTextInputFormatter(20),
+                           LengthLimitingTextInputFormatter(12),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -298,7 +298,7 @@ class _RealEstateState extends State<RealEstate> {
                         ),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                           LengthLimitingTextInputFormatter(20),
+                           LengthLimitingTextInputFormatter(12),
                         ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {

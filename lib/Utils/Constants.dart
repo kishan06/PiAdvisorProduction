@@ -138,7 +138,7 @@ class ApiConstant {
   static const String postLiabiltiesformCL = base + 'api/user_car_loan_details';
 
   static const String getAssetsmf = base + 'api/getmutualfunddetails';
-  static const String getAssetsfd = base + 'api/getfixdepositsdetails';
+  static const String getAssetsfd = base + 'api/getfixdepositdetails';
   static const String getAssetsre = base + 'api/getrealestatedetails';
 
   static const String deleteAssestsMF = base + 'api/deletemutualfunddetails';

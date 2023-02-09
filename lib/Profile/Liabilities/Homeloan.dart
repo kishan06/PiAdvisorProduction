@@ -30,6 +30,25 @@ class _HomeloanState extends State<Homeloan> {
   TextEditingController Frequency = TextEditingController();
   TextEditingController Interest = TextEditingController();
   DateTime? _selectedDate;
+  final args = Get.arguments;
+  int homeid = 0;
+  @override
+  void initState() {
+    super.initState();
+    setValues();
+  }
+
+    setValues() {
+    if (args != null) {
+      homeid = Get.arguments["id" ];
+      LoanAmmount.text = Get.arguments["total_loan"].toString();
+      datecontroller.text = Get.arguments["loan_issued_on"].toString();
+      TenureMonths.text = Get.arguments["loan_tenure"].toString();
+      InstallmentAmount.text = Get.arguments["installment_amount"].toString();
+      Frequency.text = Get.arguments["frequency_payment"].toString();
+      Interest.text = Get.arguments["rate_of_interest"].toString();
+    }
+  }
 
   void _presentpastDatePicker() {
     // showDatePicker is a pre-made funtion of Flutter
@@ -52,11 +71,11 @@ class _HomeloanState extends State<Homeloan> {
   }
 
   void UploadData() async {
-    final isValid = _form.currentState?.validate();
-    if (isValid!) {
+    //final isValid = _form.currentState?.validate();
+    //if (isValid!) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       int? user_id = await prefs.getInt('user_id');
-      replaceAssetsBtnWithLoader();
+      replaceLiabilitiesBtnWithLoader();
       Map<String, dynamic> updata = {
         "user_id": user_id,
         "total_loan": LoanAmmount.text,
@@ -69,27 +88,50 @@ class _HomeloanState extends State<Homeloan> {
       print(updata);
       final data = await StoreLiabilitiesform().postStoreLiabilitiesformHL(updata);
       if (data.status == ResponseStatus.SUCCESS) {
-        replaceLoaderWithAssetsBtn();
+        replaceLoaderWithLiabilitiesBtn();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfileMain()));
       } else {
-        replaceLoaderWithAssetsBtn();
+        replaceLoaderWithLiabilitiesBtn();
         return utils.showToast(data.message);
       }
+   // }
+  }
+
+    void editHomeloan() async {
+      replaceLiabilitiesBtnWithLoader();
+    Map<String, dynamic> updata = {
+      "id" : homeid,
+      "total_loan": LoanAmmount.text,
+      "loan_issued_on": datecontroller.text,
+      "loan_tenure": TenureMonths.text,
+      "installment_amount": InstallmentAmount.text,
+      "frequency_payment": Frequency.text,
+      "rate_of_interest": Interest.text
+    };
+    print("updats is $updata");
+    final data = await StoreLiabilitiesform().updateHomeloan(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      utils.showToast("Home loan Added!");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+    } else {
+        replaceLoaderWithLiabilitiesBtn();
+        return utils.showToast(data.message);
     }
   }
 
   bool isSaveBtnVisible = true;
   bool isSaveBtnLoaderVisible = false;
 
-  void replaceAssetsBtnWithLoader() {
+  void replaceLiabilitiesBtnWithLoader() {
     setState(() {
       isSaveBtnVisible = false;
       isSaveBtnLoaderVisible = true;
     });
   }
 
-  void replaceLoaderWithAssetsBtn() {
+  void replaceLoaderWithLiabilitiesBtn() {
     setState(() {
       isSaveBtnVisible = true;
       isSaveBtnLoaderVisible = false;
@@ -379,15 +421,15 @@ class _HomeloanState extends State<Homeloan> {
                         child: CustomNextButton(
                           text: "Save",
                           ontap: () {
-                            UploadData();
-                            // final isValid = _form.currentState?.validate();
-                            // if (isValid!) {
-                            //   Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => ProfileMain()));
-                            //   //args ! = null ? editGoal() : UploadData();
-                            // }
+                            //UploadData();
+                            final isValid = _form.currentState?.validate();
+                            if (isValid!) {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => ProfileMain()));
+                              args != null ? editHomeloan() : UploadData();
+                            }
                           },
                         ),
                       ),

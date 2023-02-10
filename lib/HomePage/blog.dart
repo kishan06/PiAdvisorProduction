@@ -12,7 +12,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:outline_search_bar/outline_search_bar.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
 import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/NoscalingAnimation.dart';
 import 'package:piadvisory/HomePage/Blog%20Repository/blogrepo.dart';
 import 'package:piadvisory/HomePage/BlogInner.dart';
@@ -151,66 +153,7 @@ class _BlogState extends State<Blog> {
               ),
             )
           : null,
-      bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-        unselectedLabelStyle: TextStyle(color: Colors.grey),
-        unselectedIconTheme: IconThemeData(color: Colors.grey),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.path_3177,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Icon(
-                CustomIcons.path_4346,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-            ),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.group_2369,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Subscribe',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.date_range,
-              //  color:
-              //           Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.bottombarbagicon,
-              size: 22.5,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Dashboard',
-          ),
-        ],
-        currentIndex: 0,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Color(0xFFF78104),
-        backgroundColor: Colors.white,
-        onTap: (index) {
-          print(index);
-          _selectedTab(index);
-        },
-        type: BottomNavigationBarType.fixed,
-      ),
+      bottomNavigationBar:CreateBottomBar(stateBottomNav, "Bottombar", context),
       appBar: CustomAppBarWithIcons(
         titleTxt: "Blog",
         globalkey: _key,

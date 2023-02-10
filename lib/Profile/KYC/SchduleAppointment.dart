@@ -3,9 +3,13 @@
 import 'dart:async';
 
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/StreamEnum.dart';
 import 'package:piadvisory/HomePage/Stock/stock.dart';
 import 'package:piadvisory/Portfolio/PortfolioMainUI.dart';
@@ -234,127 +238,94 @@ class _SchduleAppointmentState extends State<SchduleAppointment> {
       }
     }
   }
+  DateTime timebackPressed = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _key,
-      drawer: NavDrawer(),
-      appBar: CustomAppBarWithIcons(
-        globalkey: _key,
-        titleTxt: 'Calendar',
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Stack(
-        children: [
-          Positioned(
-            bottom: 22,
-            right: MediaQuery.of(context).size.width * 0.43,
-            child: FloatingActionButton(
-              backgroundColor: Color(0xFFF78104),
-              heroTag: "tag1",
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const Mysubscription())));
-              },
-              tooltip: 'Subscribe',
-              elevation: 2.0,
-              child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
-                ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-        unselectedLabelStyle: TextStyle(color: Colors.grey),
-        unselectedIconTheme: IconThemeData(color: Colors.grey),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.path_3177,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Icon(
-                CustomIcons.path_4346,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+    return WillPopScope(
+      onWillPop: () async {
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+        final difference = DateTime.now().difference(timebackPressed);
+        final isExitWarning = difference >= Duration(seconds: 2);
+
+        timebackPressed = DateTime.now();
+
+        if (isExitWarning) {
+          final message = "Press back again to exit";
+          print("reached here");
+          Fluttertoast.showToast(
+            msg: message,
+            fontSize: 18,
+          );
+
+          return false;
+        } else {
+          Fluttertoast.cancel();
+
+          SystemNavigator.pop();
+          return true;
+        }
+      },
+      child: Scaffold(
+        key: _key,
+        drawer: NavDrawer(),
+        appBar: CustomAppBarWithIcons(
+          globalkey: _key,
+          titleTxt: 'Calendar',
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Stack(
+          children: [
+            Positioned(
+              bottom: 22,
+              right: MediaQuery.of(context).size.width * 0.43,
+              child: FloatingActionButton(
+                backgroundColor: Color(0xFFF78104),
+                heroTag: "tag1",
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const Mysubscription())));
+                },
+                tooltip: 'Subscribe',
+                elevation: 2.0,
+                child: SvgPicture.asset(
+                    "assets/images/product sans logo wh new.svg",
+                    color: Colors.white,
+                    fit: BoxFit.contain,
+                    width: 28,
+                    height: 24,
+                  ),
               ),
             ),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.group_2369,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Subscribe',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.date_range,
-              //  color:
-              //           Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.bottombarbagicon,
-              size: 22.5,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Dashboard',
-          ),
-        ],
-        currentIndex: 3,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Color(0xFFF78104),
-        backgroundColor: Colors.white,
-        onTap: (index) {
-          print(index);
-          _selectedTab(index);
-        },
-        type: BottomNavigationBarType.fixed,
-      ),
-      backgroundColor: Get.isDarkMode ? Colors.black : const Color(0xFFF8F8F8),
-      body: StreamBuilder<requestResponseState>(
-          stream: scheduleAppointmentController.stream,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                  child: Lottie.asset(
-                    "assets/images/lf30_editor_jc6n8oqe.json",
-                    repeat: true,
-                    height: 50,
-                    width: 50,
-                  ),
-                );
+          ],
+        ),
+        bottomNavigationBar: CreateBottomBar(stateBottomNav, "Bottombarcalender", context),
+        backgroundColor: Get.isDarkMode ? Colors.black : const Color(0xFFF8F8F8),
+        body: StreamBuilder<requestResponseState>(
+            stream: scheduleAppointmentController.stream,
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Center(
+                    child: Lottie.asset(
+                      "assets/images/lf30_editor_jc6n8oqe.json",
+                      repeat: true,
+                      height: 50,
+                      width: 50,
+                    ),
+                  );
 
-              default:
-                if (snapshot.hasError) {
-                  return Text("Error Occured");
-                } else {
-                  return _buildBody(context);
-                }
-            }
-          }),
+                default:
+                  if (snapshot.hasError) {
+                    return Text("Error Occured");
+                  } else {
+                    return _buildBody(context);
+                  }
+              }
+            }),
+      ),
     );
   }
 
@@ -390,6 +361,7 @@ class _SchduleAppointmentState extends State<SchduleAppointment> {
                 child: SizedBox(
                   width: double.infinity,
                   height: 60,
+
                   child: CustomNextButton(
                     text: 'Schedule a Session',
                     ontap: () {

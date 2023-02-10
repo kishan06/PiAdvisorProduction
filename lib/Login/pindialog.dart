@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:piadvisory/Common/ConnectivityService.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/HomePage/Stock/MutualFundsTab.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -207,7 +209,9 @@ class _PinDialogState extends State<PinDialog> {
     print(updata);
     final data = await LoginMethod().postPinStatus(updata);
     if (data.status == ResponseStatus.SUCCESS) {
-      Get.toNamed('/home');
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: ((context) => HomePage())));
+      // Get.toNamed('/home');
       user_pin.clear();
     } else {
       return utils.showToast(data.message);
@@ -936,7 +940,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
                 onTap: () async {
                   Get.toNamed("/login");
                   SharedPreferences preferences =
-                      await SharedPreferences.getInstance();
+                  await SharedPreferences.getInstance();
                   await preferences.remove('token');
                   await preferences.remove('video');
                 },

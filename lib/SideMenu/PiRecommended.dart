@@ -2,6 +2,7 @@
 
 // ignore_for_file: file_names, avoid_print, must_be_immutable
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 
@@ -11,8 +12,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
 import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
+import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/HomePage/Stock/stock.dart';
 import 'package:piadvisory/Portfolio/PortfolioMainUI.dart';
 import 'package:piadvisory/Profile/BankDetails.dart';
@@ -120,13 +124,15 @@ class _PiRecommendedState extends State<PiRecommended> {
 
   List<Map<String, dynamic>> _scSecurities = [];
 
+  late StreamSubscription apiEventListner;
+
   @override
   void initState() {
     _isChecked = List<bool>.filled(5, false);
     myFuture = getAdvices().getPiRecomAdvice();
     super.initState();
   }
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,66 +171,7 @@ class _PiRecommendedState extends State<PiRecommended> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-          unselectedLabelStyle: TextStyle(color: Colors.grey),
-          unselectedIconTheme: IconThemeData(color: Colors.grey),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.path_3177,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  CustomIcons.path_4346,
-                  //  color:
-                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-                ),
-              ),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.group_2369,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Subscribe',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.date_range,
-                //  color:
-                //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.bottombarbagicon,
-                size: 22.5,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Dashboard',
-            ),
-          ],
-          currentIndex: 0,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Color(0xFFF78104),
-          backgroundColor: Colors.white,
-          onTap: (index) {
-            print(index);
-            _selectedTab(index);
-          },
-          type: BottomNavigationBarType.fixed,
-        ),
+        bottomNavigationBar:CreateBottomBar(stateBottomNav, "Bottombar", context),
         body: _buildBody(context));
   }
 

@@ -1,9 +1,15 @@
 // ignore_for_file: file_names
 
+import 'dart:async';
+
 import 'package:another_flushbar/flushbar.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/instance_manager.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/SubscriptionLoadingPage.dart';
 import 'package:piadvisory/HomePage/Stock/stock.dart';
 import 'package:piadvisory/Portfolio/PortfolioMainUI.dart';
@@ -178,339 +184,307 @@ class _MysubscriptionState extends State<Mysubscription> {
       ],
     );
   }
-
+  StreamController<bool> stateBottomNav = StreamController.broadcast();
+  DateTime timebackPressed = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _key,
-      drawer: NavDrawer(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Stack(
-        children: [
-          Positioned(
-            bottom: 22,
-            right: MediaQuery.of(context).size.width * 0.43,
-            child: FloatingActionButton(
-              backgroundColor: Color(0xFFF78104),
-              heroTag: "tag1",
-              onPressed: null,
-              //  () {
-              //   Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: ((context) => const Mysubscription())));
-              // },
-              tooltip: 'Subscribe',
-              elevation: 2.0,
-              child:SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
-                ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-        unselectedLabelStyle: TextStyle(color: Colors.grey),
-        unselectedIconTheme: IconThemeData(color: Colors.grey),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.path_3177,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.only(right: 8),
-              child: Icon(
-                CustomIcons.path_4346,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
+    return WillPopScope(
+      onWillPop: () async {
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+        final difference = DateTime.now().difference(timebackPressed);
+        final isExitWarning = difference >= Duration(seconds: 2);
+
+        timebackPressed = DateTime.now();
+
+        if (isExitWarning) {
+          final message = "Press back again to exit";
+          print("reached here");
+          Fluttertoast.showToast(
+            msg: message,
+            fontSize: 18,
+          );
+
+          return false;
+        } else {
+          Fluttertoast.cancel();
+
+          SystemNavigator.pop();
+          return true;
+        }
+      },
+      child: Scaffold(
+        key: _key,
+        drawer: NavDrawer(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Stack(
+          children: [
+            Positioned(
+              bottom: 22,
+              right: MediaQuery.of(context).size.width * 0.43,
+              child: FloatingActionButton(
+                backgroundColor: Color(0xFFF78104),
+                heroTag: "tag1",
+                onPressed: null,
+                //  () {
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: ((context) => const Mysubscription())));
+                // },
+                tooltip: 'Subscribe',
+                elevation: 2.0,
+                child:SvgPicture.asset(
+                    "assets/images/product sans logo wh new.svg",
+                    color: Colors.white,
+                    fit: BoxFit.contain,
+                    width: 28,
+                    height: 24,
+                  ),
               ),
             ),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.group_2369,
-              // color: Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Subscribe',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.date_range,
-              //  color:
-              //           Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.bottombarbagicon,
-              size: 22.5,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Dashboard',
-          ),
-        ],
-        currentIndex: 2,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Color(0xFFF78104),
-        backgroundColor: Colors.white,
-        onTap: (index) {
-          print(index);
-          _selectedTab(index);
-        },
-        type: BottomNavigationBarType.fixed,
-      ),
-      appBar: CustomAppBarWithIcons(
-        titleTxt: "Subscription",
-        globalkey: _key,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        width: 194,
-                        child: Text.rich(
-                            TextSpan(children: [
-                              TextSpan(
-                                  text: "Talk to your",
-                                  style: TextStyle(
-                                      color: Get.isDarkMode
-                                          ? Colors.white
-                                          : Colors.black)),
-                              TextSpan(
-                                  text: " PI ",
-                                  style: TextStyle(color: Color(0xFF008083))),
-                              TextSpan(
-                                  text: "now and start investing like a",
-                                  style: TextStyle(
-                                      color: Get.isDarkMode
-                                          ? Colors.white
-                                          : Colors.black)),
-                              TextSpan(
-                                  text: " PRO!",
-                                  style: TextStyle(color: Color(0xFF008083))),
-                            ]),
-                            textAlign: TextAlign.center,
-                            style:
-                                blackStyle(context).copyWith(fontSize: 16.sm)),
+          ],
+        ),
+        bottomNavigationBar:CreateBottomBar(stateBottomNav, "Bottombarsubscribe", context),
+        appBar: CustomAppBarWithIcons(
+          titleTxt: "Subscription",
+          globalkey: _key,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: 194,
+                          child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                    text: "Talk to your",
+                                    style: TextStyle(
+                                        color: Get.isDarkMode
+                                            ? Colors.white
+                                            : Colors.black)),
+                                TextSpan(
+                                    text: " PI ",
+                                    style: TextStyle(color: Color(0xFF008083))),
+                                TextSpan(
+                                    text: "now and start investing like a",
+                                    style: TextStyle(
+                                        color: Get.isDarkMode
+                                            ? Colors.white
+                                            : Colors.black)),
+                                TextSpan(
+                                    text: " PRO!",
+                                    style: TextStyle(color: Color(0xFF008083))),
+                              ]),
+                              textAlign: TextAlign.center,
+                              style:
+                                  blackStyle(context).copyWith(fontSize: 16.sm)),
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          //  width: double.infinity,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset('assets/images/Group 6430.svg'),
-                              SizedBox(
-                                width: 24,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  "Dedicated PI – a highly qualified and experienced Personal Investment Advisor",
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            //  width: double.infinity,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset('assets/images/Group 6430.svg'),
+                                SizedBox(
+                                  width: 24,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    "Dedicated PI – a highly qualified and experienced Personal Investment Advisor",
+                                    style: blackStyle(context).copyWith(
+                                        fontSize: 12,
+                                        color: const Color(0xFF008083)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset('assets/images/Group 6429.svg'),
+                                SizedBox(
+                                  width: 24,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    "Quality, research-backed advice that Institutional Investors receive",
+                                    style: blackStyle(context).copyWith(
+                                        fontSize: 12,
+                                        color: const Color(0xFF008083)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset('assets/images/Group 6428.svg'),
+                                SizedBox(
+                                  width: 24,
+                                ),
+                                Text(
+                                  "Simple and transparent fee structure",
                                   style: blackStyle(context).copyWith(
                                       fontSize: 12,
                                       color: const Color(0xFF008083)),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset('assets/images/Group 6429.svg'),
-                              SizedBox(
-                                width: 24,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  "Quality, research-backed advice that Institutional Investors receive",
-                                  style: blackStyle(context).copyWith(
-                                      fontSize: 12,
-                                      color: const Color(0xFF008083)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset('assets/images/Group 6428.svg'),
-                              SizedBox(
-                                width: 24,
-                              ),
-                              Text(
-                                "Simple and transparent fee structure",
-                                style: blackStyle(context).copyWith(
-                                    fontSize: 12,
-                                    color: const Color(0xFF008083)),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 0,
+                      ),
+                    ]),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
+                child: SizedBox(height: 472.h, child: SubscriptionPlans()),
+              ),
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Row(
+              //           children: const [
+              //             ScrollableCards3(
+              //               title: "Investment Advisory",
+              //               subtitle: "1% of the Sum\nInvested",
+              //             ),
+              //             ScrollableCards1(),
+              //             SizedBox(
+              //               width: 10,
+              //             ),
+              //             ScrollableCards(
+              //               title: "Financial Advisory\n(Tax Planning)",
+              //               subtitle: "₹1,999",
+              //             ),
+              //             SizedBox(
+              //               width: 10,
+              //             ),
+              //             ScrollableCards2(
+              //               title: "One Time Advisory",
+              //               subtitle: "₹199",
+              //             ),
+              //             SizedBox(
+              //               width: 10,
+              //             ),
+              //           ],
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(
+                height: 25,
+              ),
+              // !userHasSubscription
+              //     ? Padding(
+              //         padding: const EdgeInsets.only(
+              //           left: 20,
+              //           right: 20,
+              //         ),
+              //         child: Text.rich(
+              //           TextSpan(children: [
+              //             TextSpan(
+              //                 text:
+              //                     "Get Started by booking 1st Consultation with your PI @ ",
+              //                 style: TextStyle(
+              //                     //   //fontSize: 12,
+              //                     fontWeight: FontWeight.w600,
+              //                     color: Get.isDarkMode
+              //                         ? Colors.white
+              //                         : Colors.black)),
+              //             TextSpan(
+              //                 text: "₹199/-",
+              //                 style: TextStyle(
+              //                     color: Get.isDarkMode
+              //                         ? Colors.white
+              //                         : Colors.black,
+              //                     decorationColor: Colors.red,
+              //                     decoration: TextDecoration.lineThrough,
+              //                     fontWeight: FontWeight.w600)),
+              //             TextSpan(
+              //                 text: " FREE",
+              //                 style: TextStyle(
+              //                     color: Colors.red,
+              //                     // fontSize: 12,
+              //                     fontWeight: FontWeight.w600)),
+              //           ]),
+              //           style: Theme.of(context).textTheme.headline5,
+              //         ),
+              //       )
+              //     : const SizedBox(
+              //         height: 25,
+              //       ),
+              !userHasSubscription
+                  ? SizedBox(
+                      height: 30,
+                    )
+                  : SizedBox(
                       height: 0,
                     ),
-                  ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 20,
-              ),
-              child: SizedBox(height: 472.h, child: SubscriptionPlans()),
-            ),
-            // SingleChildScrollView(
-            //   scrollDirection: Axis.horizontal,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Row(
-            //           children: const [
-            //             ScrollableCards3(
-            //               title: "Investment Advisory",
-            //               subtitle: "1% of the Sum\nInvested",
-            //             ),
-            //             ScrollableCards1(),
-            //             SizedBox(
-            //               width: 10,
-            //             ),
-            //             ScrollableCards(
-            //               title: "Financial Advisory\n(Tax Planning)",
-            //               subtitle: "₹1,999",
-            //             ),
-            //             SizedBox(
-            //               width: 10,
-            //             ),
-            //             ScrollableCards2(
-            //               title: "One Time Advisory",
-            //               subtitle: "₹199",
-            //             ),
-            //             SizedBox(
-            //               width: 10,
-            //             ),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(
-              height: 25,
-            ),
-            // !userHasSubscription
-            //     ? Padding(
-            //         padding: const EdgeInsets.only(
-            //           left: 20,
-            //           right: 20,
-            //         ),
-            //         child: Text.rich(
-            //           TextSpan(children: [
-            //             TextSpan(
-            //                 text:
-            //                     "Get Started by booking 1st Consultation with your PI @ ",
-            //                 style: TextStyle(
-            //                     //   //fontSize: 12,
-            //                     fontWeight: FontWeight.w600,
-            //                     color: Get.isDarkMode
-            //                         ? Colors.white
-            //                         : Colors.black)),
-            //             TextSpan(
-            //                 text: "₹199/-",
-            //                 style: TextStyle(
-            //                     color: Get.isDarkMode
-            //                         ? Colors.white
-            //                         : Colors.black,
-            //                     decorationColor: Colors.red,
-            //                     decoration: TextDecoration.lineThrough,
-            //                     fontWeight: FontWeight.w600)),
-            //             TextSpan(
-            //                 text: " FREE",
-            //                 style: TextStyle(
-            //                     color: Colors.red,
-            //                     // fontSize: 12,
-            //                     fontWeight: FontWeight.w600)),
-            //           ]),
-            //           style: Theme.of(context).textTheme.headline5,
-            //         ),
-            //       )
-            //     : const SizedBox(
-            //         height: 25,
-            //       ),
-            !userHasSubscription
-                ? SizedBox(
-                    height: 30,
-                  )
-                : SizedBox(
-                    height: 0,
-                  ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: CustomNextButton(
-                  text: 'Book Now',
-                  ontap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => SchduleAppointment())));
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: ((context) => const PaymentSuccess())));
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 60,
+                  child: CustomNextButton(
+                    text: 'Book Now',
+                    ontap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => SchduleAppointment())));
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: ((context) => const PaymentSuccess())));
 
-                    // print("user subs? $userHasSubscription");
-                    // userHasSubscription
-                    //     ? Get.to(() => LoadingScreenPayment())
-                    //     : buildAdvisoryAgreementAlertDialog();
-                  },
+                      // print("user subs? $userHasSubscription");
+                      // userHasSubscription
+                      //     ? Get.to(() => LoadingScreenPayment())
+                      //     : buildAdvisoryAgreementAlertDialog();
+                    },
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 40,
-            )
-          ],
+              const SizedBox(
+                height: 40,
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -58,10 +58,10 @@ class _PhoneVerificationState extends State<PhoneVerification> {
   bool pinfiledshow = false;
   bool _sendOTPclicked = false;
 
-  
+
   bool isValidPhoneNumber(String phoneNumber) {
   final RegExp phoneNumberExpression = RegExp(r"^0{10}$");
-  
+
   return !phoneNumberExpression.hasMatch(phoneNumber);
 }
 
@@ -452,6 +452,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                   ),
               SizedBox(
                 height: 30,
+                
               ),
               Row(
                 children: [

@@ -9,7 +9,7 @@ import 'Portfolio/PortfolioMainUI.dart';
 import 'SideMenu/Brokerage/broker_account_model.dart';
 
 void openDashboardPage(BuildContext context) {
-  Navigator.push(
+  Navigator.pushReplacement(
       context, MaterialPageRoute(builder: ((context) => PortfolioMainUI())));
 }
 

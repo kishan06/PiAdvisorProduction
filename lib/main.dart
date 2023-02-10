@@ -5,23 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:month_year_picker/month_year_picker.dart';
-
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:piadvisory/Common/ConnectivityService.dart';
+import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/Common/SubscriptionLoadingPage.dart';
 import 'package:piadvisory/Common/ThankYouPage.dart';
-import 'package:piadvisory/Common/connectivity.dart';
-import 'package:piadvisory/Common/sfCalendarView.dart';
-
 import 'package:piadvisory/HomePage/Homepage.dart';
 import 'package:piadvisory/HomePage/Notifications/Notification.dart';
 import 'package:piadvisory/HomePage/Stock/StockGraph.dart';
 import 'package:piadvisory/Login/ForgotOTP.dart';
 import 'package:piadvisory/Login/ForgotPassword.dart';
-import 'package:piadvisory/Login/Repository/Resetpassword.dart';
 import 'package:piadvisory/Login/ResetPassword.dart';
 import 'package:piadvisory/Login/SplashSlider.dart';
 import 'package:piadvisory/Login/forgotPIN2.dart';
@@ -56,6 +50,7 @@ import 'package:piadvisory/Profile/add-goal.dart';
 import 'package:piadvisory/SideMenu/CartPi.dart';
 import 'package:piadvisory/SideMenu/CartPi2.dart';
 import 'package:piadvisory/Utils/database.dart';
+import 'package:piadvisory/mainnavigation.dart';
 import 'package:piadvisory/payment-failed.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -77,6 +72,9 @@ import 'package:scgateway_flutter_plugin/scgateway_flutter_plugin.dart';
 import 'Login/login.dart';
 import 'Login/splash.dart';
 import 'Profile/KYC/KYCMain.dart';
+
+int bottomIndex = 0;
+
 
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'msg_channel', // id
@@ -161,7 +159,7 @@ class _MyAppState extends State<MyApp> {
     _razorpay.clear();
     super.dispose();
   }
-
+  final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     // ConnectivityController connectivityController =
@@ -171,78 +169,14 @@ class _MyAppState extends State<MyApp> {
       // initialData: ConnectivityStatus.Cellular,
       // value: ConnectivityService().connectionStatusController.stream,
       //child :
-    ScreenUtilInit(
-      builder: (BuildContext context, Widget? child) => GetMaterialApp(
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          MonthYearPickerLocalizations.delegate
-        ],
-        // darkTheme: AppTheme.dark(),
-        // themeMode: ThemeServices().theme,
-        theme: AppTheme.light(),
-        debugShowCheckedModeBanner: false,
-        title: 'Pi',
-        initialRoute: '/',
-        getPages: [
-          GetPage(name: '/', page: () => Splash()),
-          GetPage(name: '/pindialog', page: () => PinDialog()),
-          GetPage(name: '/login', page: () => Login()),
-          GetPage(name: '/home', page: () => HomePage()),
-          GetPage(name: '/splashslider', page: () => Splashslider()),
-          GetPage(name: '/phoneverification', page: () => PhoneVerification()),
-          GetPage(name: '/forgotpassword', page: () => ForgotPassword()),
-          GetPage(name: '/signupforfree', page: () => VerifyPhoneNumber()),
-          GetPage(name: '/resetPassword', page: () => ResetPassword()),
-          GetPage(name: '/forgototp', page: () => ForgotOTP()),
-          GetPage(
-              name: '/RegistrationOTPverification',
-              page: () => otpPhoneVerification()),
-          GetPage(name: '/signup2', page: () => SignUpPage()),
-          GetPage(name: '/security_questions', page: () => SecurityQuestions()),
-          GetPage(name: '/security_first', page: () => SecurityFirst()),
-          GetPage(name: '/notification', page: () => Notify()),
-          GetPage(name: '/profile', page: () => ProfileMain()),
-          GetPage(name: '/touchid', page: () => TouchId()),
-          GetPage(name: '/forgotpin2', page: () => ForgotPIN2()),
-          GetPage(name: '/mysubscription', page: () => Mysubscription()),
-          GetPage(name: '/paymentsuccessfull', page: () => PaymentSuccess()),
-          GetPage(name: '/paymentfailed', page: () => PaymentFailed()),
-          GetPage(
-              name: '/select_time_and_date', page: () => SelectTimeAndDate()),
-          GetPage(name: '/kycmain', page: () => KYCMain()),
-          GetPage(name: '/familydetails', page: () => FamilyDetails()),
-          GetPage(name: '/loadingpagekyc', page: () => LoadingPageKYC()),
-          GetPage(name: '/thankyou', page: () => ThankYouPage()),
-          GetPage(name: '/KYCThankyou', page: () => KYCThankYouPage()),
-          GetPage(
-              name: '/schduleAppointment', page: () => SchduleAppointment()),
-          GetPage(name: '/personalProfile', page: () => PersonalProfile()),
-          GetPage(name: '/addgoals', page: () => AddGoals()),
-          GetPage(name: '/addBankDetails', page: () => AddBankDetails()),
-          GetPage(
-              name: '/subscription_loading_page',
-              page: () => SubscriptionLoadingPage()),
-          GetPage(name: '/cartpi', page: () => CartPI()),
-          GetPage(name: '/cartpi2', page: () => CartPI2()),
-          GetPage(name: '/stock_graph', page: () => StockGraph()),
-          GetPage(name: '/loading_kra', page: () => LoadingPageKRACheck()),
-          GetPage(name: '/loading_ckyc', page: () => LoadingPageCKYCCheck()),
-          GetPage(name: '/digi_locker', page: () => DigiLocker()),
-          GetPage(name: '/digi_locker_start', page: () => KYCDigiLocker()),
-
-          GetPage(name: '/editMutualfund', page: () => Mutualfund()),
-           GetPage(name: '/editFixdeposit', page: () => FixDeposit()),
-            GetPage(name: '/editRealestate', page: () => RealEstate()),
-          GetPage(name: '/editHomeloan', page: () => Homeloan()),
-          GetPage(name: '/editPersonalloan', page: () => PersonalLoan()),
-         GetPage(name: '/editCarloan', page: () => CarLoan()),
-          
-        ],
-      ),
-      designSize: Size(390, 844),
-    );
+      StreamProvider<ConnectivityStatus>.value(
+          value: ConnectivityService().connectionStatusController.stream,
+          initialData:  ConnectivityStatus.Cellular,
+          child: MaterialApp(
+            home: NetworkSensitive(
+              scaffoldKey: _scaffoldKey,
+                child: MainNavigation()),
+          ));
    // );
   }
 }

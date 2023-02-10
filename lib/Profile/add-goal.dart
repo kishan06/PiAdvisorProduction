@@ -296,7 +296,7 @@ class _AddGoalsState extends State<AddGoals> {
                     SizedBox(
                       width: double.infinity,
                       height: 60,
-                      child: 
+                      child:
                       RoundedLoadingButton(
                         elevation: 0,
                         height: 60,
@@ -359,6 +359,7 @@ class GoalsDialog extends StatefulWidget {
   @override
   State<GoalsDialog> createState() => _GoalsDialogState();
   final void Function()? ontap;
+
 }
 
 class _GoalsDialogState extends State<GoalsDialog> {

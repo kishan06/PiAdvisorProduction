@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/HomePage/Stock/stock.dart';
 
 import 'package:piadvisory/Login/Repository/UserVerified.dart';
@@ -139,66 +141,7 @@ class _SettingsState extends State<Settings> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-        unselectedLabelStyle: TextStyle(color: Colors.grey),
-        unselectedIconTheme: IconThemeData(color: Colors.grey),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.path_3177,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Icon(
-                CustomIcons.path_4346,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-            ),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.group_2369,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Subscribe',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.date_range,
-              //  color:
-              //           Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-            ),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              CustomIcons.bottombarbagicon,
-              //  color:
-              //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
-              size: 22.5,
-            ),
-            label: 'Dashboard',
-          ),
-        ],
-        currentIndex: 0,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Color(0xFFF78104),
-        backgroundColor: Colors.white,
-        onTap: (index) {
-          print(index);
-          _selectedTab(index);
-        },
-        type: BottomNavigationBarType.fixed,
-      ),
+      bottomNavigationBar: CreateBottomBar(stateBottomNav, "Bottombar", context),
       appBar: CustomAppBarWithIcons(
         titleTxt: "Settings",
         globalkey: _key,

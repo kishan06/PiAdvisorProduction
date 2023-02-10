@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/Noscalinganimation.dart';
 import 'package:piadvisory/HomePage/UploadDocuments.dart';
 import 'package:piadvisory/HomePage/income-details.dart';
@@ -251,54 +253,7 @@ class _TaxplanningState extends State<Taxplanning> {
               //  ],
               // )
               //: null,
-              bottomNavigationBar: BottomNavigationBar(
-                selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-                unselectedLabelStyle: TextStyle(color: Colors.grey),
-                unselectedIconTheme: IconThemeData(color: Colors.grey),
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      CustomIcons.path_3177,
-                    ),
-                    label: 'Home',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Icon(
-                        CustomIcons.path_4346,
-                      ),
-                    ),
-                    label: 'Explore',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      CustomIcons.group_2369,
-                    ),
-                    label: 'Subscribe',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(CustomIcons.date_range),
-                    label: 'Calendar',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      CustomIcons.bottombarbagicon,
-                      size: 22.5,
-                    ),
-                    label: 'Dashboard',
-                  ),
-                ],
-                currentIndex: 0,
-                unselectedItemColor: Colors.grey,
-                selectedItemColor: Color(0xFFF78104),
-                backgroundColor: Colors.white,
-                onTap: (index) {
-                  print(index);
-                  _selectedTab(index);
-                },
-                type: BottomNavigationBarType.fixed,
-              ),
+              bottomNavigationBar: CreateBottomBar(stateBottomNav, "Bottombar", context),
               appBar: AppBar(
                 backgroundColor: const Color(0xFFE7F3F3),
                 elevation: 0,

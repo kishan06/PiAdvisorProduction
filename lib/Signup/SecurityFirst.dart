@@ -138,7 +138,7 @@ class _SecurityFirstState extends State<SecurityFirst> {
                         ),
                         Text("Choose a PIN of Your choice"),
                         SizedBox(
-                          height: 15.h,
+                          height: 30.h,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -158,7 +158,7 @@ class _SecurityFirstState extends State<SecurityFirst> {
                                   controller: pincontroller,
                                   textAlign: TextAlign.center,
                                   decoration: const InputDecoration(
-                                    //  helperText: '',
+                                    helperText: '',
                                     hintText: "",
                                     floatingLabelBehavior:
                                         FloatingLabelBehavior.always,
@@ -187,7 +187,7 @@ class _SecurityFirstState extends State<SecurityFirst> {
                         ),
                         const Text("Please Re-Enter the PIN"),
                         SizedBox(
-                          height: 25.h,
+                          height: 30.h,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -209,7 +209,7 @@ class _SecurityFirstState extends State<SecurityFirst> {
                                     textAlign: TextAlign.center,
                                     decoration: const InputDecoration(
                                       hintText: "",
-                                      //    helperText: '',
+                                      helperText: '',
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.always,
                                       focusedBorder: UnderlineInputBorder(

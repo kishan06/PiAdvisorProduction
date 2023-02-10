@@ -28,7 +28,7 @@ class Data {
   int? id;
   int? userId;
   String? type;
-  int? amount;
+  String? amount;
   int? isActive;
   String? duration;
   String? createdAt;

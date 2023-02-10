@@ -296,7 +296,8 @@ class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            CustomTextFieldsName(             
+            CustomTextFieldsName( 
+              readOnly: true,            
               errortext: "Enter Full Name",
               hint: "Enter Your Full Name",
               txtinptype: TextInputType.text,
@@ -353,6 +354,7 @@ class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
               ),
             ),
             CustomTextFieldsName(
+              readOnly: false,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please select familarity with investing";
@@ -379,6 +381,7 @@ class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
               ),
             ),
             CustomTextFieldsName(
+              readOnly: false,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please enter primary reason ";
@@ -431,6 +434,7 @@ class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
               ),
             ),
             CustomTextFieldsName(
+              readOnly: false,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please enter how long you plan to invest";
@@ -509,6 +513,7 @@ class _TellUsAboutYourselfState extends State<TellUsAboutYourself> {
               ),
             ),
             CustomTextFieldsName(
+              readOnly: false,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please enter how would you react if your portfolio is in loss";
@@ -617,7 +622,9 @@ class CustomTextFieldsName extends StatelessWidget {
       this.onchanged,
       this.txtinptype,
       this.inputFormatters,
-      this.validator})
+      this.validator,
+      required this.readOnly
+      })
       : super(key: key);
 
   final TextEditingController? controller;
@@ -630,10 +637,11 @@ class CustomTextFieldsName extends StatelessWidget {
   final TextInputType? txtinptype;
   final dynamic inputFormatters;
   final dynamic validator;
+  final bool readOnly;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      readOnly: true,
+      readOnly: readOnly,
       keyboardType: txtinptype ?? TextInputType.text,
       maxLength: maxlength,
       cursorColor: Colors.grey,

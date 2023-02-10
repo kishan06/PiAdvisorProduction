@@ -242,9 +242,9 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "Please Enter Number";
+                            return "Please enter number";
                           } else if (value.length < 10) {
-                            return "Please Enter Correct Phone Number";
+                            return "Please enter correct phone number";
                           } else if (!isValidPhoneNumber(value)) {
                             return 'Phone number cannot contain 10 zeros';
                           }
@@ -276,6 +276,10 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                           hintStyle: TextStyle(
                               color:
                                   Get.isDarkMode ? Colors.white : Colors.black),
+                          errorStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Productsans'
+                          )
                         ),
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(10),
@@ -396,7 +400,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                   child:
                       //  pinfiledshow
                       //  ?
-                      PinCodeTextField(
+                      PinCodeTextField(      
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return "Please enter verification code";

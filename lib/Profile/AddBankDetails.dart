@@ -262,9 +262,9 @@ class _AddBankDetailsState extends State<AddBankDetails> {
                         return null;
                       },
                     ),
-                    //   const SizedBox(
-                    //   height: 15,
-                    // ),
+                      const SizedBox(
+                      height: 15,
+                    ),
                   ],
                 ),
               ),
@@ -547,7 +547,7 @@ class CustomTextFieldsIfsc extends StatelessWidget {
       ),
       validator: validator,
       inputFormatters: [
-        LengthLimitingTextInputFormatter(limitlength ?? 20),
+        LengthLimitingTextInputFormatter(limitlength ?? 11),
         FilteringTextInputFormatter.allow(RegExp('[A-ZS0-9]')),
       ],
       onSaved: (value) {

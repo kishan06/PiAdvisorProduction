@@ -381,26 +381,6 @@ class _ProfileMainState extends State<ProfileMain> {
             sizefactor: 20,
             isimage: false,
             isupdate: false,
-            leadingimage: "assets/images/Group 6057.svg",
-            title: "Password & Security",
-            ontap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const PasswordAndSecurity()));
-            },
-          ),
-          const Divider(
-            thickness: 1,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomListTiles(
-            showTrailingText: false,
-            sizefactor: 20,
-            isimage: false,
-            isupdate: false,
             leadingimage: "assets/images/Group 12.svg",
             title: "My Assets",
             ontap: () {
@@ -424,6 +404,26 @@ class _ProfileMainState extends State<ProfileMain> {
             ontap: () {
                Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const Liabilities()));
+            },
+          ),
+          const Divider(
+            thickness: 1,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          CustomListTiles(
+            showTrailingText: false,
+            sizefactor: 20,
+            isimage: false,
+            isupdate: false,
+            leadingimage: "assets/images/Group 6057.svg",
+            title: "Password & Security",
+            ontap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PasswordAndSecurity()));
             },
           ),
           const Divider(

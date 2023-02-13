@@ -18,6 +18,7 @@ import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
 import 'package:piadvisory/Profile/Assets/Fixdeposit.dart';
 import 'package:piadvisory/Profile/Assets/Mutualfund.dart';
 import 'package:piadvisory/Profile/Assets/Realestate.dart';
+import 'package:piadvisory/Profile/ProfileMain.dart';
 import 'package:piadvisory/SideMenu/Subscribe/AppWidget.dart';
 import 'package:async/src/future_group.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
@@ -41,6 +42,9 @@ class _AssetsState extends State<Assets> {
   List<UserRe>? _Realestate = [];
 
   FutureGroup futureGroup = FutureGroup();
+    final ScrollController _scrollController = ScrollController();
+    final ScrollController _fdscrollController = ScrollController();
+    final ScrollController _rescrollController = ScrollController();
 
   @override
   void initState() {
@@ -229,549 +233,570 @@ class _AssetsState extends State<Assets> {
 
   Widget _buildBody(context, List<User>? _Mutualfund, List<Userfd>? _Fixdeposit,
       List<UserRe>? _Realestate) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Card(
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // SizedBox(
-                  //   height: 12.h,
-                  // ),
-                  // Text(
-                  //   "My Total Invstments ₹0.00",
-                  //   style: TextStyle(
-                  //       color: Colors.black,
-                  //       fontSize: 15,
-                  //       fontWeight: FontWeight.w600),
-                  // ),
-                  SizedBox(
-                    height: 12.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: SvgPicture.asset("assets/images/Group 9.svg"),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Mutualfund()));
-                            },
-                          ),
-                          // SizedBox(
-                          //   height: 2.h,
-                          // ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12),
-                            child: GestureDetector(
-                              onTap: () {
+    return WillPopScope(
+      onWillPop: () {
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ProfileMain()));
+        return Future.value(false);
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Card(
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // SizedBox(
+                    //   height: 12.h,
+                    // ),
+                    // Text(
+                    //   "My Total Invstments ₹0.00",
+                    //   style: TextStyle(
+                    //       color: Colors.black,
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.w600),
+                    // ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            IconButton(
+                              icon: SvgPicture.asset("assets/images/Group 9.svg"),
+                              onPressed: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => Mutualfund()));
                               },
-                              child: Text(
-                                "Mutual Fund",
-                                style:
-                                    TextStyle(fontSize: 13, color: Colors.black),
+                            ),
+                            // SizedBox(
+                            //   height: 2.h,
+                            // ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Mutualfund()));
+                                },
+                                child: Text(
+                                  "Mutual Fund",
+                                  style:
+                                      TextStyle(fontSize: 13, color: Colors.black),
+                                ),
                               ),
                             ),
-                          ),
-                          // SizedBox(
-                          //   height: 6.h,
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(left: 12),
-                          //   child: Text("₹99.k",
-                          //   style: TextStyle(
-                          //     fontSize: 13,
-                          //     color: Colors.black
-                          //   ),
-                          //   ),
-                          // )
-                        ],
-                      ),
-                      Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: SvgPicture.asset("assets/images/Group 10.svg"),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FixDeposit()));
-                            },
-                          ),
-                          // SizedBox(
-                          //   height: 2.h,
-                          // ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FixDeposit()));
-                            },
-                            child: Text(
-                              "Fix Deposit",
-                              style: TextStyle(fontSize: 13, color: Colors.black),
+                            // SizedBox(
+                            //   height: 6.h,
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 12),
+                            //   child: Text("₹99.k",
+                            //   style: TextStyle(
+                            //     fontSize: 13,
+                            //     color: Colors.black
+                            //   ),
+                            //   ),
+                            // )
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            IconButton(
+                              icon: SvgPicture.asset("assets/images/Group 10.svg"),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FixDeposit()));
+                              },
                             ),
-                          ),
-                          // SizedBox(
-                          //   height: 6.h,
-                          // ),
-                          // Text("₹99.k",
-                          // style: TextStyle(
-                          //   fontSize: 13,
-                          //   color: Colors.black
-                          // ),
-                          // )
-                        ],
-                      ),
-                      Column(
-                        children: <Widget>[
-                          IconButton(
-                            icon: SvgPicture.asset("assets/images/Group 8.svg"),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RealEstate()));
-                            },
-                          ),
-                          // SizedBox(
-                          //   height: 2.h,
-                          // ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 12),
-                            child: GestureDetector(
+                            // SizedBox(
+                            //   height: 2.h,
+                            // ),
+                            GestureDetector(
                               onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FixDeposit()));
+                              },
+                              child: Text(
+                                "Fixed Deposit",
+                                style: TextStyle(fontSize: 13, color: Colors.black),
+                              ),
+                            ),
+                            // SizedBox(
+                            //   height: 6.h,
+                            // ),
+                            // Text("₹99.k",
+                            // style: TextStyle(
+                            //   fontSize: 13,
+                            //   color: Colors.black
+                            // ),
+                            // )
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            IconButton(
+                              icon: SvgPicture.asset("assets/images/Group 8.svg"),
+                              onPressed: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => RealEstate()));
                               },
-                              child: Text(
-                                "Real Estate",
-                                style:
-                                    TextStyle(fontSize: 13, color: Colors.black),
+                            ),
+                            // SizedBox(
+                            //   height: 2.h,
+                            // ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 12),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => RealEstate()));
+                                },
+                                child: Text(
+                                  "Real Estate",
+                                  style:
+                                      TextStyle(fontSize: 13, color: Colors.black),
+                                ),
                               ),
                             ),
-                          ),
-                          // SizedBox(
-                          //   height: 6.h,
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(right: 12),
-                          //   child: Text("₹99.k",
-                          //   style: TextStyle(
-                          //     fontSize: 13,
-                          //     color: Colors.black
-                          //   ),
-                          //   ),
-                          // )
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                ],
+                            // SizedBox(
+                            //   height: 6.h,
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(right: 12),
+                            //   child: Text("₹99.k",
+                            //   style: TextStyle(
+                            //     fontSize: 13,
+                            //     color: Colors.black
+                            //   ),
+                            //   ),
+                            // )
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          _Mutualfund != null && _Mutualfund.isNotEmpty
-              ? SizedBox(
-                height: 150,
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Mutual Funds",
-                                style: blackStyle(context).copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Get.isDarkMode
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              SizedBox(
-                                height: 25,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                            child: ListView.builder(
-                                itemCount: _Mutualfund!.length,
-                                itemBuilder: (context, index) {
-                                  return Dismissible(
-                                    background: slideRightBackground(),
-                                    key: UniqueKey(),
-                                    onDismissed: (direction) {
-                                      setState(() {
-                                        deleteMutualfunds(_Mutualfund[index].id!);
-                                        _Mutualfund.removeAt(index);
-                                      });
-                                      Flushbar(
-                                        message: "Mutual Funds deleted",
-                                        duration: Duration(seconds: 3),
-                                      ).show(context);
-                                    },
-                                    child: Card(
-                                      elevation: 2,
-                                      child: ListTile(
-                                        title:
-                                            Text('${_Mutualfund[index].schemeName}'),
-                                        subtitle: Text(
-                                            '${_Mutualfund[index].dateOfInvestment.toString()}'),
-                                        trailing: PopupMenuButton(
-                                            offset: Offset(0, 50),
-                                            color: Color(0xFF6B6B6B),
-                                            tooltip: '',
-                                            icon: Icon(Icons.more_vert),
-                                            onSelected: (value) {
-                                              if (value == '/delete') {
-                                                setState(() {
-                                                  deleteMutualfunds(
-                                                      _Mutualfund[index].id!);
-                                                  _Mutualfund.removeAt(index);
-                                                  Flushbar(
-                                                    message: "Mutual Funds deleted",
-                                                    duration: Duration(seconds: 3),
-                                                  ).show(context);
-                                                });
-                                              } else if (value == "/edit") {
-                                                Get.toNamed("/editMutualfund",
-                                                    arguments: {
-                                                      "id": _Mutualfund[index].id,
-                                                      "scheme_name":
-                                                          _Mutualfund[index]
-                                                              .schemeName,
-                                                      "investment_amount":
-                                                          _Mutualfund[index]
-                                                              .investmentAmount,
-                                                      "date_of_investment":
-                                                          _Mutualfund[index]
-                                                              .dateOfInvestment,
-                                                      "current_value":
-                                                          _Mutualfund[index]
-                                                              .currentValue
+            _Mutualfund != null && _Mutualfund.isNotEmpty
+                ? SizedBox(
+                  height: 150,
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Mutual Funds",
+                                  style: blackStyle(context).copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Get.isDarkMode
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                               height: 100,
+                              child: Scrollbar(
+                                thumbVisibility: true,
+                                controller: _scrollController,
+                                child: ListView.builder(
+                                  controller: _scrollController,
+                                    itemCount: _Mutualfund!.length,
+                                    itemBuilder: (context, index) {
+                                      return Dismissible(
+                                        background: slideRightBackground(),
+                                        key: UniqueKey(),
+                                        onDismissed: (direction) {
+                                          setState(() {
+                                            deleteMutualfunds(_Mutualfund[index].id!);
+                                            _Mutualfund.removeAt(index);
+                                          });
+                                          Flushbar(
+                                            message: "Mutual Funds deleted",
+                                            duration: Duration(seconds: 3),
+                                          ).show(context);
+                                        },
+                                        child: Card(
+                                          elevation: 2,
+                                          child: ListTile(
+                                            title:
+                                                Text('${_Mutualfund[index].schemeName}'),
+                                            subtitle: Text(
+                                                '${_Mutualfund[index].dateOfInvestment.toString()}'),
+                                            trailing: PopupMenuButton(
+                                                offset: Offset(0, 50),
+                                                color: Color(0xFF6B6B6B),
+                                                tooltip: '',
+                                                icon: Icon(Icons.more_vert),
+                                                onSelected: (value) {
+                                                  if (value == '/delete') {
+                                                    setState(() {
+                                                      deleteMutualfunds(
+                                                          _Mutualfund[index].id!);
+                                                      _Mutualfund.removeAt(index);
+                                                      Flushbar(
+                                                        message: "Mutual Funds deleted",
+                                                        duration: Duration(seconds: 3),
+                                                      ).show(context);
                                                     });
-                                              }
-                                            },
-                                            itemBuilder: (BuildContext bc) {
-                                              return [
-                                                PopupMenuItem(
-                                                  child: Text(
-                                                    "Edit",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  value: '/edit',
-                                                ),
-                                                PopupMenuItem(
-                                                  child: Text(
-                                                    "Delete",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  value: '/delete',
-                                                )
-                                              ];
-                                            }),
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ],
+                                                  } else if (value == "/edit") {
+                                                    Get.toNamed("/editMutualfund",
+                                                        arguments: {
+                                                          "id": _Mutualfund[index].id,
+                                                          "scheme_name":
+                                                              _Mutualfund[index]
+                                                                  .schemeName,
+                                                          "investment_amount":
+                                                              _Mutualfund[index]
+                                                                  .investmentAmount,
+                                                          "date_of_investment":
+                                                              _Mutualfund[index]
+                                                                  .dateOfInvestment,
+                                                          "current_value":
+                                                              _Mutualfund[index]
+                                                                  .currentValue
+                                                        });
+                                                  }
+                                                },
+                                                itemBuilder: (BuildContext bc) {
+                                                  return [
+                                                    PopupMenuItem(
+                                                      child: Text(
+                                                        "Edit",
+                                                        style: TextStyle(
+                                                            color: Colors.white),
+                                                      ),
+                                                      value: '/edit',
+                                                    ),
+                                                    PopupMenuItem(
+                                                      child: Text(
+                                                        "Delete",
+                                                        style: TextStyle(
+                                                            color: Colors.white),
+                                                      ),
+                                                      value: '/delete',
+                                                    )
+                                                  ];
+                                                }),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-              )
-              : Container(),
-          _Fixdeposit != null && _Fixdeposit.isNotEmpty
-              ? SizedBox(
-                height: 150,
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Fix Deposit",
-                                style: blackStyle(context).copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Get.isDarkMode
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              SizedBox(
-                                height: 25,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                            child: ListView.builder(
-                                itemCount: _Fixdeposit!.length,
-                                itemBuilder: (context, index) {
-                                  return Dismissible(
-                                    background: slideRightBackground(),
-                                    key: UniqueKey(),
-                                    onDismissed: (direction) {
-                                      setState(() {
-                                        deleteFixdeposit(_Fixdeposit[index].id!);
-                                        _Fixdeposit.removeAt(index);
-                                      });
-                                      Flushbar(
-                                        message: "Fix Deposit deleted",
-                                        duration: Duration(seconds: 3),
-                                      ).show(context);
-                                    },
-                                    child: Card(
-                                      elevation: 2,
-                                      child: ListTile(
-                                        title: Text('${_Fixdeposit[index].bankName}'),
-                                        subtitle: Text(
-                                            '${_Fixdeposit[index].startDate.toString()}'),
-                                        trailing: PopupMenuButton(
-                                            offset: Offset(0, 50),
-                                            color: Color(0xFF6B6B6B),
-                                            tooltip: '',
-                                            icon: Icon(Icons.more_vert),
-                                            onSelected: (value) {
-                                              if (value == '/delete') {
-                                                setState(() {
-                                                  deleteFixdeposit(
-                                                      _Fixdeposit[index].id!);
-                                                  _Fixdeposit.removeAt(index);
-                                                  Flushbar(
-                                                    message: "Fix Deposit deleted",
-                                                    duration: Duration(seconds: 3),
-                                                  ).show(context);
-                                                });
-                                              } else if (value == "/edit") {
-                                                Get.toNamed("/editFixdeposit",
-                                                    arguments: {
-                                                      "id": _Fixdeposit[index].id,
-                                                      "bank_name":
-                                                          _Fixdeposit[index].bankName,
-                                                      "investment_amount":
-                                                          _Fixdeposit[index]
-                                                              .investmentAmount,
-                                                      "annual_rate":
-                                                          _Fixdeposit[index]
-                                                              .annualRate,
-                                                      "start_date": _Fixdeposit[index]
-                                                          .startDate,
-                                                      "tenure":
-                                                          _Fixdeposit[index].tenure,
+                )
+                : Container(),
+            _Fixdeposit != null && _Fixdeposit.isNotEmpty
+                ? SizedBox(
+                  height: 150,
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Fixed Deposit",
+                                  style: blackStyle(context).copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Get.isDarkMode
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 100,
+                              child: Scrollbar(
+                                thumbVisibility: true,
+                                controller: _fdscrollController,
+                                child: ListView.builder(
+                                  controller: _fdscrollController,
+                                    itemCount: _Fixdeposit!.length,
+                                    itemBuilder: (context, index) {
+                                      return Dismissible(
+                                        background: slideRightBackground(),
+                                        key: UniqueKey(),
+                                        onDismissed: (direction) {
+                                          setState(() {
+                                            deleteFixdeposit(_Fixdeposit[index].id!);
+                                            _Fixdeposit.removeAt(index);
+                                          });
+                                          Flushbar(
+                                            message: "Fixed Deposit deleted",
+                                            duration: Duration(seconds: 3),
+                                          ).show(context);
+                                        },
+                                        child: Card(
+                                          elevation: 2,
+                                          child: ListTile(
+                                            title: Text('${_Fixdeposit[index].bankName}'),
+                                            subtitle: Text(
+                                                '${_Fixdeposit[index].startDate.toString()}'),
+                                            trailing: PopupMenuButton(
+                                                offset: Offset(0, 50),
+                                                color: Color(0xFF6B6B6B),
+                                                tooltip: '',
+                                                icon: Icon(Icons.more_vert),
+                                                onSelected: (value) {
+                                                  if (value == '/delete') {
+                                                    setState(() {
+                                                      deleteFixdeposit(
+                                                          _Fixdeposit[index].id!);
+                                                      _Fixdeposit.removeAt(index);
+                                                      Flushbar(
+                                                        message: "Fixed Deposit deleted",
+                                                        duration: Duration(seconds: 3),
+                                                      ).show(context);
                                                     });
-                                              }
-                                            },
-                                            itemBuilder: (BuildContext bc) {
-                                              return [
-                                                PopupMenuItem(
-                                                  child: Text(
-                                                    "Edit",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  value: '/edit',
-                                                ),
-                                                PopupMenuItem(
-                                                  child: Text(
-                                                    "Delete",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  value: '/delete',
-                                                )
-                                              ];
-                                            }),
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ],
+                                                  } else if (value == "/edit") {
+                                                    Get.toNamed("/editFixdeposit",
+                                                        arguments: {
+                                                          "id": _Fixdeposit[index].id,
+                                                          "bank_name":
+                                                              _Fixdeposit[index].bankName,
+                                                          "investment_amount":
+                                                              _Fixdeposit[index]
+                                                                  .investmentAmount,
+                                                          "annual_rate":
+                                                              _Fixdeposit[index]
+                                                                  .annualRate,
+                                                          "start_date": _Fixdeposit[index]
+                                                              .startDate,
+                                                          "tenure":
+                                                              _Fixdeposit[index].tenure,
+                                                        });
+                                                  }
+                                                },
+                                                itemBuilder: (BuildContext bc) {
+                                                  return [
+                                                    PopupMenuItem(
+                                                      child: Text(
+                                                        "Edit",
+                                                        style: TextStyle(
+                                                            color: Colors.white),
+                                                      ),
+                                                      value: '/edit',
+                                                    ),
+                                                    PopupMenuItem(
+                                                      child: Text(
+                                                        "Delete",
+                                                        style: TextStyle(
+                                                            color: Colors.white),
+                                                      ),
+                                                      value: '/delete',
+                                                    )
+                                                  ];
+                                                }),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-              )
-              : Container(),
-          _Realestate != null && _Realestate.isNotEmpty
-              ? SizedBox(
-                height: 150,
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Real Estate",
-                                style: blackStyle(context).copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Get.isDarkMode
-                                        ? Colors.white
-                                        : Colors.black),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              SizedBox(
-                                height: 25,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                            child: ListView.builder(
-                                itemCount: _Realestate!.length,
-                                itemBuilder: (context, index) {
-                                  return Dismissible(
-                                    background: slideRightBackground(),
-                                    key: UniqueKey(),
-                                    onDismissed: (direction) {
-                                      setState(() {
-                                        deleteRealestate(_Realestate[index].id!);
-                                        _Realestate.removeAt(index);
-                                      });
-                                      Flushbar(
-                                        message: "Real Estate deleted",
-                                        duration: Duration(seconds: 3),
-                                      ).show(context);
-                                    },
-                                    child: Card(
-                                      elevation: 2,
-                                      child: ListTile(
-                                        title: Text(
-                                            '${_Realestate[index].propertyName}'),
-                                        subtitle: Text(
-                                            '${_Realestate[index].dateOfInvestment.toString()}'),
-                                        trailing: PopupMenuButton(
-                                            offset: Offset(0, 50),
-                                            color: Color(0xFF6B6B6B),
-                                            tooltip: '',
-                                            icon: Icon(Icons.more_vert),
-                                            onSelected: (value) {
-                                              if (value == '/delete') {
-                                                setState(() {
-                                                  deleteRealestate(
-                                                      _Realestate[index].id!);
-                                                  _Realestate.removeAt(index);
-                                                  Flushbar(
-                                                    message: "Real Estate deleted",
-                                                    duration: Duration(seconds: 3),
-                                                  ).show(context);
-                                                });
-                                              } else if (value == "/edit") {
-                                                Get.toNamed("/editRealestate",
-                                                    arguments: {
-                                                      "id": _Realestate[index].id,
-                                                      "property_name":
-                                                          _Realestate[index]
-                                                              .propertyName,
-                                                      "invested_value":
-                                                          _Realestate[index]
-                                                              .investedValue,
-                                                      "date_of_investment":
-                                                          _Realestate[index]
-                                                              .dateOfInvestment,
-                                                      "current_value":
-                                                          _Realestate[index]
-                                                              .currentValue
+                )
+                : Container(),
+            _Realestate != null && _Realestate.isNotEmpty
+                ? SizedBox(
+                  height: 150,
+                  child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Color(0xFFEBEBEB), width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Real Estate",
+                                  style: blackStyle(context).copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Get.isDarkMode
+                                          ? Colors.white
+                                          : Colors.black),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 100,
+                              child: Scrollbar(
+                                thumbVisibility: true,
+                                controller: _rescrollController,
+                                child: ListView.builder(
+                                  controller: _rescrollController,
+                                    itemCount: _Realestate!.length,
+                                    itemBuilder: (context, index) {
+                                      return Dismissible(
+                                        background: slideRightBackground(),
+                                        key: UniqueKey(),
+                                        onDismissed: (direction) {
+                                          setState(() {
+                                            deleteRealestate(_Realestate[index].id!);
+                                            _Realestate.removeAt(index);
+                                          });
+                                          Flushbar(
+                                            message: "Real Estate deleted",
+                                            duration: Duration(seconds: 3),
+                                          ).show(context);
+                                        },
+                                        child: Card(
+                                          elevation: 2,
+                                          child: ListTile(
+                                            title: Text(
+                                                '${_Realestate[index].propertyName}'),
+                                            subtitle: Text(
+                                                '${_Realestate[index].dateOfInvestment.toString()}'),
+                                            trailing: PopupMenuButton(
+                                                offset: Offset(0, 50),
+                                                color: Color(0xFF6B6B6B),
+                                                tooltip: '',
+                                                icon: Icon(Icons.more_vert),
+                                                onSelected: (value) {
+                                                  if (value == '/delete') {
+                                                    setState(() {
+                                                      deleteRealestate(
+                                                          _Realestate[index].id!);
+                                                      _Realestate.removeAt(index);
+                                                      Flushbar(
+                                                        message: "Real Estate deleted",
+                                                        duration: Duration(seconds: 3),
+                                                      ).show(context);
                                                     });
-                                              }
-                                            },
-                                            itemBuilder: (BuildContext bc) {
-                                              return [
-                                                PopupMenuItem(
-                                                  child: Text(
-                                                    "Edit",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  value: '/edit',
-                                                ),
-                                                PopupMenuItem(
-                                                  child: Text(
-                                                    "Delete",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  value: '/delete',
-                                                )
-                                              ];
-                                            }),
-                                      ),
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ],
+                                                  } else if (value == "/edit") {
+                                                    Get.toNamed("/editRealestate",
+                                                        arguments: {
+                                                          "id": _Realestate[index].id,
+                                                          "property_name":
+                                                              _Realestate[index]
+                                                                  .propertyName,
+                                                          "invested_value":
+                                                              _Realestate[index]
+                                                                  .investedValue,
+                                                          "date_of_investment":
+                                                              _Realestate[index]
+                                                                  .dateOfInvestment,
+                                                          "current_value":
+                                                              _Realestate[index]
+                                                                  .currentValue
+                                                        });
+                                                  }
+                                                },
+                                                itemBuilder: (BuildContext bc) {
+                                                  return [
+                                                    PopupMenuItem(
+                                                      child: Text(
+                                                        "Edit",
+                                                        style: TextStyle(
+                                                            color: Colors.white),
+                                                      ),
+                                                      value: '/edit',
+                                                    ),
+                                                    PopupMenuItem(
+                                                      child: Text(
+                                                        "Delete",
+                                                        style: TextStyle(
+                                                            color: Colors.white),
+                                                      ),
+                                                      value: '/delete',
+                                                    )
+                                                  ];
+                                                }),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-              )
-              : Container(),
-              SizedBox(
-                height: 20,
-              )
-        ],
+                )
+                : Container(),
+                SizedBox(
+                  height: 20,
+                )
+          ],
+        ),
       ),
     );
   }

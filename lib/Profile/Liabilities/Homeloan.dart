@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/app_bar.dart';
+import 'package:piadvisory/Profile/Liabilities/Liabilities.dart';
 import 'package:piadvisory/Profile/Liabilities/LiabilitiesRepository/liabilitiesform.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
@@ -122,7 +123,7 @@ class _HomeloanState extends State<Homeloan> {
         utils.showToast("Home loan Added!");
         replaceLoaderWithLiabilitiesBtn();
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProfileMain()));
+            context, MaterialPageRoute(builder: (context) => Liabilities()));
       } else {
         replaceLoaderWithLiabilitiesBtn();
         return utils.showToast(data.message);
@@ -147,7 +148,7 @@ class _HomeloanState extends State<Homeloan> {
       utils.showToast("Home loan Added!");
        replaceLoaderWithLiabilitiesBtn();
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+          context, MaterialPageRoute(builder: (context) => Liabilities()));
     } else {
         replaceLoaderWithLiabilitiesBtn();
         return utils.showToast(data.message);

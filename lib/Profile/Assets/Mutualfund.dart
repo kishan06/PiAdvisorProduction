@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/app_bar.dart';
+import 'package:piadvisory/Profile/Assets/Assets.dart';
 import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
 import 'package:piadvisory/Profile/GoalsRepository/storeGoals.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
@@ -65,8 +66,8 @@ class _MutualfundState extends State<Mutualfund> {
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2099))
+            firstDate: DateTime(1922),
+            lastDate: DateTime.now())
         .then((pickedDate) {
       // Check if no date is selected
       if (pickedDate == null) {
@@ -99,7 +100,7 @@ class _MutualfundState extends State<Mutualfund> {
         utils.showToast("Mutual funds Added!");
         replaceLoaderWithAssetsBtn();
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProfileMain()));    
+            context, MaterialPageRoute(builder: (context) => Assets()));    
       } else {
         replaceLoaderWithAssetsBtn();
         return utils.showToast(data.message);
@@ -122,7 +123,7 @@ class _MutualfundState extends State<Mutualfund> {
       utils.showToast("Mutual funds Added!");
       replaceLoaderWithAssetsBtn();
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+          context, MaterialPageRoute(builder: (context) => Assets()));
     } else {
        replaceLoaderWithAssetsBtn();
       return utils.showToast(data.message);

@@ -1,15 +1,20 @@
 // ignore_for_file: file_names, avoid_print
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/PieChart.dart';
 import 'package:piadvisory/Common/PieChartLiabilities.dart';
 import 'package:piadvisory/HomePage/Homepage.dart';
@@ -41,6 +46,7 @@ class PortfolioMainUI extends StatefulWidget {
 }
 
 class _PortfolioMainUIState extends State<PortfolioMainUI> {
+  StreamController<bool> stateBottomNav = StreamController.broadcast();
   void _selectedTab(int index) {
     setState(() {
       switch (index) {
@@ -90,195 +96,161 @@ class _PortfolioMainUIState extends State<PortfolioMainUI> {
   }
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
+  DateTime timebackPressed = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        extendBody: false,
-        backgroundColor: Color(0xFF878787),
-        key: _key,
-        drawer: NavDrawer(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Stack(
-          children: [
-            Positioned(
-              bottom: 22,
-              right: MediaQuery.of(context).size.width * 0.43,
-              child: FloatingActionButton(
-                backgroundColor: Color(0xFFF78104),
-                heroTag: "tag1",
+    return WillPopScope(
+      onWillPop: () async {
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+        final difference = DateTime.now().difference(timebackPressed);
+        final isExitWarning = difference >= Duration(seconds: 2);
+
+        timebackPressed = DateTime.now();
+
+        if (isExitWarning) {
+          final message = "Press back again to exit";
+          print("reached here");
+          Fluttertoast.showToast(
+            msg: message,
+            fontSize: 18,
+          );
+
+          return false;
+        } else {
+          Fluttertoast.cancel();
+
+          SystemNavigator.pop();
+          return true;
+        }
+      },
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          extendBody: false,
+          backgroundColor: Color(0xFF878787),
+          key: _key,
+          drawer: NavDrawer(),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Stack(
+            children: [
+              Positioned(
+                bottom: 22,
+                right: MediaQuery.of(context).size.width * 0.43,
+                child: FloatingActionButton(
+                  backgroundColor: Color(0xFFF78104),
+                  heroTag: "tag1",
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const Mysubscription())));
+                  },
+                  tooltip: 'Subscribe',
+                  elevation: 2.0,
+                  child: SvgPicture.asset(
+                    "assets/images/product sans logo wh new.svg",
+                    color: Colors.white,
+                    fit: BoxFit.contain,
+                    width: 28,
+                    height: 24,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          bottomNavigationBar:CreateBottomBar(stateBottomNav, "Bottombardashboard", context),
+          appBar: AppBar(
+            bottom: TabBar(
+              indicatorColor: Color(0xFF008083),
+              unselectedLabelStyle: TextStyle(color: Color(0xFF6B6B6B)),
+              labelColor: Colors.black,
+              labelStyle: TextStyle(
+                color: Color(0xFF000000),
+                fontWeight: FontWeight.bold,
+                fontSize: 16.sp,
+              ),
+              tabs: [
+                Tab(
+                  text: "Net Worth",
+                ),
+                Tab(
+                  text: "Goal Tracker",
+                ),
+                // Tab(
+                //   text: "Taxation",
+                // ),
+              ],
+            ),
+            backgroundColor: Colors.white,
+            elevation: 2,
+            shadowColor: Colors.black,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            title: Text("Dashboard"),
+            leading: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _key.currentState!.openDrawer();
+                  },
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ),
+                  iconSize: 25,
+                ),
+              ],
+            ),
+            actions: [
+              // IconButton(
+              //   onPressed: () {},
+              //   icon: SvgPicture.asset(
+              //     'assets/images/search-icon.svg',
+              //   ),
+              //   iconSize: 22,
+              //   color: const Color(0xFF6B6B6B),
+              // ),
+              // IconButton(
+              //   onPressed: () {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: ((context) => const Notify())));
+              //   },
+              //   icon: SvgPicture.asset(
+              //     'assets/images/notification-icon.svg',
+              //   ),
+              //   iconSize: 22,
+              //   color: const Color(0xFF6B6B6B),
+              // ),
+              IconButton(
                 onPressed: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: ((context) => const Mysubscription())));
+                          builder: ((context) => const ProfileMain())));
                 },
-                tooltip: 'Subscribe',
-                elevation: 2.0,
-                child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
+                icon: SvgPicture.asset(
+                  'assets/images/Profile1.svg',
                 ),
+                iconSize: 22,
+                color: const Color(0xFF303030),
               ),
-            ),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-          unselectedLabelStyle: TextStyle(color: Colors.grey),
-          unselectedIconTheme: IconThemeData(color: Colors.grey),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.path_3177,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  CustomIcons.path_4346,
-                  //  color:
-                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-                ),
-              ),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.group_2369,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Subscribe',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.date_range,
-                //  color:
-                //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.bottombarbagicon,
-                size: 22.5,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Dashboard',
-            ),
-          ],
-          currentIndex: 4,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Color(0xFFF78104),
-          backgroundColor: Colors.white,
-          onTap: (index) {
-            print(index);
-            _selectedTab(index);
-          },
-          type: BottomNavigationBarType.fixed,
-        ),
-        appBar: AppBar(
-          bottom: TabBar(
-            indicatorColor: Color(0xFF008083),
-            unselectedLabelStyle: TextStyle(color: Color(0xFF6B6B6B)),
-            labelColor: Colors.black,
-            labelStyle: TextStyle(
-              color: Color(0xFF000000),
-              fontWeight: FontWeight.bold,
-              fontSize: 16.sp,
-            ),
-            tabs: [
-              Tab(
-                text: "Net Worth",
-              ),
-              Tab(
-                text: "Goal Tracker",
-              ),
-              // Tab(
-              //   text: "Taxation",
-              // ),
             ],
           ),
-          backgroundColor: Colors.white,
-          elevation: 2,
-          shadowColor: Colors.black,
-          automaticallyImplyLeading: false,
-          titleSpacing: 0,
-          title: Text("Dashboard"),
-          leading: Row(
+          body: TabBarView(
+            physics: ScrollPhysics(),
+            dragStartBehavior: DragStartBehavior.down,
             children: [
-              IconButton(
-                onPressed: () {
-                  _key.currentState!.openDrawer();
-                },
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                ),
-                iconSize: 25,
-              ),
+              //net worth
+              PortfolioMain(),
+
+              //goal tracker
+              GoalsTracker(),
+
+              //taxation
+              //Taxation(),
             ],
           ),
-          actions: [
-            // IconButton(
-            //   onPressed: () {},
-            //   icon: SvgPicture.asset(
-            //     'assets/images/search-icon.svg',
-            //   ),
-            //   iconSize: 22,
-            //   color: const Color(0xFF6B6B6B),
-            // ),
-            // IconButton(
-            //   onPressed: () {
-            //     Navigator.push(context,
-            //         MaterialPageRoute(builder: ((context) => const Notify())));
-            //   },
-            //   icon: SvgPicture.asset(
-            //     'assets/images/notification-icon.svg',
-            //   ),
-            //   iconSize: 22,
-            //   color: const Color(0xFF6B6B6B),
-            // ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const ProfileMain())));
-              },
-              icon: SvgPicture.asset(
-                'assets/images/Profile1.svg',
-              ),
-              iconSize: 22,
-              color: const Color(0xFF303030),
-            ),
-          ],
-        ),
-        body: TabBarView(
-          physics: ScrollPhysics(),
-          dragStartBehavior: DragStartBehavior.down,
-          children: [
-            //net worth
-            PortfolioMain(),
-
-            //goal tracker
-            GoalsTracker(),
-
-            //taxation
-            //Taxation(),
-          ],
         ),
       ),
     );

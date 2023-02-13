@@ -11,7 +11,10 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:piadvisory/Common/ConnectivityService.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/NetworkSensitive.dart';
 import 'package:piadvisory/Common/VideoYoutube.dart';
 //import 'package:piadvisory/Common/network.dart';
@@ -32,6 +35,7 @@ import 'package:piadvisory/SideMenu/about.dart';
 import 'package:piadvisory/Utils/Constants.dart';
 import 'package:piadvisory/no-internet.dart';
 import 'package:piadvisory/smallcase_api_methods.dart';
+import 'package:provider/provider.dart';
 import 'package:scgateway_flutter_plugin/scgateway_flutter_plugin.dart';
 
 import 'package:async/src/future_group.dart';
@@ -58,6 +62,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import '../SideMenu/Subscribe/Mysubscription.dart';
 
 // import 'MutualFundsDetailed.dart';
+
 
 class HomePage extends StatefulWidget {
   HomePage({
@@ -111,6 +116,14 @@ class _HomePageState extends State<HomePage> {
     //_fetchfutures();
     //myFuture = getBlogs().getBlogsandNews();
     super.initState();
+  }
+
+  @override
+
+
+
+  void dispose() {
+    super.dispose();
   }
 
   // getConnectivity() =>
@@ -794,19 +807,19 @@ class _HomePageState extends State<HomePage> {
       ],
     ));
   }
-
+  String fromScreen = "";
 final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return  WillPopScope(
+    return WillPopScope(
       //onWillPop: () => Future.value(false),
       onWillPop: () async {
         SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
         final difference = DateTime.now().difference(timebackPressed);
         final isExitWarning = difference >= Duration(seconds: 2);
-    
+
         timebackPressed = DateTime.now();
-    
+
         if (isExitWarning) {
           final message = "Press back again to exit";
           print("reached here");
@@ -814,11 +827,11 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
             msg: message,
             fontSize: 18,
           );
-    
+
           return false;
         } else {
           Fluttertoast.cancel();
-    
+
           SystemNavigator.pop();
           return true;
         }
@@ -908,66 +921,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
                 }),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(color:  Color(0xFFF78104)),
-          unselectedLabelStyle: TextStyle(color: Colors.grey),
-          unselectedIconTheme: IconThemeData(color: Colors.grey),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.path_3177,
-                // color:
-                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  CustomIcons.path_4346,
-                  //  color:
-                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-                ),
-              ),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.group_2369,
-                // color:
-                //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Subscribe',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.date_range,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.bottombarbagicon,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104),
-                size: 22.5,
-              ),
-              label: 'Dashboard',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Color(0xFFF78104),
-          backgroundColor: Colors.white,
-          onTap: (index) {
-            print(index);
-            _selectedTab(index);
-          },
-          type: BottomNavigationBarType.fixed,
-        ),
+        bottomNavigationBar:CreateBottomBar(stateBottomNav,"BottombarHomepage", context),
         appBar: AppBar(
           backgroundColor: Colors.white, elevation: 2,
           shadowColor: Colors.black,
@@ -1036,18 +990,18 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
           ],
         ),
         body:
-            //   _networkcheck ?
-            //   Center(
-            //   child: Obx(() => Text(
-            //         _controller.connectionType.value == 1
-            //             ? "Wifi Connected"
-            //             : _controller.connectionType.value == 2
-            //                 ? 'Mobile Data Connected'
-            //                 : 'No Internet',
-            //         style: const TextStyle(fontSize: 20),
-            //       )),
-            // ):
-            FutureBuilder(
+        //   _networkcheck ?
+        //   Center(
+        //   child: Obx(() => Text(
+        //         _controller.connectionType.value == 1
+        //             ? "Wifi Connected"
+        //             : _controller.connectionType.value == 2
+        //                 ? 'Mobile Data Connected'
+        //                 : 'No Internet',
+        //         style: const TextStyle(fontSize: 20),
+        //       )),
+        // ):
+        FutureBuilder(
           future: futureGroup.future,
           builder: (ctx, snapshot) {
             if (snapshot.data == null) {

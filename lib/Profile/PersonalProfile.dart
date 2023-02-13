@@ -535,8 +535,8 @@ class _PersonalProfileState extends State<PersonalProfile> {
               stateSearchPlaceholder: "State",
               citySearchPlaceholder: "City",
               //countryDropdownLabel: "*Country",
-              stateDropdownLabel: "Select State*",
-              cityDropdownLabel: "Select City*",
+              stateDropdownLabel: stateValue ??  "Select State*",
+              cityDropdownLabel: cityValue ?? "Select City*",
               selectedItemStyle: TextStyle(
                   color: Get.isDarkMode ? Colors.white : Colors.black,
                   fontSize: 14.sp,

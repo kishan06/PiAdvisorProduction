@@ -91,13 +91,13 @@ class _SplashState extends State<Splash> {
             pinenabled != null && pinenabled
                 ? _ispinverified == 1
                     ? _isFingerPrint == 1
-                        ? Navigator.push(
+                        ? Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: ((context) => PinDialog(
                                       showFingerAndPin: "yes",
                                     ))))
-                        : Navigator.push(
+                        : Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: ((context) => PinDialog(

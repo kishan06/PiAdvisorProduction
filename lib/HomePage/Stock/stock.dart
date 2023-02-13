@@ -8,7 +8,10 @@ import 'package:dio/dio.dart' as prefix;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:outline_search_bar/outline_search_bar.dart';
+import 'package:piadvisory/Common/CreateBottomBar.dart';
+import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/StreamEnum.dart';
 import 'package:piadvisory/HomePage/FilterMutualFunds.dart';
 import 'package:piadvisory/HomePage/Stock/Model/ActiveByValue.dart';
@@ -70,6 +73,7 @@ class _StocksState extends State<Stocks> with TickerProviderStateMixin {
   late TabController _controller;
   int? randomNum;
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+  String fromScreen = "";
   void _selectedTab(int index) {
     setState(() {
       _lastSelected = 'TAB: $index';
@@ -152,247 +156,213 @@ class _StocksState extends State<Stocks> with TickerProviderStateMixin {
 
     print("random generated no is ${randomNum}");
   }
-
+  DateTime timebackPressed = DateTime.now();
   @override
   Widget build(BuildContext context) {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     //bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-    return DefaultTabController(
-      length: 3,
-      initialIndex: widget.selectedPage,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        key: _key,
-        drawer: NavDrawer(),
-        // floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: showFab
-            ? Stack(
-                children: [
-                  Positioned(
-                    bottom: 22,
-                    right: MediaQuery.of(context).size.width * 0.43,
-                    child: FloatingActionButton(
-                      backgroundColor: Color(0xFFF78104),
-                      heroTag: "MyFirstPage",
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    const Mysubscription())));
-                      },
-                      tooltip: 'Subscribe',
-                      elevation: 2.0,
-                      child: SvgPicture.asset(
-                        "assets/images/product sans logo wh new.svg",
-                        color: Colors.white,
-                        fit: BoxFit.contain,
-                        width: 28,
-                        height: 24,
+    return WillPopScope(
+      onWillPop: () async {
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+        final difference = DateTime.now().difference(timebackPressed);
+        final isExitWarning = difference >= Duration(seconds: 2);
+
+        timebackPressed = DateTime.now();
+
+        if (isExitWarning) {
+          final message = "Press back again to exit";
+          print("reached here");
+          Fluttertoast.showToast(
+            msg: message,
+            fontSize: 18,
+          );
+
+          return false;
+        } else {
+          Fluttertoast.cancel();
+
+          SystemNavigator.pop();
+          return true;
+        }
+      },
+      child: DefaultTabController(
+        length: 3,
+        initialIndex: widget.selectedPage,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          key: _key,
+          drawer: NavDrawer(),
+          // floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: showFab
+              ? Stack(
+                  children: [
+                    Positioned(
+                      bottom: 22,
+                      right: MediaQuery.of(context).size.width * 0.43,
+                      child: FloatingActionButton(
+                        backgroundColor: Color(0xFFF78104),
+                        heroTag: "MyFirstPage",
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>
+                                      const Mysubscription())));
+                        },
+                        tooltip: 'Subscribe',
+                        elevation: 2.0,
+                        child: SvgPicture.asset(
+                          "assets/images/product sans logo wh new.svg",
+                          color: Colors.white,
+                          fit: BoxFit.contain,
+                          width: 28,
+                          height: 24,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    bottom: 80,
-                    left: 20,
-                    child: Visibility(
-                        visible: !userHasSubscription,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          Mysubscription())));
-                            },
-                            child: Image.asset("assets/images/BannerNew.png",
-                                fit: BoxFit.cover),
+                    Positioned(
+                      bottom: 80,
+                      left: 20,
+                      child: Visibility(
+                          visible: !userHasSubscription,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            Mysubscription())));
+                              },
+                              child: Image.asset("assets/images/BannerNew.png",
+                                  fit: BoxFit.cover),
+                            ),
+                          )
+                          //  Container(
+                          //   decoration: const BoxDecoration(
+                          //       gradient: LinearGradient(
+                          //     begin: Alignment.topLeft,
+                          //     end: Alignment.bottomRight,
+                          //     colors: [
+                          //       Color(0xFF000000),
+                          //       Color(0xFF009A9E),
+                          //       Color(0xFF000000),
+                          //     ],
+                          //   )),
+                          //   width: MediaQuery.of(context).size.width * 0.9,
+                          //   height: 52.h,
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //     crossAxisAlignment: CrossAxisAlignment.center,
+                          //     children: [
+                          //       Text.rich(
+                          //         TextSpan(children: [
+                          //           TextSpan(
+                          //             text: "Get Started @ ",
+                          //           ),
+                          //           TextSpan(
+                          //               text: "₹199/-",
+                          //               style: TextStyle(
+                          //                 decorationColor: Colors.red,
+                          //                 decoration: TextDecoration.lineThrough,
+                          //               )),
+                          //           TextSpan(
+                          //               text: " FREE",
+                          //               style: TextStyle(color: Colors.red)),
+                          //         ]),
+                          //         // "Get Started @ 199/- only ",
+                          //         style: blackStyle(context)
+                          //             .copyWith(color: Colors.white),
+                          //       ),
+                          //       // Text(
+                          //       //   "Get Started @ 199/- only ",
+                          //       //   style: blackStyle(context)
+                          //       //       .copyWith(color: Colors.white),
+                          //       // ),
+                          //       Container(
+                          //         padding: const EdgeInsets.all(8),
+                          //         decoration: BoxDecoration(
+                          //           border: Border.all(
+                          //             color: Colors.white,
+                          //           ),
+                          //           borderRadius: BorderRadius.circular(25),
+                          //         ),
+                          //         child: GestureDetector(
+                          //           onTap: () {
+                          //             Navigator.push(
+                          //                 context,
+                          //                 MaterialPageRoute(
+                          //                     builder: ((context) =>
+                          //                         Mysubscription())));
+                          //           },
+                          //           child: Text(
+                          //             "Book Now",
+                          //             style: blackStyle(context).copyWith(
+                          //                 color: Colors.white, fontSize: 12),
+                          //           ),
+                          //         ),
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
                           ),
-                        )
-                        //  Container(
-                        //   decoration: const BoxDecoration(
-                        //       gradient: LinearGradient(
-                        //     begin: Alignment.topLeft,
-                        //     end: Alignment.bottomRight,
-                        //     colors: [
-                        //       Color(0xFF000000),
-                        //       Color(0xFF009A9E),
-                        //       Color(0xFF000000),
-                        //     ],
-                        //   )),
-                        //   width: MediaQuery.of(context).size.width * 0.9,
-                        //   height: 52.h,
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //     crossAxisAlignment: CrossAxisAlignment.center,
-                        //     children: [
-                        //       Text.rich(
-                        //         TextSpan(children: [
-                        //           TextSpan(
-                        //             text: "Get Started @ ",
-                        //           ),
-                        //           TextSpan(
-                        //               text: "₹199/-",
-                        //               style: TextStyle(
-                        //                 decorationColor: Colors.red,
-                        //                 decoration: TextDecoration.lineThrough,
-                        //               )),
-                        //           TextSpan(
-                        //               text: " FREE",
-                        //               style: TextStyle(color: Colors.red)),
-                        //         ]),
-                        //         // "Get Started @ 199/- only ",
-                        //         style: blackStyle(context)
-                        //             .copyWith(color: Colors.white),
-                        //       ),
-                        //       // Text(
-                        //       //   "Get Started @ 199/- only ",
-                        //       //   style: blackStyle(context)
-                        //       //       .copyWith(color: Colors.white),
-                        //       // ),
-                        //       Container(
-                        //         padding: const EdgeInsets.all(8),
-                        //         decoration: BoxDecoration(
-                        //           border: Border.all(
-                        //             color: Colors.white,
-                        //           ),
-                        //           borderRadius: BorderRadius.circular(25),
-                        //         ),
-                        //         child: GestureDetector(
-                        //           onTap: () {
-                        //             Navigator.push(
-                        //                 context,
-                        //                 MaterialPageRoute(
-                        //                     builder: ((context) =>
-                        //                         Mysubscription())));
-                        //           },
-                        //           child: Text(
-                        //             "Book Now",
-                        //             style: blackStyle(context).copyWith(
-                        //                 color: Colors.white, fontSize: 12),
-                        //           ),
-                        //         ),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
-                        ),
+                    ),
+                  ],
+                )
+              : null,
+          bottomNavigationBar:CreateBottomBar(stateBottomNav, "Bottombarstocks", context),
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(100),
+            child: CustomAppBarWithIcons(
+              globalkey: _key,
+              titleTxt: _myHandler!,
+              bottomWidget: TabBar(
+                labelColor: Colors.black,
+                isScrollable: true,
+                controller: _controller,
+                indicatorColor: const Color(0xFF008083),
+                unselectedLabelStyle: const TextStyle(color: Color(0xFF6B6B6B)),
+                labelStyle: const TextStyle(
+                  color: Color(0xFF000000),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+                tabs: [
+                  SizedBox(
+                    width: 80.w,
+                    child: const Tab(
+                      text: "Stocks",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 110.w,
+                    child: const Tab(
+                      text: "Mutual Funds",
+                    ),
+                  ),
+                  SizedBox(
+                    width: 110.w,
+                    child: const Tab(
+                      text: "My Watchlist",
+                    ),
                   ),
                 ],
-              )
-            : null,
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(color: Color(0xFFF78104)),
-          unselectedLabelStyle: TextStyle(color: Colors.grey),
-          unselectedIconTheme: IconThemeData(color: Colors.grey),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.path_3177,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
               ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: Icon(
-                  CustomIcons.path_4346,
-                  //  color:
-                  //     Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-                ),
-              ),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.group_2369,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Subscribe',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.date_range,
-                //  color:
-                //         Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Calendar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                CustomIcons.bottombarbagicon,
-                size: 22.5,
-                //  color:
-                //       Get.isDarkMode ? Color(0xFFF78104) : Color(0xFFF78104)
-              ),
-              label: 'Dashboard',
-            ),
-          ],
-          currentIndex: 1,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: Color(0xFFF78104),
-          backgroundColor: Colors.white,
-          onTap: (index) {
-            print(index);
-            _selectedTab(index);
-          },
-          type: BottomNavigationBarType.fixed,
-        ),
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: CustomAppBarWithIcons(
-            globalkey: _key,
-            titleTxt: _myHandler!,
-            bottomWidget: TabBar(
-              labelColor: Colors.black,
-              isScrollable: true,
-              controller: _controller,
-              indicatorColor: const Color(0xFF008083),
-              unselectedLabelStyle: const TextStyle(color: Color(0xFF6B6B6B)),
-              labelStyle: const TextStyle(
-                color: Color(0xFF000000),
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-              tabs: [
-                SizedBox(
-                  width: 80.w,
-                  child: const Tab(
-                    text: "Stocks",
-                  ),
-                ),
-                SizedBox(
-                  width: 110.w,
-                  child: const Tab(
-                    text: "Mutual Funds",
-                  ),
-                ),
-                SizedBox(
-                  width: 110.w,
-                  child: const Tab(
-                    text: "My Watchlist",
-                  ),
-                ),
-              ],
             ),
           ),
-        ),
-        body: TabBarView(
-          controller: _controller,
-          children: <Widget>[
-            //stocks
-            FirstTab(
-              randomNumber: randomNum,
-            ),
-            MutualFundsTab(),
-            ThirdTab(),
-          ],
+          body: TabBarView(
+            controller: _controller,
+            children: <Widget>[
+              //stocks
+              FirstTab(
+                randomNumber: randomNum,
+              ),
+              MutualFundsTab(),
+              ThirdTab(),
+            ],
+          ),
         ),
       ),
     );

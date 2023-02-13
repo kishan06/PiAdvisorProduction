@@ -277,7 +277,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                               color:
                                   Get.isDarkMode ? Colors.white : Colors.black),
                           errorStyle: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Productsans'
                           )
                         ),

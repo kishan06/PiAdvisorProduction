@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CustomNextButton.dart';
 import 'package:piadvisory/Common/app_bar.dart';
+import 'package:piadvisory/Profile/Assets/Assets.dart';
 import 'package:piadvisory/Profile/Assets/AssetsRepository/assetsform.dart';
 import 'package:piadvisory/Profile/ProfileMain.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
@@ -66,8 +67,8 @@ class _FixDepositState extends State<FixDeposit> {
     showDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2099))
+            firstDate: DateTime(1922),
+            lastDate: DateTime.now())
         .then((pickedDate) {
       // Check if no date is selected
       if (pickedDate == null) {
@@ -122,7 +123,7 @@ class _FixDepositState extends State<FixDeposit> {
         utils.showToast("Fix deposit Added!");
         replaceLoaderWithAssetsBtn();
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProfileMain()));
+            context, MaterialPageRoute(builder: (context) => Assets()));
       } else {
         replaceLoaderWithAssetsBtn();
         return utils.showToast(data.message);
@@ -146,7 +147,7 @@ class _FixDepositState extends State<FixDeposit> {
       utils.showToast("Fix deposit Added!");
       replaceLoaderWithAssetsBtn();
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ProfileMain()));
+          context, MaterialPageRoute(builder: (context) => Assets()));
     } else {
        replaceLoaderWithAssetsBtn();
       return utils.showToast(data.message);

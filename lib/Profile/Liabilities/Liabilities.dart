@@ -91,10 +91,46 @@ class _LiabilitiesState extends State<Liabilities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        titleTxt: "My Liabilities",
-        bottomtext: false,
+      appBar: AppBar(
+        flexibleSpace: Container(
+          height: 50,
+          decoration: BoxDecoration(),
+        ),
+        
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        titleSpacing: 0,
+        title: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Text("My Liabilities",
+          softWrap: true,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20.sm,
+            fontWeight: FontWeight.w600,
+            color: Colors.black
+          ),
+          ),
+        ),
+        leading: IconButton(
+            onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => const ProfileMain())));
+              },
+          icon: Icon(
+            Icons.arrow_back,
+          ),
+          iconSize: 22.sm,
+          color: Color(0xFF6B6B6B),
+          ),
       ),
+      // CustomAppBar(
+      //   titleTxt: "My Liabilities",
+      //   bottomtext: false,
+      // ),
       body: FutureBuilder(
         future:
             //StoreLiabilitiesform().getLiabilitiesHL(),

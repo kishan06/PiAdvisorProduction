@@ -23,6 +23,9 @@ import 'package:piadvisory/Login/forgotPIN2.dart';
 import 'package:piadvisory/Login/pindialog.dart';
 import 'package:piadvisory/PaymentSuccess.dart';
 import 'package:piadvisory/Profile/AddBankDetails.dart';
+import 'package:piadvisory/Profile/Assets/Fixdeposit.dart';
+import 'package:piadvisory/Profile/Assets/Mutualfund.dart';
+import 'package:piadvisory/Profile/Assets/Realestate.dart';
 import 'package:piadvisory/Profile/KYC/DigiLocker.dart';
 import 'package:piadvisory/Profile/KYC/FamilyDetails.dart';
 import 'package:piadvisory/Profile/KYC/KYCDigiLocker.dart';
@@ -35,6 +38,9 @@ import 'package:piadvisory/Profile/KYC/Repository/LoadingPageKYC.dart';
 import 'package:piadvisory/Profile/KYC/SchduleAppointment.dart';
 
 import 'package:piadvisory/Profile/KYC/SelectTimeAndDate.dart';
+import 'package:piadvisory/Profile/Liabilities/CarLoan.dart';
+import 'package:piadvisory/Profile/Liabilities/Homeloan.dart';
+import 'package:piadvisory/Profile/Liabilities/PersonalLoan.dart';
 import 'package:piadvisory/Profile/PersonalProfile.dart';
 import 'package:piadvisory/Profile/Personalprofilerepository/Model/familybasicdetails.dart';
 import 'package:piadvisory/Profile/add-goal.dart';
@@ -129,6 +135,13 @@ class _MainNavigation extends State<MainNavigation>{
           GetPage(name: '/loading_ckyc', page: () => LoadingPageCKYCCheck()),
           GetPage(name: '/digi_locker', page: () => DigiLocker()),
           GetPage(name: '/digi_locker_start', page: () => KYCDigiLocker()),
+
+          GetPage(name: '/editMutualfund', page: () => Mutualfund()),
+          GetPage(name: '/editFixdeposit', page: () => FixDeposit()),
+          GetPage(name: '/editRealestate', page: () => RealEstate()),
+          GetPage(name: '/editHomeloan', page: () => Homeloan()),
+          GetPage(name: '/editPersonalloan', page: () => PersonalLoan()),
+          GetPage(name: '/editCarloan', page: () => CarLoan()),
         ],
 
 

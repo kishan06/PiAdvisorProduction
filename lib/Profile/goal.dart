@@ -9,6 +9,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Profile/GoalsRepository/Model/UserGoals.dart';
 import 'package:piadvisory/Profile/GoalsRepository/storeGoals.dart';
+import 'package:piadvisory/Profile/ProfileMain.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
 import '/Utils/Dialogs.dart';
 import '/Common/CustomNextButton.dart';
@@ -52,46 +53,88 @@ class _goalState extends State<goal> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(titleTxt: "My Goals", bottomtext: false),
-      body: FutureBuilder(
-        future: Storegoalsdetails().getGoals(),
-        builder: (ctx, snapshot) {
-          if (snapshot.data == null) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                  child: Lottie.asset(
-                    "assets/images/lf30_editor_jc6n8oqe.json",
-                    repeat: true,
-                    height: 150,
-                    width: 150,
+    
+    return WillPopScope(
+       onWillPop: () {
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ProfileMain()));
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+            flexibleSpace: Container(
+              height: 50,
+              decoration: BoxDecoration(),
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            title: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Text("My Goals",
+              softWrap: true,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20.sm,
+                fontWeight: FontWeight.w600,
+                color: Colors.black
+              ),
+              ),
+            ),
+            leading: IconButton(
+                onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => ProfileMain())));
+                  },
+              icon: Icon(
+                Icons.arrow_back,
+              ),
+              iconSize: 22.sm,
+              color: Color(0xFF6B6B6B),
+              ),
+          ),
+        // CustomAppBar(titleTxt: "My Goals", bottomtext: false),
+        body: FutureBuilder(
+          future: Storegoalsdetails().getGoals(),
+          builder: (ctx, snapshot) {
+            if (snapshot.data == null) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Lottie.asset(
+                      "assets/images/lf30_editor_jc6n8oqe.json",
+                      repeat: true,
+                      height: 150,
+                      width: 150,
+                    ),
                   ),
-                ),
-              ],
-            );
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            _goals = userGoals.data!;
-            globalGoals = _goals;
-
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  '${snapshot.error} occured',
-                  style: TextStyle(fontSize: 18),
-                ),
+                ],
               );
             }
-          }
-          if (_goals != null && _goals!.isEmpty) {
-            return _buildNodataBody(context);
-          } else {
-            return _buildBody(context, _goals);
-          }
-        },
+            if (snapshot.connectionState == ConnectionState.done) {
+              _goals = userGoals.data!;
+              globalGoals = _goals;
+    
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(
+                    '${snapshot.error} occured',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
+              }
+            }
+            if (_goals != null && _goals!.isEmpty) {
+              return _buildNodataBody(context);
+            } else {
+              return _buildBody(context, _goals);
+            }
+          },
+        ),
       ),
     );
   }

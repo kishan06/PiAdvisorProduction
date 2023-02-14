@@ -149,200 +149,241 @@ class _AddGoalsState extends State<AddGoals> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(titleTxt: "Add Goal", bottomtext: false),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _form,
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 49.h,
-                    ),
-                    Text(
-                      "Goal Name*",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Get.isDarkMode ? Colors.white : Colors.black,
+    return WillPopScope(
+      onWillPop: () {
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> goal()));
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          flexibleSpace: Container(
+            height: 50,
+            decoration: BoxDecoration(),
+          ),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
+          title: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text("Add Goal",
+            softWrap: true,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20.sm,
+              fontWeight: FontWeight.w600,
+              color: Colors.black
+            ),
+            ),
+          ),
+          leading: IconButton(
+              onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const goal())));
+                },
+            icon: Icon(
+              Icons.arrow_back,
+            ),
+            iconSize: 22.sm,
+            color: Color(0xFF6B6B6B),
+            ),
+        ),
+        //const CustomAppBar(titleTxt: "Add Goal", bottomtext: false),
+        body: SingleChildScrollView(
+          child: Form(
+            key: _form,
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 49.h,
                       ),
-                    ),
-                    TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      keyboardType: TextInputType.text,
-                      cursorColor: Colors.grey,
-                      controller: GoalName,
-                      decoration: InputDecoration(
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Color(0xFF303030))),
-                        hintText: "Goal Name",
-                        hintStyle: blackStyle(context).copyWith(
-                          color: Get.isDarkMode
-                              ? Colors.white
-                              : const Color(0xFF6B6B6B),
-                          fontSize: 14,
+                      Text(
+                        "Goal Name*",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Get.isDarkMode ? Colors.white : Colors.black,
                         ),
                       ),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp('[a-zA-ZS0-9 ]')),
-                      ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter Goal name";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      "Investment Amount*",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Get.isDarkMode ? Colors.white : Colors.black,
-                      ),
-                    ),
-                    TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: Ammount,
-                      keyboardType: TextInputType.number,
-                      cursorColor: Colors.grey,
-                      decoration: InputDecoration(
-                        // prefixIcon: Text(
-                        //   "₹",
-                        //   style: TextStyle(color: Colors.black, fontSize: 18),
-                        // ),
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Color(0xFF303030))),
-                        hintText: " ₹ Enter Amount",
-                        hintStyle: blackStyle(context).copyWith(
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        keyboardType: TextInputType.text,
+                        cursorColor: Colors.grey,
+                        controller: GoalName,
+                        decoration: InputDecoration(
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: Color(0xFF303030))),
+                          hintText: "Goal Name",
+                          hintStyle: blackStyle(context).copyWith(
                             color: Get.isDarkMode
                                 ? Colors.white
                                 : const Color(0xFF6B6B6B),
-                            fontSize: 14),
-                      ),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                      ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter Amount";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      "Duration: Years and Months*",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Get.isDarkMode ? Colors.white : Colors.black,
-                      ),
-                    ),
-                    TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: datecontroller,
-                      onTap: (() => _yearMonthPicker()),
-                      readOnly: true,
-                      cursorColor: Colors.grey,
-                      style: const TextStyle(
-                        fontFamily: 'Product Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Color(0xFF878787),
+                            fontSize: 14,
                           ),
-                          onPressed: () {
-                            _yearMonthPicker();
-                          },
                         ),
-                        hintStyle: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Product Sans',
-                          color: Get.isDarkMode
-                              ? Colors.white
-                              : const Color(0xFF6B6B6B),
-                        ),
-                        hintText: "Select Years and Months",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Select Years and Months";
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(
-                      height: 106.h,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 60,
-                      child:
-                      RoundedLoadingButton(
-                        elevation: 0,
-                        height: 60,
-                        resetAfterDuration: true,
-                        resetDuration: Duration(seconds: 2),
-                        width: MediaQuery.of(context).size.width * 1,
-                        color: const Color.fromRGBO(247, 129, 4, 1),
-                        successColor: const Color.fromRGBO(247, 129, 4, 1),
-                        controller: _btnController1,
-                        onPressed: (){
-                          final isValid = _form.currentState?.validate();
-                          if (isValid!) {
-                           // replaceAddGoalBtnWithLoader();
-                           // showGoalsDialog();
-                            args != null ? editGoal() : UploadData();
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp('[a-zA-ZS0-9 ]')),
+                        ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please Enter Goal name";
                           }
+                          return null;
                         },
-                        valueColor: Colors.black,
-                        borderRadius: 10,
-                        child: Text(
-                          "Add Goal",
-                          style: TextStyle(
-                            color: Color(0xFFFFFFFF),
-                            fontSize: 16,
-                            fontFamily: 'Productsans',
-                          ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Investment Amount*",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Get.isDarkMode ? Colors.white : Colors.black,
                         ),
                       ),
-                      //  CustomNextButton(
-                      //   text: "Add Goal",
-                      //   ontap: () {
-                      //     //  print(Get.arguments["id"].toString());
-
-                      //     final isValid = _form.currentState?.validate();
-                      //     if (isValid!) {
-                      //      // replaceAddGoalBtnWithLoader();
-                      //      // showGoalsDialog();
-                      //       args != null ? editGoal() : UploadData();
-                      //     }
-                      //   },
-                      // ),
-                    )
-                  ],
-                ),
-              )
-            ],
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: Ammount,
+                        keyboardType: TextInputType.number,
+                        cursorColor: Colors.grey,
+                        decoration: InputDecoration(
+                          // prefixIcon: Text(
+                          //   "₹",
+                          //   style: TextStyle(color: Colors.black, fontSize: 18),
+                          // ),
+                          focusedBorder: const UnderlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: Color(0xFF303030))),
+                          hintText: " ₹ Enter Amount",
+                          hintStyle: blackStyle(context).copyWith(
+                              color: Get.isDarkMode
+                                  ? Colors.white
+                                  : const Color(0xFF6B6B6B),
+                              fontSize: 14),
+                        ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                        ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please Enter Amount";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "Duration: Years and Months*",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Get.isDarkMode ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: datecontroller,
+                        onTap: (() => _yearMonthPicker()),
+                        readOnly: true,
+                        cursorColor: Colors.grey,
+                        style: const TextStyle(
+                          fontFamily: 'Product Sans',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down,
+                              color: Color(0xFF878787),
+                            ),
+                            onPressed: () {
+                              _yearMonthPicker();
+                            },
+                          ),
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Product Sans',
+                            color: Get.isDarkMode
+                                ? Colors.white
+                                : const Color(0xFF6B6B6B),
+                          ),
+                          hintText: "Select Years and Months",
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please Select Years and Months";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 106.h,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 60,
+                        child:
+                        RoundedLoadingButton(
+                          elevation: 0,
+                          height: 60,
+                          resetAfterDuration: true,
+                          resetDuration: Duration(seconds: 2),
+                          width: MediaQuery.of(context).size.width * 1,
+                          color: const Color.fromRGBO(247, 129, 4, 1),
+                          successColor: const Color.fromRGBO(247, 129, 4, 1),
+                          controller: _btnController1,
+                          onPressed: (){
+                            final isValid = _form.currentState?.validate();
+                            if (isValid!) {
+                             // replaceAddGoalBtnWithLoader();
+                             // showGoalsDialog();
+                              args != null ? editGoal() : UploadData();
+                            }
+                          },
+                          valueColor: Colors.black,
+                          borderRadius: 10,
+                          child: Text(
+                            "Add Goal",
+                            style: TextStyle(
+                              color: Color(0xFFFFFFFF),
+                              fontSize: 16,
+                              fontFamily: 'Productsans',
+                            ),
+                          ),
+                        ),
+                        //  CustomNextButton(
+                        //   text: "Add Goal",
+                        //   ontap: () {
+                        //     //  print(Get.arguments["id"].toString());
+    
+                        //     final isValid = _form.currentState?.validate();
+                        //     if (isValid!) {
+                        //      // replaceAddGoalBtnWithLoader();
+                        //      // showGoalsDialog();
+                        //       args != null ? editGoal() : UploadData();
+                        //     }
+                        //   },
+                        // ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

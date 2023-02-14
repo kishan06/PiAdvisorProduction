@@ -173,6 +173,7 @@ class _MyAppState extends State<MyApp> {
           value: ConnectivityService().connectionStatusController.stream,
           initialData:  ConnectivityStatus.Cellular,
           child: MaterialApp(
+             debugShowCheckedModeBanner: false,
             home: NetworkSensitive(
               scaffoldKey: _scaffoldKey,
                 child: MainNavigation()),

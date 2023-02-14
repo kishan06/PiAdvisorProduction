@@ -97,10 +97,45 @@ class _AssetsState extends State<Assets> {
     BuildContext context,
   ) {
     return Scaffold(
-      appBar: CustomAppBar(
-        titleTxt: "My Assets",
-        bottomtext: false,
+      appBar: AppBar(
+        flexibleSpace: Container(
+          height: 50,
+          decoration: BoxDecoration(),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        titleSpacing: 0,
+        title: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Text("My Assets",
+          softWrap: true,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20.sm,
+            fontWeight: FontWeight.w600,
+            color: Colors.black
+          ),
+          ),
+        ),
+        leading: IconButton(
+            onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => const ProfileMain())));
+              },
+          icon: Icon(
+            Icons.arrow_back,
+          ),
+          iconSize: 22.sm,
+          color: Color(0xFF6B6B6B),
+          ),
       ),
+      //  CustomAppBar(
+      //   titleTxt: "My Assets",
+      //   bottomtext: false,
+      // ),
       body: FutureBuilder(
         future: futureGroup.future,
         // StoreAssetsform().getAssetsMF(),

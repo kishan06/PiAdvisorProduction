@@ -38,7 +38,10 @@ class KYCMain extends StatefulWidget {
 
 class _KYCMainState extends State<KYCMain> {
   final selectedOccupation = TextEditingController();
-
+  final selectedSourceWealth = TextEditingController();
+  final selectedIncomeSlab = TextEditingController();
+  final selectedAccounttype = TextEditingController();
+  final selectedDividend = TextEditingController();
   final selectedResidentialStatus = TextEditingController();
   final selectedLifeExpectancy = TextEditingController();
   final selectedgender = TextEditingController();
@@ -60,7 +63,7 @@ class _KYCMainState extends State<KYCMain> {
     return !phoneNumberExpression.hasMatch(phoneNumber);
   }
 
-   bool isValidPanNumber(String phoneNumber) {
+  bool isValidPanNumber(String phoneNumber) {
     final RegExp panNumberExpression = RegExp(r"^0{10}$");
 
     return !panNumberExpression.hasMatch(phoneNumber);
@@ -115,8 +118,8 @@ class _KYCMainState extends State<KYCMain> {
         _selectedDate = pickedDate;
         datecontroller.text =
             "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
-            var currentTime = DateTime.now();
-           agecontroller.text = (currentTime.year - _selectedDate!.year).toString(); 
+        var currentTime = DateTime.now();
+        agecontroller.text = (currentTime.year - _selectedDate!.year).toString();
       });
     });
   }
@@ -234,6 +237,7 @@ class _KYCMainState extends State<KYCMain> {
       context: context,
       builder: (context) {
         return Container(
+          height: 400.h,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: const OccupationPicker(),
         );
@@ -254,6 +258,118 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
+    Future _showSourceWealthPicker() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 400.h,
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const SourceWealthPicker(),
+        );
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedSourceWealth.text = data;
+      });
+    }
+  }
+
+    Future _showIncomeWealth() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 400.h,
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const IncomeSlab(),
+        );
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedIncomeSlab.text = data;
+      });
+    }
+  }
+
+      Future _showAccountPicker() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const Accounttype()
+          );
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedAccounttype.text = data;
+      });
+    }
+  }
+
+       Future _showDividendPicker() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const Dividend()
+          );
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedDividend.text = data;
+      });
+    } 
+  }
+
+  
+
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   TextEditingController fullname = TextEditingController();
   //TextEditingController lastname = TextEditingController();
@@ -263,6 +379,7 @@ class _KYCMainState extends State<KYCMain> {
   TextEditingController mobilecontroller = TextEditingController();
   TextEditingController agecontroller = TextEditingController();
   TextEditingController datecontroller = TextEditingController();
+  TextEditingController placeBirth = TextEditingController();
 
   setControllerValues() {
     Map<String, dynamic> userdata = Database().restoreUserDetails();
@@ -456,7 +573,7 @@ class _KYCMainState extends State<KYCMain> {
                 } else if (value.length != 10) {
                   return "Please Enter Valid PAN Number";
                 } else if (!isValidPanNumber(value)) {
-                return 'Pan number cannot contain 10 zeros';
+                  return 'Pan number cannot contain 10 zeros';
                 }
                 return null;
               },
@@ -571,6 +688,54 @@ class _KYCMainState extends State<KYCMain> {
               //   fontWeight: FontWeight.w600,
               // ),
             ),
+            // CustomTextFields(
+            //   textCapitalization: TextCapitalization.none,
+            //   inputFormatters: [
+            //     LengthLimitingTextInputFormatter(20),
+            //     FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+            //   ],
+            //   validator: (value) {
+            //     if (value == null || value.isEmpty) {
+            //       return "Please Enter Occupation";
+            //     } else
+            //       return null;
+            //   },
+            //   errortext: "Enter Occupation",
+            //   hint: "Enter Occupation",
+            //   controller: selectedOccupation,
+            // ),
+            CustomDropDownOptions(
+              controller: selectedOccupation,
+              ontap: () => _showOccupationPicker(),
+              hinttext: "Select Occupation",
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Source of Wealth*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            CustomDropDownOptions(
+              controller: selectedSourceWealth,
+              ontap: () => _showSourceWealthPicker(),
+              hinttext: "Select Source of Wealth",
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Place Of Birth*",
+              style: Theme.of(context).textTheme.headline2,
+              //  blackStyle(context).copyWith(
+              //   fontSize: 16.sm,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
             CustomTextFields(
               textCapitalization: TextCapitalization.none,
               inputFormatters: [
@@ -579,19 +744,62 @@ class _KYCMainState extends State<KYCMain> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please Enter Occupation";
+                  return "Please Enter Place Of Birth";
                 } else
                   return null;
               },
-              errortext: "Enter Occupation",
-              hint: "Enter Occupation",
-              controller: selectedOccupation,
+              errortext: "Enter Place Of Birth",
+              hint: "Enter Place Of Birth",
+              controller: placeBirth,
             ),
-            // CustomDropDownOptions(
-            //   controller: selectedOccupation,
-            //   ontap: () => _showOccupationPicker(),
-            //   hinttext: "Select Occupation",
-            // ),
+            SizedBox(
+              height: 40.h,
+            ),
+            Text(
+              "Income Slab*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            CustomDropDownOptions(
+              controller: selectedIncomeSlab,
+              ontap: () => _showIncomeWealth(),
+              hinttext: "Select Income Slab",
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Account Type*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            CustomDropDownOptions(
+              controller: selectedAccounttype,
+              ontap: () => _showAccountPicker(),
+              hinttext: "Select Account Type",
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+              Text(
+              "Dividend Paymode*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            CustomDropDownOptions(
+              controller: selectedDividend,
+              ontap: () => _showDividendPicker(),
+              hinttext: "Select Dividend Paymode",
+            ),
             const SizedBox(
               height: 40,
             ),
@@ -1010,6 +1218,291 @@ class OccupationPicker extends StatefulWidget {
 class _OccupationPickerState extends State<OccupationPicker> {
   @override
   Widget build(BuildContext context) {
+    return Scrollbar(
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              child: Text("Select an Occupation",
+                  style: Theme.of(context).textTheme.displayMedium),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Business");
+                    }),
+                    title: const Text("Bussiness"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Service");
+                    }),
+                    title: const Text("Service"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Professional");
+                    }),
+                    title: const Text("Professional"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Agriculturist");
+                    }),
+                    title: const Text("Agriculturist"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Retired");
+                    }),
+                    title: const Text("Retired"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Housewife");
+                    }),
+                    title: const Text("Housewife"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Student");
+                    }),
+                    title: const Text("Student"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Others");
+                    }),
+                    title: const Text("Others"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Doctor");
+                    }),
+                    title: const Text("Doctor"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Private Sector Service");
+                    }),
+                    title: const Text("Private Sector Service"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Public Sector Service");
+                    }),
+                    title: const Text("Public Sector Service"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Forex Dealer");
+                    }),
+                    title: const Text("Forex Dealer"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Government Service");
+                    }),
+                    title: const Text("Government Service"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Unknown / Not Applicable");
+                    }),
+                    title: const Text("Unknown / Not Applicable"),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SourceWealthPicker extends StatefulWidget {
+  const SourceWealthPicker({Key? key}) : super(key: key);
+
+  @override
+  State<SourceWealthPicker> createState() => _SourceWealthPickerState();
+}
+
+class _SourceWealthPickerState extends State<SourceWealthPicker> {
+  //final ScrollController _OcscrollController = ScrollController();
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              child: Text("Select Source of Wealth",
+                  style: Theme.of(context).textTheme.displayMedium),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Salary");
+                    }),
+                    title: const Text("Salary"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Business Income");
+                    }),
+                    title: const Text("Business Income"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Gift");
+                    }),
+                    title: const Text("Gift"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Ancestral Property");
+                    }),
+                    title: const Text("Ancestral Property"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Rental Income");
+                    }),
+                    title: const Text("Rental Income"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Prize Money");
+                    }),
+                    title: const Text("Prize Money"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Royalty");
+                    }),
+                    title: const Text("Royalty"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Others");
+                    }),
+                    title: const Text("Others"),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class IncomeSlab extends StatefulWidget {
+  const IncomeSlab({Key? key}) : super(key: key);
+
+  @override
+  State<IncomeSlab> createState() => _IncomeSlabState();
+}
+
+class _IncomeSlabState extends State<IncomeSlab> {
+  //final ScrollController _OcscrollController = ScrollController();
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              child: Text("Select Apllicant Income",
+                  style: Theme.of(context).textTheme.displayMedium),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Below 1 Lakh");
+                    }),
+                    title: const Text("Below 1 Lakh"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Between 1 to 5 Lacs");
+                    }),
+                    title: const Text("Between 1 to 5 Lacs"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Between 5 to 10 Lacs");
+                    }),
+                    title: const Text("Between 5 to 10 Lacs"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Between 10 to 25 Lacs");
+                    }),
+                    title: const Text("Between 10 to 25 Lacs"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "25 lacs to 1 Crore");
+                    }),
+                    title: const Text("25 lacs to 1 Crore"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Above 1 Crore");
+                    }),
+                    title: const Text("Above 1 Crore"),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Accounttype extends StatefulWidget {
+  const Accounttype({Key? key}) : super(key: key);
+
+  @override
+  State<Accounttype> createState() => _AccounttypeState();
+}
+
+class _AccounttypeState extends State<Accounttype> {
+  //final ScrollController _OcscrollController = ScrollController();
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1017,8 +1510,8 @@ class _OccupationPickerState extends State<OccupationPicker> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-            child: Text("Select an Occupation",
-                style: Theme.of(context).textTheme.headline3),
+            child: Text("Select Account Type",
+                style: Theme.of(context).textTheme.displayMedium),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -1027,38 +1520,93 @@ class _OccupationPickerState extends State<OccupationPicker> {
               children: [
                 ListTile(
                   onTap: (() {
-                    Navigator.pop(
-                        context, " Salaried – Private Sector/Corporates");
+                    Navigator.pop(context, "Savings Bank");
                   }),
-                  title: const Text(" Salaried – Private Sector/Corporates"),
+                  title: const Text("Savings Bank"),
                 ),
                 ListTile(
                   onTap: (() {
-                    Navigator.pop(
-                        context, "Salaried - Government Sector/PSUs/PSBs");
+                    Navigator.pop(context, "Current Bank");
                   }),
-                  title: const Text("Salaried - Government Sector/PSUs/PSBs"),
+                  title: const Text("Current Bank"),
                 ),
                 ListTile(
                   onTap: (() {
-                    Navigator.pop(context,
-                        "Self-employed Professional (Doctors, Lawyers, ");
+                    Navigator.pop(context, "NRE");
                   }),
-                  title: const Text(
-                      "Self-employed Professional (Doctors, Lawyers, "),
+                  title: const Text("NRE"),
                 ),
                 ListTile(
                   onTap: (() {
-                    Navigator.pop(
-                        context, "Self-employed trader/Business Owner");
+                    Navigator.pop(context, "NRO");
                   }),
-                  title: const Text("Self-employed trader/Business Owner"),
+                  title: const Text("NRO"),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
+class Dividend extends StatefulWidget {
+  const Dividend({Key? key}) : super(key: key);
+
+  @override
+  State<Dividend> createState() => _DividendState();
+}
+
+class _DividendState extends State<Dividend> {
+  //final ScrollController _OcscrollController = ScrollController();
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: Text("Select Dividend Paymode",
+                style: Theme.of(context).textTheme.displayMedium),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              children: [
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Cheque");
+                  }),
+                  title: const Text("Cheque"),
                 ),
                 ListTile(
                   onTap: (() {
-                    Navigator.pop(context, "Others");
+                    Navigator.pop(context, "Direct Credit");
                   }),
-                  title: const Text("Others"),
+                  title: const Text("Direct Credit"),
+                ),
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "ECS");
+                  }),
+                  title: const Text("ECS"),
+                ),
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "NEFT");
+                  }),
+                  title: const Text("NEFT"),
+                ),
+                 ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "RTGS");
+                  }),
+                  title: const Text("RTGS"),
                 ),
               ],
             ),

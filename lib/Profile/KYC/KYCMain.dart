@@ -119,7 +119,8 @@ class _KYCMainState extends State<KYCMain> {
         datecontroller.text =
             "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
         var currentTime = DateTime.now();
-        agecontroller.text = (currentTime.year - _selectedDate!.year).toString();
+        agecontroller.text =
+            (currentTime.year - _selectedDate!.year).toString();
       });
     });
   }
@@ -130,7 +131,8 @@ class _KYCMainState extends State<KYCMain> {
     if (isValid!) {
       replaceKycBtnWithLoader();
       Map<String, dynamic> updata = {
-        "full_name": fullname.text,
+        "first_name": fullname.text,
+        "last_name": lastname.text,
         "address": address.text,
         "email": emailid.text,
         "pan_number": pannumber.text,
@@ -138,6 +140,11 @@ class _KYCMainState extends State<KYCMain> {
         "mob_number": mobilecontroller.text,
         "age": agecontroller.text,
         "occupation": selectedOccupation.text,
+        "source_of_wealth": selectedSourceWealth.text,
+        "place_of_birth": placeBirth.text,
+        "Income_slab": selectedIncomeSlab.text,
+        "account_type": selectedAccounttype.text,
+        "dividend_paymode": selectedDividend.text,
         "gender": selectedgender.text,
         "residential_status": selectedResidentialStatus.text
       };
@@ -258,7 +265,7 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-    Future _showSourceWealthPicker() async {
+  Future _showSourceWealthPicker() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
@@ -286,7 +293,7 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-    Future _showIncomeWealth() async {
+  Future _showIncomeWealth() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
@@ -314,16 +321,15 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-      Future _showAccountPicker() async {
+  Future _showAccountPicker() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       context: context,
       builder: (context) {
         return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: const Accounttype()
-          );
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: const Accounttype());
       },
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -341,16 +347,15 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-       Future _showDividendPicker() async {
+  Future _showDividendPicker() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       context: context,
       builder: (context) {
         return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: const Dividend()
-          );
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: const Dividend());
       },
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -365,14 +370,12 @@ class _KYCMainState extends State<KYCMain> {
       setState(() {
         selectedDividend.text = data;
       });
-    } 
+    }
   }
-
-  
 
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   TextEditingController fullname = TextEditingController();
-  //TextEditingController lastname = TextEditingController();
+  TextEditingController lastname = TextEditingController();
   TextEditingController emailid = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController pannumber = TextEditingController();
@@ -383,7 +386,9 @@ class _KYCMainState extends State<KYCMain> {
 
   setControllerValues() {
     Map<String, dynamic> userdata = Database().restoreUserDetails();
-    fullname.text = userdata['fullname'];
+    fullname.text =kycDetails?.user?.firstName ?? "";
+    //userdata['fullname'];
+    lastname.text = kycDetails?.user?.lastName ?? "";
     emailid.text = kycDetails?.user?.email ?? "";
     globalEmailID = emailid.text;
     mobilecontroller.text = userdata['number'].toString();
@@ -392,6 +397,11 @@ class _KYCMainState extends State<KYCMain> {
     datecontroller.text = kycDetails?.user?.dOB ?? "";
     agecontroller.text = kycDetails?.user?.age.toString() ?? "";
     selectedOccupation.text = kycDetails?.user?.occupation ?? "";
+    selectedSourceWealth.text = kycDetails?.user?.sourceOfWealth ?? "";
+    placeBirth.text = kycDetails?.user?.placeOfBirth ?? "";
+    selectedIncomeSlab.text = kycDetails?.user?.incomeSlab ?? "";
+    selectedAccounttype.text = kycDetails?.user?.accountType ?? "";
+    selectedDividend.text = kycDetails?.user?.dividendPaymode ?? "";
     selectedgender.text = kycDetails?.user?.gender ?? "";
     selectedResidentialStatus.text = kycDetails?.user?.residentialStatus ?? "";
     //selectedLifeExpectancy.text = kycDetails?.user?.lifeExpectancy ?? "";
@@ -452,7 +462,7 @@ class _KYCMainState extends State<KYCMain> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Full Name*",
+              "First Name*",
               style: Theme.of(context).textTheme.headline2,
               //  blackStyle(context).copyWith(
               //   fontSize: 16.sm,
@@ -467,13 +477,36 @@ class _KYCMainState extends State<KYCMain> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please Enter Full Name";
+                  return "Please Enter First Name";
                 } else
                   return null;
               },
-              errortext: "Enter Full Name",
-              hint: "Enter Full Name",
+              errortext: "Enter First Name",
+              hint: "Enter First Name",
               controller: fullname,
+            ),
+            SizedBox(
+              height: 40.h,
+            ),
+            Text(
+              "Last Name*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            CustomTextFields(
+              textCapitalization: TextCapitalization.none,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Enter Last Name";
+                } else
+                  return null;
+              },
+              errortext: "Enter Last Name",
+              hint: "Enter Last Name",
+              controller: lastname,
             ),
             SizedBox(
               height: 40.h,
@@ -787,7 +820,7 @@ class _KYCMainState extends State<KYCMain> {
             const SizedBox(
               height: 40,
             ),
-              Text(
+            Text(
               "Dividend Paymode*",
               style: Theme.of(context).textTheme.headline2,
               // blackStyle(context).copyWith(
@@ -1602,7 +1635,7 @@ class _DividendState extends State<Dividend> {
                   }),
                   title: const Text("NEFT"),
                 ),
-                 ListTile(
+                ListTile(
                   onTap: (() {
                     Navigator.pop(context, "RTGS");
                   }),

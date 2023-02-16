@@ -511,7 +511,6 @@ class _KYCMainState extends State<KYCMain> {
             SizedBox(
               height: 40.h,
             ),
-
             Text(
               "Address with Pincode*",
               style: Theme.of(context).textTheme.headline2,

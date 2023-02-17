@@ -52,6 +52,9 @@ class _KYCMainState extends State<KYCMain> {
   StreamController<requestResponseState> kycmainController =
       StreamController.broadcast();
 
+  String? taxcode;
+  String? taxstatus;
+
   @override
   void initState() {
     super.initState();
@@ -157,6 +160,41 @@ class _KYCMainState extends State<KYCMain> {
         return utils.showToast(data.message);
       }
     }
+  }
+
+  void UploadFatca() async {
+    globalEmailID = emailid.text;
+    //final isValid = _form.currentState?.validate();
+    //if (isValid!) {
+    replaceKycBtnWithLoader();
+    Map<String, dynamic> updata = {
+      // "full_name": fullname.text,
+      // "address": address.text,
+      // "email": emailid.text,
+      // "pan_number": pannumber.text,
+      // "DOB": datecontroller.text,
+      // "mob_number": mobilecontroller.text,
+      // "age": agecontroller.text,
+      // "occupation": selectedOccupation.text,
+      // "gender": selectedgender.text,
+      // "residential_status": selectedResidentialStatus.text
+      "tax_status": taxcode
+    };
+    final data =
+        await StorebasickycuserDetails().postStorebasickycfatcadetails(updata);
+    if (data.status == ResponseStatus.SUCCESS) {
+      print(updata);
+      replaceLoaderWithKycBtn();
+      _storePanAndDob();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
+    } else {
+      replaceLoaderWithKycBtn();
+      return utils.showToast(data.message);
+    }
+    // }
   }
 
   bool isContinueBtnVisible = true;
@@ -392,6 +430,164 @@ class _KYCMainState extends State<KYCMain> {
       setState(() {
         selectedTaxstatus.text = data;
       });
+    }
+  }
+
+  setTaxCode_TaxCategory(String selectedTaxstatus) {
+    switch (selectedTaxstatus) {
+      case "Individual":
+        {
+          taxcode = "01";
+          taxstatus = "Individual";
+        }
+        break;
+
+      case "On Behalf Of Minor":
+        {
+          taxcode = "02";
+          taxstatus = "On Behalf Of Minor";
+        }
+        break;
+
+      case "HUF":
+        {
+          taxcode = "03";
+          taxstatus = "HUF";
+        }
+        break;
+
+      case "Company":
+        {
+          taxcode = "04";
+          taxstatus = "Company";
+        }
+        break;
+
+      case "AOP/BOI":
+        {
+          taxcode = "05";
+          taxstatus = "AOP/BOI";
+        }
+        break;
+
+      case "Partnership Firm":
+        {
+          taxcode = "06";
+          taxstatus = "Partnership Firm";
+        }
+        break;
+
+      case "Body Corporate":
+        {
+          taxcode = "07";
+          taxstatus = "Body Corporate";
+        }
+        break;
+
+      case "Trust":
+        {
+          taxcode = "08";
+          taxstatus = "Trust";
+        }
+        break;
+
+      case "Society":
+        {
+          taxcode = "09";
+          taxstatus = "Society";
+        }
+        break;
+
+      case "Others":
+        {
+          taxcode = "10";
+          taxstatus = "Others";
+        }
+        break;
+
+      case "NRI-Others":
+        {
+          taxcode = "11";
+          taxstatus = "NRI-Others";
+        }
+        break;
+
+      case "Banks / Financial Institution":
+        {
+          taxcode = "12";
+          taxstatus = "Banks / Financial Institution";
+        }
+        break;
+
+      case "Sole Proprietorship":
+        {
+          taxcode = "13";
+          taxstatus = "Sole Proprietorship";
+        }
+        break;
+
+      case "Banks":
+        {
+          taxcode = "14";
+          taxstatus = "Banks";
+        }
+        break;
+
+      case "Association of Persons":
+        {
+          taxcode = "15";
+          taxstatus = "Association of Persons";
+        }
+        break;
+
+      case "NRI - NRE (Repatriation)":
+        {
+          taxcode = "21";
+          taxstatus = "NRI - NRE (Repatriation)";
+        }
+        break;
+
+      case "Overseas Corporate body":
+        {
+          taxcode = "22";
+          taxstatus = "Overseas Corporate body";
+        }
+        break;
+
+      case "Foreign Institutional Investor":
+        {
+          taxcode = "23";
+          taxstatus = "Foreign Institutional Investor";
+        }
+        break;
+
+      case "NRI - NRO [Non Repatriation]":
+        {
+          taxcode = "24";
+          taxstatus = "NRI - NRO [Non Repatriation]";
+        }
+        break;
+
+      case "Overseas Corporate Body-Others":
+        {
+          taxcode = "25";
+          taxstatus = "Overseas Corporate Body-Others";
+        }
+        break;
+
+      case "NRI - Minor (NRE)":
+        {
+          taxcode = "26";
+          taxstatus = "NRI - Minor (NRE)";
+        }
+        break;
+
+      default:
+        {
+          taxcode = null;
+          taxstatus = null;
+        }
+        break;
     }
   }
 
@@ -913,7 +1109,11 @@ class _KYCMainState extends State<KYCMain> {
                     // ){
                     //   return utils.showToast("Please fill all fields");
                     // }
-                    UploadData();
+                    UploadFatca();
+                    // setTaxCode_TaxCategory(selectedTaxstatus.text);
+                    print(taxcode);
+                    print(taxstatus);
+                    //UploadData();
                   },
                 ),
                 // RoundedLoadingButton(

@@ -1,8 +1,8 @@
 class ApiConstant {
-  static const String base = "https://app.piadvisors.in/";
+  static const String base = "https://pi.betadelivery.com/pi_advisors/";
 
 
-  static const String basetesting = "https://pi.betadelivery.com/pi_advisors/";
+  static const String basetesting = "https://app.piadvisors.in/";
 
   static const String loginAPI = base + 'api/loginv2';
 
@@ -162,6 +162,9 @@ class ApiConstant {
   static const String getliabilitiescl = base + 'api/getcarloandetails';
   static const String deleteLiabilitiescl =  base + 'api/deletecarloandetails';
   static const String updateCarloan= base + 'api/updatecarloandetails';
+
+
+   static const String poststorebasickycfatcadetails = base + 'api/fatca_form';
 
  
 }

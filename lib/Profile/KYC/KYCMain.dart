@@ -42,6 +42,7 @@ class _KYCMainState extends State<KYCMain> {
   final selectedIncomeSlab = TextEditingController();
   final selectedAccounttype = TextEditingController();
   final selectedDividend = TextEditingController();
+  final selectedTaxstatus = TextEditingController();
   final selectedResidentialStatus = TextEditingController();
   final selectedLifeExpectancy = TextEditingController();
   final selectedgender = TextEditingController();
@@ -119,7 +120,8 @@ class _KYCMainState extends State<KYCMain> {
         datecontroller.text =
             "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
         var currentTime = DateTime.now();
-        agecontroller.text = (currentTime.year - _selectedDate!.year).toString();
+        agecontroller.text =
+            (currentTime.year - _selectedDate!.year).toString();
       });
     });
   }
@@ -258,7 +260,7 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-    Future _showSourceWealthPicker() async {
+  Future _showSourceWealthPicker() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
@@ -286,7 +288,7 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-    Future _showIncomeWealth() async {
+  Future _showIncomeWealth() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
@@ -314,16 +316,15 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-      Future _showAccountPicker() async {
+  Future _showAccountPicker() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       context: context,
       builder: (context) {
         return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: const Accounttype()
-          );
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: const Accounttype());
       },
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -341,16 +342,15 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-       Future _showDividendPicker() async {
+  Future _showDividendPicker() async {
     FocusScope.of(context).unfocus();
     final data = await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
       context: context,
       builder: (context) {
         return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: const Dividend()
-          );
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: const Dividend());
       },
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -365,10 +365,35 @@ class _KYCMainState extends State<KYCMain> {
       setState(() {
         selectedDividend.text = data;
       });
-    } 
+    }
   }
 
-  
+  Future _showTaxstausPicker() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+            height: 300.h,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: const Taxstaus());
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedTaxstatus.text = data;
+      });
+    }
+  }
 
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   TextEditingController fullname = TextEditingController();
@@ -787,7 +812,7 @@ class _KYCMainState extends State<KYCMain> {
             const SizedBox(
               height: 40,
             ),
-              Text(
+            Text(
               "Dividend Paymode*",
               style: Theme.of(context).textTheme.headline2,
               // blackStyle(context).copyWith(
@@ -799,6 +824,18 @@ class _KYCMainState extends State<KYCMain> {
               controller: selectedDividend,
               ontap: () => _showDividendPicker(),
               hinttext: "Select Dividend Paymode",
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Tax Status*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            CustomDropDownOptions(
+              hinttext: "Select Tax Status",
+              ontap: () => _showTaxstausPicker(),
+              controller: selectedTaxstatus,
             ),
             const SizedBox(
               height: 40,
@@ -1602,7 +1639,7 @@ class _DividendState extends State<Dividend> {
                   }),
                   title: const Text("NEFT"),
                 ),
-                 ListTile(
+                ListTile(
                   onTap: (() {
                     Navigator.pop(context, "RTGS");
                   }),
@@ -1613,6 +1650,171 @@ class _DividendState extends State<Dividend> {
           ),
           const SizedBox(height: 16),
         ],
+      ),
+    );
+  }
+}
+
+class Taxstaus extends StatefulWidget {
+  const Taxstaus({Key? key}) : super(key: key);
+
+  @override
+  State<Taxstaus> createState() => _TaxstausState();
+}
+
+class _TaxstausState extends State<Taxstaus> {
+  //final ScrollController _OcscrollController = ScrollController();
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              child: Text("Select Tax Status",
+                  style: Theme.of(context).textTheme.displayMedium),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Individual");
+                    }),
+                    title: const Text("Individual"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "On Behalf Of Minor");
+                    }),
+                    title: const Text("On Behalf Of Minor"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "HUF");
+                    }),
+                    title: const Text("HUF"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Company");
+                    }),
+                    title: const Text("Company"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "AOP/BOI");
+                    }),
+                    title: const Text("AOP/BOI"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Partnership Firm");
+                    }),
+                    title: const Text("Partnership Firm"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Body Corporate");
+                    }),
+                    title: const Text("Body Corporate"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Trust");
+                    }),
+                    title: const Text("Trust"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Society");
+                    }),
+                    title: const Text("Society"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Others");
+                    }),
+                    title: const Text("Others"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "NRI-Others");
+                    }),
+                    title: const Text("NRI-Others"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Banks / Financial Institution");
+                    }),
+                    title: const Text("Banks / Financial Institution"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Sole Proprietorship");
+                    }),
+                    title: const Text("Sole Proprietorship"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Banks");
+                    }),
+                    title: const Text("Banks"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Association of Persons");
+                    }),
+                    title: const Text("Association of Persons"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "NRI - NRE (Repatriation)");
+                    }),
+                    title: const Text("NRI - NRE (Repatriation)"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Overseas Corporate body");
+                    }),
+                    title: const Text("Overseas Corporate body"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Foreign Institutional Investor");
+                    }),
+                    title: const Text("Foreign Institutional Investor"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "NRI - NRO [Non Repatriation]");
+                    }),
+                    title: const Text("NRI - NRO [Non Repatriation]"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Overseas Corporate Body-Others");
+                    }),
+                    title: const Text("Overseas Corporate Body-Others"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "NRI - Minor (NRE)");
+                    }),
+                    title: const Text("NRI - Minor (NRE)"),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }

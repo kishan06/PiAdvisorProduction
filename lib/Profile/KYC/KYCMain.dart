@@ -54,6 +54,10 @@ class _KYCMainState extends State<KYCMain> {
 
   String? taxcode;
   String? taxstatus;
+  String? sourcecode;
+  String? incomecode;
+  String? occupationcode;
+  String? occupationtype;
 
   @override
   void initState() {
@@ -164,37 +168,53 @@ class _KYCMainState extends State<KYCMain> {
 
   void UploadFatca() async {
     globalEmailID = emailid.text;
-    //final isValid = _form.currentState?.validate();
-    //if (isValid!) {
-    replaceKycBtnWithLoader();
-    Map<String, dynamic> updata = {
-      // "full_name": fullname.text,
-      // "address": address.text,
-      // "email": emailid.text,
-      // "pan_number": pannumber.text,
-      // "DOB": datecontroller.text,
-      // "mob_number": mobilecontroller.text,
-      // "age": agecontroller.text,
-      // "occupation": selectedOccupation.text,
-      // "gender": selectedgender.text,
-      // "residential_status": selectedResidentialStatus.text
-      "tax_status": taxcode
-    };
-    final data =
-        await StorebasickycuserDetails().postStorebasickycfatcadetails(updata);
-    if (data.status == ResponseStatus.SUCCESS) {
+    final isValid = _form.currentState?.validate();
+    if (isValid!) {
+      replaceKycBtnWithLoader();
+      setTaxCode_TaxCategory(selectedTaxstatus.text);
+      setSourceCode(selectedSourceWealth.text);
+      setIncomeCode(selectedIncomeSlab.text);
+      setOccupationCode_Occupationtype(selectedOccupation.text);
+      Map<String, dynamic> updata = {
+        "pan_rp": pannumber.text,
+        "inv_name": fullname.text,
+        "tax_status": taxcode,
+        //setTaxCode_TaxCategory(selectedTaxstatus.text),
+        "data_src": "E",
+        "addr_type": "1",
+        "po_bir_inc": placeBirth.text,
+        "co_bir_inc": "IN",
+        "tax_res1": "In",
+        "tpin1":pannumber.text,
+        "id1_type": "C",
+        "srce_wealt": sourcecode,
+        //setSourceCode(selectedSourceWealth.text),
+        "inc_slab": incomecode,
+        "pep_flag": "N",
+        "occ_code": occupationcode,
+        "occ_type": occupationtype,
+        "exch_name": "B",
+        "ubo_appl": "N",
+        "sdf_flag": "N",
+        "ubo_df": "N",
+        "log_name": "23-01-2023"
+      };
       print(updata);
-      replaceLoaderWithKycBtn();
-      _storePanAndDob();
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
-    } else {
-      replaceLoaderWithKycBtn();
-      return utils.showToast(data.message);
+      final data = await StorebasickycuserDetails()
+          .postStorebasickycfatcadetails(updata);
+      if (data.status == ResponseStatus.SUCCESS) {
+        print("fatca is $updata");
+        //replaceLoaderWithKycBtn();
+        _storePanAndDob();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
+      } else {
+        replaceLoaderWithKycBtn();
+        return utils.showToast(data.message);
+      }
     }
-    // }
   }
 
   bool isContinueBtnVisible = true;
@@ -591,6 +611,219 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
+  setSourceCode(String selectedSourceWealth) {
+    switch (selectedSourceWealth) {
+      case "Salary":
+        {
+          sourcecode = "01";
+        }
+        break;
+
+      case "Business Income":
+        {
+          sourcecode = "02";
+        }
+        break;
+
+      case "Gift":
+        {
+          sourcecode = "03";
+        }
+        break;
+
+      case "Ancestral Property":
+        {
+          sourcecode = "04";
+        }
+        break;
+
+      case "Rental Income":
+        {
+          sourcecode = "05";
+        }
+        break;
+
+      case "Prize Money":
+        {
+          sourcecode = "06";
+        }
+        break;
+
+      case "Royalty":
+        {
+          sourcecode = "07";
+        }
+        break;
+
+      case "Others":
+        {
+          sourcecode = "08";
+        }
+        break;
+
+      default:
+        {
+          sourcecode = null;
+        }
+        break;
+    }
+  }
+
+  setIncomeCode(String selectedIncomeSlab) {
+    switch (selectedIncomeSlab) {
+      case "Below 1 Lakh":
+        {
+          incomecode = "31";
+        }
+        break;
+
+      case "Between 1 to 5 Lacs":
+        {
+          incomecode = "32";
+        }
+        break;
+
+      case "Between 5 to 10 Lacs":
+        {
+          incomecode = "33";
+        }
+        break;
+
+      case "Between 10 to 25 Lacs":
+        {
+          incomecode = "34";
+        }
+        break;
+
+      case "25 lacs to 1 Crore":
+        {
+          incomecode = "35";
+        }
+        break;
+
+      case "Above 1 Crore":
+        {
+          incomecode = "36";
+        }
+        break;
+
+      default:
+        {
+          incomecode = null;
+        }
+        break;
+    }
+  }
+
+  setOccupationCode_Occupationtype(String selectedOccupation) {
+    switch (selectedOccupation) {
+      case "Business":
+        {
+          occupationcode = "01";
+          occupationtype = "B";
+        }
+        break;
+
+      case "Service":
+        {
+          occupationcode = "02";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Professional":
+        {
+          occupationcode = "03";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Agriculturist":
+        {
+          occupationcode = "04";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Retired":
+        {
+          occupationcode = "05";
+          occupationtype = "O";
+        }
+        break;
+
+      case "Housewife":
+        {
+          occupationcode = "06";
+          occupationtype = "O";
+        }
+        break;
+
+      case "Student":
+        {
+          occupationcode = "07";
+          occupationtype = "O";
+        }
+        break;
+
+      case "Others":
+        {
+          occupationcode = "08";
+          occupationtype = "O";
+        }
+        break;
+
+      case "Doctor":
+        {
+          occupationcode = "09";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Private Sector Service":
+        {
+          occupationcode = "41";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Public Sector Service":
+        {
+          occupationcode = "42";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Forex Dealer":
+        {
+          occupationcode = "43";
+          occupationtype = "B";
+        }
+        break;
+
+      case "Government Service":
+        {
+          occupationcode = "44";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Unknown / Not Applicable":
+        {
+          occupationcode = "99";
+          occupationtype = "O";
+        }
+        break;
+
+      default:
+        {
+          occupationcode = null;
+          occupationtype = null;
+        }
+        break;
+    }
+  }
+
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   TextEditingController fullname = TextEditingController();
   //TextEditingController lastname = TextEditingController();
@@ -929,6 +1162,12 @@ class _KYCMainState extends State<KYCMain> {
               controller: selectedOccupation,
               ontap: () => _showOccupationPicker(),
               hinttext: "Select Occupation",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Occupation";
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 40,
@@ -945,6 +1184,12 @@ class _KYCMainState extends State<KYCMain> {
               controller: selectedSourceWealth,
               ontap: () => _showSourceWealthPicker(),
               hinttext: "Select Source of Wealth",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Source of Wealth";
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 40,
@@ -988,6 +1233,12 @@ class _KYCMainState extends State<KYCMain> {
               controller: selectedIncomeSlab,
               ontap: () => _showIncomeWealth(),
               hinttext: "Select Income Slab",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Income Slab";
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 40,
@@ -1004,6 +1255,12 @@ class _KYCMainState extends State<KYCMain> {
               controller: selectedAccounttype,
               ontap: () => _showAccountPicker(),
               hinttext: "Select Account Type",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Account Type";
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 40,
@@ -1020,6 +1277,12 @@ class _KYCMainState extends State<KYCMain> {
               controller: selectedDividend,
               ontap: () => _showDividendPicker(),
               hinttext: "Select Dividend Paymode",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Dividend Paymode";
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 40,
@@ -1032,6 +1295,12 @@ class _KYCMainState extends State<KYCMain> {
               hinttext: "Select Tax Status",
               ontap: () => _showTaxstausPicker(),
               controller: selectedTaxstatus,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Tax Status";
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 40,
@@ -1111,8 +1380,12 @@ class _KYCMainState extends State<KYCMain> {
                     // }
                     UploadFatca();
                     // setTaxCode_TaxCategory(selectedTaxstatus.text);
-                    print(taxcode);
+                    print("tax code is $taxcode");
                     print(taxstatus);
+                    print("source code is $sourcecode");
+                    print("income code is $incomecode");
+                    print("occupation code is $occupationcode");
+                    print("occupation type is $occupationtype");
                     //UploadData();
                   },
                 ),
@@ -1173,20 +1446,22 @@ class _KYCMainState extends State<KYCMain> {
 }
 
 class CustomDropDownOptions extends StatelessWidget {
-  const CustomDropDownOptions({
+  CustomDropDownOptions({
     Key? key,
     required this.hinttext,
     required this.ontap,
     this.controller,
+    this.validator,
   }) : super(key: key);
 
   final String hinttext;
   final GestureTapCallback ontap;
   final TextEditingController? controller;
-
+  String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       onTap: (() => ontap()),
@@ -1199,23 +1474,24 @@ class CustomDropDownOptions extends StatelessWidget {
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-          suffixIcon: IconButton(
-            icon: const Icon(
-              Icons.keyboard_arrow_down,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              ontap();
-            },
+        suffixIcon: IconButton(
+          icon: const Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.grey,
           ),
-          hintStyle: blackStyle(context).copyWith(
-              fontSize: 16.sm,
-              fontWeight: FontWeight.w400,
-              color: Get.isDarkMode
-                  ? Colors.white
-                  : Color(0xFF303030).withOpacity(0.3)),
-          //  Color(0xFF303030).withOpacity(0.3)),
-          hintText: hinttext),
+          onPressed: () {
+            ontap();
+          },
+        ),
+        hintStyle: blackStyle(context).copyWith(
+            fontSize: 16.sm,
+            fontWeight: FontWeight.w400,
+            color: Get.isDarkMode
+                ? Colors.white
+                : Color(0xFF303030).withOpacity(0.3)),
+        //  Color(0xFF303030).withOpacity(0.3)),
+        hintText: hinttext,
+      ),
     );
   }
 }

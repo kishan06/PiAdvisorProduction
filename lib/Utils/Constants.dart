@@ -166,5 +166,7 @@ class ApiConstant {
 
    static const String poststorebasickycfatcadetails = base + 'api/fatca_form';
 
+   static const String poststorebasickycuccdetails = base + 'api/register_ucc';
+
  
 }

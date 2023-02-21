@@ -59,6 +59,13 @@ class _KYCMainState extends State<KYCMain> {
   String? occupationcode;
   String? occupationtype;
 
+  String? occupationuccCode;
+  String? occupationuccType;
+  String? sourceuccCode;
+  String? accountuccCode;
+  String? dividenduccCode;
+  String? genderuccCode;
+
   @override
   void initState() {
     super.initState();
@@ -132,6 +139,308 @@ class _KYCMainState extends State<KYCMain> {
       });
     });
   }
+
+  setOccupationUccCode_OccupationUccType(String selectedOccupation){
+    switch(selectedOccupation) { 
+      case "Business": { 
+        occupationuccCode = "01";
+        occupationuccType = "Business";
+      } 
+      break; 
+      
+      case "Service": { 
+        occupationuccCode = "02";
+        occupationuccType = "Service";
+      } 
+      break; 
+
+      case "Professional": { 
+        occupationuccCode = "03";
+        occupationuccType = "Service";
+      } 
+      break; 
+
+      case "Agriculturist": { 
+        occupationuccCode = "04";
+        occupationuccType = "Service";
+      } 
+      break; 
+
+      case "Retired": { 
+        occupationuccCode = "05";
+        occupationuccType = "Others";
+      } 
+      break; 
+
+      case "Housewife": { 
+        occupationuccCode = "06";
+        occupationuccType = "Others";
+      } 
+      break; 
+
+      case "Student": { 
+        occupationuccCode = "07";
+        occupationuccType = "Others";
+      } 
+      break; 
+
+      case "Others": { 
+        occupationuccCode = "08";
+        occupationuccType = "Others";
+      } 
+      break; 
+
+      case "Doctor": { 
+        occupationuccCode = "09";
+        occupationuccType = "Service";
+      } 
+      break; 
+
+      case "Private Sector Service": { 
+        occupationuccCode = "41";
+        occupationuccType = "Service";
+      } 
+      break; 
+
+      case "Public Sector Service": { 
+        occupationuccCode = "42";
+        occupationuccType = "Service";
+      } 
+      break; 
+
+      case "Forex Dealer": { 
+        occupationuccCode = "43";
+        occupationuccType = "Business";
+      } 
+      break; 
+
+      case "Government Service": { 
+        occupationuccCode = "44";
+        occupationuccType = "Service";
+      } 
+      break; 
+
+      case "Unknown / Not Applicable": { 
+        occupationuccCode = "99";
+        occupationuccType = "Others";
+      } 
+      break; 
+          
+      default: { 
+        occupationuccCode = null;
+        occupationuccType = null;
+      }
+      break; 
+    } 
+  }
+
+  setSourceUccCode(String selectedSourceWealth){
+    switch(selectedSourceWealth) {
+      case "Salary": { 
+        sourceuccCode = "01";
+      } 
+      break; 
+      
+      case "Business Income": { 
+        sourceuccCode = "02";
+      } 
+      break; 
+
+      case "Gift": { 
+        sourceuccCode = "03";
+      } 
+      break; 
+
+      case "Ancestral Property": { 
+        sourceuccCode = "04";
+      } 
+      break; 
+
+      case "Rental Income": { 
+        sourceuccCode = "05";
+      } 
+      break; 
+
+      case "Prize Money": { 
+        sourceuccCode = "06";
+      } 
+      break; 
+
+      case "Royalty": { 
+        sourceuccCode = "07";
+      } 
+      break; 
+
+      case "Others": { 
+        sourceuccCode = "08";
+      } 
+      break; 
+
+      default: { 
+        sourceuccCode = null;
+      }
+      break;
+    }
+  }
+
+  setAccountUccCode(String selectedAccounttype){
+    switch(selectedAccounttype){
+      case "Savings Bank": { 
+        accountuccCode = "SB";
+      } 
+      break;
+      
+      case "Current Bank": { 
+        accountuccCode = "CB";
+      } 
+      break; 
+
+      case "NRE": { 
+        accountuccCode = "NE";
+      } 
+      break; 
+
+      case "NRO": { 
+        accountuccCode = "NO";
+      } 
+      break; 
+
+      default: { 
+        accountuccCode = null;
+      }
+      break;
+    }
+  }
+
+  setDividendUccCode(String selectedDividend){
+    switch(selectedDividend) {
+      case "Cheque": { 
+        dividenduccCode = "01";
+      } 
+      break;
+      
+      case "Direct Credit": { 
+        dividenduccCode = "02";
+      } 
+      break; 
+
+      case "ECS": { 
+        dividenduccCode = "03";
+      } 
+      break; 
+
+      case "NEFT": { 
+        dividenduccCode = "04";
+      } 
+      break; 
+
+      case "RTGS": { 
+        dividenduccCode = "05";
+      } 
+      break; 
+
+      default: { 
+        dividenduccCode = null;
+      }
+      break;
+    }
+  }
+
+  setGenderUccCode(String selectedgender){
+    switch(selectedgender){
+       case "Male": { 
+        genderuccCode = "M";
+      } 
+      break;
+      
+      case "Female": { 
+        genderuccCode = "F";
+      } 
+      break; 
+
+      default: { 
+        genderuccCode = null;
+      }
+      break;
+    }
+  }
+
+   late Map<String, dynamic> updateKycFatca;
+
+  uploadKycUcc() async {
+    final isValid = _form.currentState!.validate();
+    if(isValid){
+      replaceKycBtnWithLoader();
+
+      setOccupationUccCode_OccupationUccType(selectedOccupation.text);
+      print("Occupation code is $occupationuccCode");
+      print("Occupation type is $occupationuccType");
+
+      setSourceUccCode(selectedSourceWealth.text);
+      print("Source code is $sourceuccCode");
+
+      setAccountUccCode(selectedAccounttype.text);
+      print("Account code is $accountuccCode");
+
+      setDividendUccCode(selectedDividend.text);
+      print('dividend code is $dividenduccCode');
+
+      setGenderUccCode(selectedgender.text);
+      print("gender code is $genderuccCode");
+
+      updateKycFatca = {
+        "client_code":"P009",
+        "primary_holder_name": fullname.text,
+        "primary_holder_last_name":"Bhuta",
+        "tax_status":"01",
+        "gender" : genderuccCode,
+        "primary_holder_dob": datecontroller.text,
+        "occupation_code": occupationuccCode,
+        "holding_nature":"SI",
+        "primary_holder_pan_exempt":"N",
+        "primary_holder_pan":pannumber.text, //"NHSPS5835K",
+        "client_type":"P",
+        "account_type1": accountuccCode,
+        "account_no1":"11415", 
+        "ifsc_code1":"HDFC0000001",
+        "default_bank_flag":"Y",
+        "cheque_name":"kishan bhuta",
+        "div_pay_mode":dividenduccCode,
+        "address1": address.text,
+        "address2":"ADD 2",
+        "address3":"ADD 3",
+        "city":"MUMBAI",
+        "state":"MA",
+        "pincode":"400001",
+        "country":"INDIA",
+        "res_phone":"22721233",
+        "office_phone":"9773363994",
+        "email": emailid.text,
+        "communication_mode":"P",
+        "indian_mobile_no":mobilecontroller.text,
+        "primary_holder_kyc_type":"K",
+        "aadhar_updated":"N",
+        "paperless_flag":"P",
+        "filler_1_mobile_declaration_flag":"SE",
+        "filler_2_email_declaration_flag":"SE"
+      };
+       final data =
+          await StorebasickycuserDetails().postStorebasickycUccdetails(updateKycFatca);
+      if (data.status == ResponseStatus.SUCCESS) {
+        print(updateKycFatca);
+        replaceLoaderWithKycBtn();
+        _storePanAndDob();
+        Navigator.push(context,
+            MaterialPageRoute(builder:( context) => LoadingPageKRACheck()));
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
+      } else {
+        replaceLoaderWithKycBtn();
+        return utils.showToast(data.message);
+      } 
+
+    }
+  } 
 
   void UploadData() async {
     globalEmailID = emailid.text;
@@ -1378,14 +1687,16 @@ class _KYCMainState extends State<KYCMain> {
                     // ){
                     //   return utils.showToast("Please fill all fields");
                     // }
-                    UploadFatca();
-                    // setTaxCode_TaxCategory(selectedTaxstatus.text);
-                    print("tax code is $taxcode");
-                    print(taxstatus);
-                    print("source code is $sourcecode");
-                    print("income code is $incomecode");
-                    print("occupation code is $occupationcode");
-                    print("occupation type is $occupationtype");
+                    uploadKycUcc();
+
+                    // UploadFatca();
+                    // print("tax code is $taxcode");
+                    // print(taxstatus);
+                    // print("source code is $sourcecode");
+                    // print("income code is $incomecode");
+                    // print("occupation code is $occupationcode");
+                    // print("occupation type is $occupationtype");
+                    
                     //UploadData();
                   },
                 ),

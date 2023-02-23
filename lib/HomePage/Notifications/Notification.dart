@@ -9,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CreateBottomBar.dart';
 import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
+import 'package:piadvisory/Common/Customfloatingbutton.dart';
 import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/HomePage/Stock/stock.dart';
 import 'package:piadvisory/Portfolio/PortfolioMainUI.dart';
@@ -99,29 +100,30 @@ class _NotifyState extends State<Notify> {
           Positioned(
             bottom: 22,
             right: MediaQuery.of(context).size.width * 0.43,
-            child: FloatingActionButton(
-              backgroundColor :Color(0xFFF78104),
-              heroTag: "tag1",
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const Mysubscription())));
-              },
-              tooltip: 'Portfolio',
-              elevation: 2.0,
-              child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
-                ),
-              // SvgPicture.asset(
-              //   "assets/images/product sans logo wh.svg",
-              //  // "assets/images/group-6177.svg",
-              // ),
-            ),
+            child: CustomFloatingButton(),
+            // FloatingActionButton(
+            //   backgroundColor :Color(0xFFF78104),
+            //   heroTag: "tag1",
+            //   onPressed: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: ((context) => const Mysubscription())));
+            //   },
+            //   tooltip: 'Portfolio',
+            //   elevation: 2.0,
+            //   child: SvgPicture.asset(
+            //       "assets/images/product sans logo wh new.svg",
+            //       color: Colors.white,
+            //       fit: BoxFit.contain,
+            //       width: 28,
+            //       height: 24,
+            //     ),
+            //   // SvgPicture.asset(
+            //   //   "assets/images/product sans logo wh.svg",
+            //   //  // "assets/images/group-6177.svg",
+            //   // ),
+            // ),
           ),
         ],
       ),

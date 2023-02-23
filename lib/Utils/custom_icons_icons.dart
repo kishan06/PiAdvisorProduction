@@ -28,16 +28,16 @@ class CustomIcons {
   static const _kFontFam2 = 'Custom';
   static const String? _kFontPkg = null;
 
-  static IconData bottombarbagicon =
+  static const IconData bottombarbagicon =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static  IconData date_range =
+  static const IconData date_range =
       IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static  IconData path_3177 =
+  static const IconData path_3177 =
       IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static  IconData path_4346 =
+  static const IconData path_4346 =
       IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static  IconData group_2369 =
+  static const IconData group_2369 =
       IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static  IconData usericon =
+  static const IconData usericon =
       IconData(0xe805, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
 }

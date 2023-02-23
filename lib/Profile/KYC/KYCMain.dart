@@ -713,54 +713,6 @@ class _KYCMainState extends State<KYCMain> {
               //   fontWeight: FontWeight.w600,
               // ),
             ),
-            // CustomTextFields(
-            //   textCapitalization: TextCapitalization.none,
-            //   inputFormatters: [
-            //     LengthLimitingTextInputFormatter(20),
-            //     FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
-            //   ],
-            //   validator: (value) {
-            //     if (value == null || value.isEmpty) {
-            //       return "Please Enter Occupation";
-            //     } else
-            //       return null;
-            //   },
-            //   errortext: "Enter Occupation",
-            //   hint: "Enter Occupation",
-            //   controller: selectedOccupation,
-            // ),
-            CustomDropDownOptions(
-              controller: selectedOccupation,
-              ontap: () => _showOccupationPicker(),
-              hinttext: "Select Occupation",
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Source of Wealth*",
-              style: Theme.of(context).textTheme.headline2,
-              // blackStyle(context).copyWith(
-              //   fontSize: 16.sp,
-              //   fontWeight: FontWeight.w600,
-              // ),
-            ),
-            CustomDropDownOptions(
-              controller: selectedSourceWealth,
-              ontap: () => _showSourceWealthPicker(),
-              hinttext: "Select Source of Wealth",
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Place Of Birth*",
-              style: Theme.of(context).textTheme.headline2,
-              //  blackStyle(context).copyWith(
-              //   fontSize: 16.sm,
-              //   fontWeight: FontWeight.w600,
-              // ),
-            ),
             CustomTextFields(
               textCapitalization: TextCapitalization.none,
               inputFormatters: [
@@ -769,77 +721,125 @@ class _KYCMainState extends State<KYCMain> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please Enter Place Of Birth";
+                  return "Please Enter Occupation";
                 } else
                   return null;
               },
-              errortext: "Enter Place Of Birth",
-              hint: "Enter Place Of Birth",
-              controller: placeBirth,
+              errortext: "Enter Occupation",
+              hint: "Enter Occupation",
+              controller: selectedOccupation,
             ),
-            SizedBox(
-              height: 40.h,
-            ),
-            Text(
-              "Income Slab*",
-              style: Theme.of(context).textTheme.headline2,
-              // blackStyle(context).copyWith(
-              //   fontSize: 16.sp,
-              //   fontWeight: FontWeight.w600,
-              // ),
-            ),
-            CustomDropDownOptions(
-              controller: selectedIncomeSlab,
-              ontap: () => _showIncomeWealth(),
-              hinttext: "Select Income Slab",
-            ),
+            // CustomDropDownOptions(
+            //   controller: selectedOccupation,
+            //   ontap: () => _showOccupationPicker(),
+            //   hinttext: "Select Occupation",
+            // ),
             const SizedBox(
               height: 40,
             ),
-            Text(
-              "Account Type*",
-              style: Theme.of(context).textTheme.headline2,
-              // blackStyle(context).copyWith(
-              //   fontSize: 16.sp,
-              //   fontWeight: FontWeight.w600,
-              // ),
-            ),
-            CustomDropDownOptions(
-              controller: selectedAccounttype,
-              ontap: () => _showAccountPicker(),
-              hinttext: "Select Account Type",
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Dividend Paymode*",
-              style: Theme.of(context).textTheme.headline2,
-              // blackStyle(context).copyWith(
-              //   fontSize: 16.sp,
-              //   fontWeight: FontWeight.w600,
-              // ),
-            ),
-            CustomDropDownOptions(
-              controller: selectedDividend,
-              ontap: () => _showDividendPicker(),
-              hinttext: "Select Dividend Paymode",
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Tax Status*",
-              style: Theme.of(context).textTheme.headline2,
-            ),
-            CustomDropDownOptions(
-              hinttext: "Select Tax Status",
-              ontap: () => _showTaxstausPicker(),
-              controller: selectedTaxstatus,
-            ),
-            const SizedBox(
-              height: 40,
-            ),
+            // Text(
+            //   "Source of Wealth*",
+            //   style: Theme.of(context).textTheme.headline2,
+            //   // blackStyle(context).copyWith(
+            //   //   fontSize: 16.sp,
+            //   //   fontWeight: FontWeight.w600,
+            //   // ),
+            // ),
+            // CustomDropDownOptions(
+            //   controller: selectedSourceWealth,
+            //   ontap: () => _showSourceWealthPicker(),
+            //   hinttext: "Select Source of Wealth",
+            // ),
+            // const SizedBox(
+            //   height: 40,
+            // ),
+            // Text(
+            //   "Place Of Birth*",
+            //   style: Theme.of(context).textTheme.headline2,
+            //   //  blackStyle(context).copyWith(
+            //   //   fontSize: 16.sm,
+            //   //   fontWeight: FontWeight.w600,
+            //   // ),
+            // ),
+            // CustomTextFields(
+            //   textCapitalization: TextCapitalization.none,
+            //   inputFormatters: [
+            //     LengthLimitingTextInputFormatter(20),
+            //     FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+            //   ],
+            //   validator: (value) {
+            //     if (value == null || value.isEmpty) {
+            //       return "Please Enter Place Of Birth";
+            //     } else
+            //       return null;
+            //   },
+            //   errortext: "Enter Place Of Birth",
+            //   hint: "Enter Place Of Birth",
+            //   controller: placeBirth,
+            // ),
+            // SizedBox(
+            //   height: 40.h,
+            // ),
+            // Text(
+            //   "Income Slab*",
+            //   style: Theme.of(context).textTheme.headline2,
+            //   // blackStyle(context).copyWith(
+            //   //   fontSize: 16.sp,
+            //   //   fontWeight: FontWeight.w600,
+            //   // ),
+            // ),
+            // CustomDropDownOptions(
+            //   controller: selectedIncomeSlab,
+            //   ontap: () => _showIncomeWealth(),
+            //   hinttext: "Select Income Slab",
+            // ),
+            // const SizedBox(
+            //   height: 40,
+            // ),
+            // Text(
+            //   "Account Type*",
+            //   style: Theme.of(context).textTheme.headline2,
+            //   // blackStyle(context).copyWith(
+            //   //   fontSize: 16.sp,
+            //   //   fontWeight: FontWeight.w600,
+            //   // ),
+            // ),
+            // CustomDropDownOptions(
+            //   controller: selectedAccounttype,
+            //   ontap: () => _showAccountPicker(),
+            //   hinttext: "Select Account Type",
+            // ),
+            // const SizedBox(
+            //   height: 40,
+            // ),
+            // Text(
+            //   "Dividend Paymode*",
+            //   style: Theme.of(context).textTheme.headline2,
+            //   // blackStyle(context).copyWith(
+            //   //   fontSize: 16.sp,
+            //   //   fontWeight: FontWeight.w600,
+            //   // ),
+            // ),
+            // CustomDropDownOptions(
+            //   controller: selectedDividend,
+            //   ontap: () => _showDividendPicker(),
+            //   hinttext: "Select Dividend Paymode",
+            // ),
+            // const SizedBox(
+            //   height: 40,
+            // ),
+            // Text(
+            //   "Tax Status*",
+            //   style: Theme.of(context).textTheme.headline2,
+            // ),
+            // CustomDropDownOptions(
+            //   hinttext: "Select Tax Status",
+            //   ontap: () => _showTaxstausPicker(),
+            //   controller: selectedTaxstatus,
+            // ),
+            // const SizedBox(
+            //   height: 40,
+            // ),
             Text(
               "Gender*",
               style: Theme.of(context).textTheme.headline2,

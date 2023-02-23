@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CreateBottomBar.dart';
+import 'package:piadvisory/Common/Customfloatingbutton.dart';
 import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/PieChartLiabilities.dart';
 import '../Common/app_bar.dart';
@@ -291,25 +292,26 @@ class _EquityinnerState extends State<Equityinner> {
           Positioned(
             bottom: 22,
             right: MediaQuery.of(context).size.width * 0.43,
-            child: FloatingActionButton(
-              backgroundColor: Color(0xFFF78104),
-              heroTag: "tag1",
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const Mysubscription())));
-              },
-              tooltip: 'Subscribe',
-              elevation: 2.0,
-              child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
-                ),
-            ),
+            child: CustomFloatingButton(),
+            // FloatingActionButton(
+            //   backgroundColor: Color(0xFFF78104),
+            //   heroTag: "tag1",
+            //   onPressed: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: ((context) => const Mysubscription())));
+            //   },
+            //   tooltip: 'Subscribe',
+            //   elevation: 2.0,
+            //   child: SvgPicture.asset(
+            //       "assets/images/product sans logo wh new.svg",
+            //       color: Colors.white,
+            //       fit: BoxFit.contain,
+            //       width: 28,
+            //       height: 24,
+            //     ),
+            // ),
           ),
         ],
       ),

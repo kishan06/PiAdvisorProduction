@@ -120,7 +120,7 @@ class _FixDepositState extends State<FixDeposit> {
       print(updata);
       final data = await StoreAssetsform().postStoreAssetsformFD(updata);
       if (data.status == ResponseStatus.SUCCESS) {
-        utils.showToast("Fix deposit Added!");
+        utils.showToast("Fixed deposit Added!");
         replaceLoaderWithAssetsBtn();
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => Assets()));
@@ -144,7 +144,7 @@ class _FixDepositState extends State<FixDeposit> {
     print("updats is $updata");
     final data = await StoreAssetsform().updateFixdeposit(updata);
     if (data.status == ResponseStatus.SUCCESS) {
-      utils.showToast("Fix deposit Added!");
+      utils.showToast("Fixed deposit Added!");
       replaceLoaderWithAssetsBtn();
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Assets()));
@@ -175,7 +175,7 @@ class _FixDepositState extends State<FixDeposit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        titleTxt: "Fix Deposit",
+        titleTxt: "Fixed Deposit",
         bottomtext: false,
       ),
       body: SingleChildScrollView(

@@ -38,6 +38,7 @@ import 'package:piadvisory/SideMenu/CartPi.dart';
 import 'package:piadvisory/SideMenu/CartPi2.dart';
 import 'package:piadvisory/SideMenu/NavDrawer.dart';
 import 'package:piadvisory/SideMenu/PiRecommendedRepository/PiRecommendedMethod.dart';
+import 'package:piadvisory/SideMenu/Place_order.dart';
 import 'package:piadvisory/SideMenu/Subscribe/AppWidget.dart';
 import 'package:piadvisory/SideMenu/Subscribe/Mysubscription.dart';
 import 'package:piadvisory/Utils/custom_icons_icons.dart';
@@ -863,7 +864,7 @@ class _PiRecommendedState extends State<PiRecommended> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const CartPI()));
+                                      builder: (context) => PlaceOrder()));
                             },
                           ),
                         ),

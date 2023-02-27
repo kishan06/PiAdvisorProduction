@@ -122,8 +122,7 @@ class ApiConstant {
   static const String postStoretellusabout =
       base + 'api/tell_us_about_yourself';
 
-  static const String piImages =
-      'https://pi.betadelivery.com/pi_advisors/public/uploads/';
+ static const String piImages = 'https://app.piadvisors.in/public/uploads/';
 
   static const String gettellusabout = base + 'api/get_ur_about_yourself_data';
   static const String pirecommeded = base + 'api/get_manage_advisors';

@@ -141,11 +141,10 @@ class _KYCMainState extends State<KYCMain> {
     });
   }
 
-  void generateRandomNumber() {
+  generateRandomNumber() {
     var random = new Random();
-
-    // Printing Random Number between 1 to 100 on Terminal Window.
-    print(random.nextInt(10000));
+    var generatednumber = random.nextInt(10000);
+    return generatednumber;
   }
 
   setOccupationUccCode_OccupationUccType(String selectedOccupation) {
@@ -411,82 +410,88 @@ class _KYCMainState extends State<KYCMain> {
     }
   }
 
-  late Map<String, dynamic> updateKycFatca;
+  late Map<String, dynamic> updateKycUcc;
 
   uploadKycUcc() async {
-    final isValid = _form.currentState!.validate();
-    if (isValid) {
-      replaceKycBtnWithLoader();
+    //final isValid = _form.currentState!.validate();
+    // if (isValid) {
+    replaceKycBtnWithLoader();
 
-      setOccupationUccCode_OccupationUccType(selectedOccupation.text);
-      print("Occupation code is $occupationuccCode");
-      print("Occupation type is $occupationuccType");
+    setOccupationUccCode_OccupationUccType(selectedOccupation.text);
+    print("Occupation code is $occupationuccCode");
+    print("Occupation type is $occupationuccType");
 
-      setSourceUccCode(selectedSourceWealth.text);
-      print("Source code is $sourceuccCode");
+    setSourceUccCode(selectedSourceWealth.text);
+    print("Source code is $sourceuccCode");
 
-      setAccountUccCode(selectedAccounttype.text);
-      print("Account code is $accountuccCode");
+    setAccountUccCode(selectedAccounttype.text);
+    print("Account code is $accountuccCode");
 
-      setDividendUccCode(selectedDividend.text);
-      print('dividend code is $dividenduccCode');
+    setDividendUccCode(selectedDividend.text);
+    print('dividend code is $dividenduccCode');
 
-      setGenderUccCode(selectedgender.text);
-      print("gender code is $genderuccCode");
+    setGenderUccCode(selectedgender.text);
+    print("gender code is $genderuccCode");
 
-      print(datecontroller.text);
+    print(datecontroller.text);
+    print(generateRandomNumber());
 
-      updateKycFatca = {
-        "client_code": generateRandomNumber, //"P012",
-        "primary_holder_name": fullname.text,
-        "primary_holder_last_name": "Bhuta",
-        "tax_status": "01",
-        "gender": genderuccCode,
-        "primary_holder_dob": datecontroller.text,
-        "occupation_code": occupationuccCode,
-        "holding_nature": "SI",
-        "primary_holder_pan_exempt": "N",
-        "primary_holder_pan": pannumber.text, //"NHSPS5835K",
-        "client_type": "P",
-        "account_type1": accountuccCode,
-        "account_no1": "11415",
-        "ifsc_code1": "HDFC0000001",
-        "default_bank_flag": "Y",
-        "cheque_name": "kishan bhuta",
-        "div_pay_mode": dividenduccCode,
-        "address1": address.text,
-        "address2": "ADD 2",
-        "address3": "ADD 3",
-        "city": "MUMBAI",
-        "state": "MA",
-        "pincode": "400001",
-        "country": "INDIA",
-        "res_phone": "22721233",
-        "office_phone": "9773363994",
-        "email": emailid.text,
-        "communication_mode": "P",
-        "indian_mobile_no": mobilecontroller.text,
-        "primary_holder_kyc_type": "K",
-        "aadhar_updated": "N",
-        "paperless_flag": "P",
-        "filler_1_mobile_declaration_flag": "SE",
-        "filler_2_email_declaration_flag": "SE"
-      };
-      final data = await StorebasickycuserDetails()
-          .postStorebasickycUccdetails(updateKycFatca);
-      if (data.status == ResponseStatus.SUCCESS) {
-        print(updateKycFatca);
-        replaceLoaderWithKycBtn();
-        _storePanAndDob();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
-      } else {
-        replaceLoaderWithKycBtn();
-        return utils.showToast(data.message);
-      }
+    updateKycUcc = {
+      "client_code": int.parse(generateRandomNumber().toString()), //"P012",
+      "primary_holder_name": fullname.text,
+      "primary_holder_last_name": "Bhuta",
+      "tax_status": "01",
+      "gender": genderuccCode,
+      "primary_holder_dob": datecontroller.text,
+      "occupation_code": occupationuccCode,
+      "holding_nature": "SI",
+      "primary_holder_pan_exempt": "N",
+      "primary_holder_pan": pannumber.text, //"NHSPS5835K",
+      "client_type": "P",
+      "account_type1": accountuccCode,
+      "account_no1": "11415",
+      "ifsc_code1": "HDFC0000001",
+      "default_bank_flag": "Y",
+      "cheque_name": "kishan bhuta",
+      "div_pay_mode": dividenduccCode,
+      "address1": address.text,
+      "address2": "ADD 2",
+      "address3": "ADD 3",
+      "city": "MUMBAI",
+      "state": "MA",
+      "pincode": "400001",
+      "country": "INDIA",
+      "res_phone": "22721233",
+      "office_phone": "9773363994",
+      "email": emailid.text,
+      "communication_mode": "P",
+      "indian_mobile_no": mobilecontroller.text,
+      "primary_holder_kyc_type": "K",
+      "aadhar_updated": "N",
+      "paperless_flag": "P",
+      "filler_1_mobile_declaration_flag": "SE",
+      "filler_2_email_declaration_flag": "SE"
+    };
+    final data = await StorebasickycuserDetails()
+        .postStorebasickycUccdetails(updateKycUcc);
+    if (data.status == ResponseStatus.SUCCESS) {
+      print(updateKycUcc);
+
+      print("Upload method called");
+      UploadData();
+
+      // replaceLoaderWithKycBtn();
+      // _storePanAndDob();
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
+    } else {
+      replaceLoaderWithKycBtn();
+      return utils.showToast(data.message);
     }
+    //}
   }
 
   void UploadData() async {
@@ -513,6 +518,7 @@ class _KYCMainState extends State<KYCMain> {
         _storePanAndDob();
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
       } else {
@@ -553,17 +559,24 @@ class _KYCMainState extends State<KYCMain> {
         "ubo_appl": "N",
         "sdf_flag": "N",
         "ubo_df": "N",
-        "log_name": "23-01-2023"
+        "log_name":
+            //"23-01-2023",
+            int.parse(generateRandomNumber().toString()),
       };
       print(updata);
       final data = await StorebasickycuserDetails()
           .postStorebasickycfatcadetails(updata);
       if (data.status == ResponseStatus.SUCCESS) {
         print("fatca is $updata");
-        //replaceLoaderWithKycBtn();
-        _storePanAndDob();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+
+        print("Ucc method called");
+        uploadKycUcc();
+
+        // replaceLoaderWithKycBtn();
+        // _storePanAndDob();
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
       } else {
@@ -1734,16 +1747,16 @@ class _KYCMainState extends State<KYCMain> {
                     // ){
                     //   return utils.showToast("Please fill all fields");
                     // }
-                    uploadKycUcc();
-                    generateRandomNumber();
 
-                    // UploadFatca();
-                    // print("tax code is $taxcode");
-                    // print(taxstatus);
-                    // print("source code is $sourcecode");
-                    // print("income code is $incomecode");
-                    // print("occupation code is $occupationcode");
-                    // print("occupation type is $occupationtype");
+                    //uploadKycUcc();
+
+                    UploadFatca();
+                    print("tax code is $taxcode");
+                    print(taxstatus);
+                    print("source code is $sourcecode");
+                    print("income code is $incomecode");
+                    print("occupation code is $occupationcode");
+                    print("occupation type is $occupationtype");
 
                     //UploadData();
                   },

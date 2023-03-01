@@ -114,7 +114,7 @@ class StorebasickycuserDetails {
   }
 
    Future<ResponseData> postStorebasickycUccdetails(
-      Map<String, dynamic> updateKycFatca) async {
+      Map<String, dynamic> updateKycUcc) async {
     Response response;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -122,7 +122,7 @@ class StorebasickycuserDetails {
 
     try {
       response = await dio.post(ApiConstant.poststorebasickycuccdetails,
-          data: updateKycFatca,
+          data: updateKycUcc,
           options: Options(headers: {"authorization": "Bearer $token"}));
     } on Exception catch (_) {
       print("Not reached");

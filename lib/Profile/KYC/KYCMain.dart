@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -51,6 +52,20 @@ class _KYCMainState extends State<KYCMain> {
   late final Future? myFuture;
   StreamController<requestResponseState> kycmainController =
       StreamController.broadcast();
+
+  String? taxcode;
+  String? taxstatus;
+  String? sourcecode;
+  String? incomecode;
+  String? occupationcode;
+  String? occupationtype;
+
+  String? occupationuccCode;
+  String? occupationuccType;
+  String? sourceuccCode;
+  String? accountuccCode;
+  String? dividenduccCode;
+  String? genderuccCode;
 
   @override
   void initState() {
@@ -118,12 +133,365 @@ class _KYCMainState extends State<KYCMain> {
       setState(() {
         _selectedDate = pickedDate;
         datecontroller.text =
-            "${_selectedDate!.day.toString()}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.year.toString().padLeft(2, '0')}";
+            "${_selectedDate!.day.toString()}/${_selectedDate!.month.toString().padLeft(2, '0')}/${_selectedDate!.year.toString().padLeft(2, '0')}";
         var currentTime = DateTime.now();
         agecontroller.text =
             (currentTime.year - _selectedDate!.year).toString();
       });
     });
+  }
+
+  generateRandomNumber() {
+    var random = new Random();
+    var generatednumber = random.nextInt(10000);
+    return generatednumber;
+  }
+
+  setOccupationUccCode_OccupationUccType(String selectedOccupation) {
+    switch (selectedOccupation) {
+      case "Business":
+        {
+          occupationuccCode = "01";
+          occupationuccType = "Business";
+        }
+        break;
+
+      case "Service":
+        {
+          occupationuccCode = "02";
+          occupationuccType = "Service";
+        }
+        break;
+
+      case "Professional":
+        {
+          occupationuccCode = "03";
+          occupationuccType = "Service";
+        }
+        break;
+
+      case "Agriculturist":
+        {
+          occupationuccCode = "04";
+          occupationuccType = "Service";
+        }
+        break;
+
+      case "Retired":
+        {
+          occupationuccCode = "05";
+          occupationuccType = "Others";
+        }
+        break;
+
+      case "Housewife":
+        {
+          occupationuccCode = "06";
+          occupationuccType = "Others";
+        }
+        break;
+
+      case "Student":
+        {
+          occupationuccCode = "07";
+          occupationuccType = "Others";
+        }
+        break;
+
+      case "Others":
+        {
+          occupationuccCode = "08";
+          occupationuccType = "Others";
+        }
+        break;
+
+      case "Doctor":
+        {
+          occupationuccCode = "09";
+          occupationuccType = "Service";
+        }
+        break;
+
+      case "Private Sector Service":
+        {
+          occupationuccCode = "41";
+          occupationuccType = "Service";
+        }
+        break;
+
+      case "Public Sector Service":
+        {
+          occupationuccCode = "42";
+          occupationuccType = "Service";
+        }
+        break;
+
+      case "Forex Dealer":
+        {
+          occupationuccCode = "43";
+          occupationuccType = "Business";
+        }
+        break;
+
+      case "Government Service":
+        {
+          occupationuccCode = "44";
+          occupationuccType = "Service";
+        }
+        break;
+
+      case "Unknown / Not Applicable":
+        {
+          occupationuccCode = "99";
+          occupationuccType = "Others";
+        }
+        break;
+
+      default:
+        {
+          occupationuccCode = null;
+          occupationuccType = null;
+        }
+        break;
+    }
+  }
+
+  setSourceUccCode(String selectedSourceWealth) {
+    switch (selectedSourceWealth) {
+      case "Salary":
+        {
+          sourceuccCode = "01";
+        }
+        break;
+
+      case "Business Income":
+        {
+          sourceuccCode = "02";
+        }
+        break;
+
+      case "Gift":
+        {
+          sourceuccCode = "03";
+        }
+        break;
+
+      case "Ancestral Property":
+        {
+          sourceuccCode = "04";
+        }
+        break;
+
+      case "Rental Income":
+        {
+          sourceuccCode = "05";
+        }
+        break;
+
+      case "Prize Money":
+        {
+          sourceuccCode = "06";
+        }
+        break;
+
+      case "Royalty":
+        {
+          sourceuccCode = "07";
+        }
+        break;
+
+      case "Others":
+        {
+          sourceuccCode = "08";
+        }
+        break;
+
+      default:
+        {
+          sourceuccCode = null;
+        }
+        break;
+    }
+  }
+
+  setAccountUccCode(String selectedAccounttype) {
+    switch (selectedAccounttype) {
+      case "Savings Bank":
+        {
+          accountuccCode = "SB";
+        }
+        break;
+
+      case "Current Bank":
+        {
+          accountuccCode = "CB";
+        }
+        break;
+
+      case "NRE":
+        {
+          accountuccCode = "NE";
+        }
+        break;
+
+      case "NRO":
+        {
+          accountuccCode = "NO";
+        }
+        break;
+
+      default:
+        {
+          accountuccCode = null;
+        }
+        break;
+    }
+  }
+
+  setDividendUccCode(String selectedDividend) {
+    switch (selectedDividend) {
+      case "Cheque":
+        {
+          dividenduccCode = "01";
+        }
+        break;
+
+      case "Direct Credit":
+        {
+          dividenduccCode = "02";
+        }
+        break;
+
+      case "ECS":
+        {
+          dividenduccCode = "03";
+        }
+        break;
+
+      case "NEFT":
+        {
+          dividenduccCode = "04";
+        }
+        break;
+
+      case "RTGS":
+        {
+          dividenduccCode = "05";
+        }
+        break;
+
+      default:
+        {
+          dividenduccCode = null;
+        }
+        break;
+    }
+  }
+
+  setGenderUccCode(String selectedgender) {
+    switch (selectedgender) {
+      case "Male":
+        {
+          genderuccCode = "M";
+        }
+        break;
+
+      case "Female":
+        {
+          genderuccCode = "F";
+        }
+        break;
+
+      default:
+        {
+          genderuccCode = null;
+        }
+        break;
+    }
+  }
+
+  late Map<String, dynamic> updateKycUcc;
+
+  uploadKycUcc() async {
+    //final isValid = _form.currentState!.validate();
+    // if (isValid) {
+    replaceKycBtnWithLoader();
+
+    setOccupationUccCode_OccupationUccType(selectedOccupation.text);
+    print("Occupation code is $occupationuccCode");
+    print("Occupation type is $occupationuccType");
+
+    setSourceUccCode(selectedSourceWealth.text);
+    print("Source code is $sourceuccCode");
+
+    setAccountUccCode(selectedAccounttype.text);
+    print("Account code is $accountuccCode");
+
+    setDividendUccCode(selectedDividend.text);
+    print('dividend code is $dividenduccCode');
+
+    setGenderUccCode(selectedgender.text);
+    print("gender code is $genderuccCode");
+
+    print(datecontroller.text);
+    print(generateRandomNumber());
+
+    updateKycUcc = {
+      "client_code": int.parse(generateRandomNumber().toString()), //"P012",
+      "primary_holder_name": fullname.text,
+      "primary_holder_last_name": "Bhuta",
+      "tax_status": "01",
+      "gender": genderuccCode,
+      "primary_holder_dob": datecontroller.text,
+      "occupation_code": occupationuccCode,
+      "holding_nature": "SI",
+      "primary_holder_pan_exempt": "N",
+      "primary_holder_pan": pannumber.text, //"NHSPS5835K",
+      "client_type": "P",
+      "account_type1": accountuccCode,
+      "account_no1": "11415",
+      "ifsc_code1": "HDFC0000001",
+      "default_bank_flag": "Y",
+      "cheque_name": "kishan bhuta",
+      "div_pay_mode": dividenduccCode,
+      "address1": address.text,
+      "address2": "ADD 2",
+      "address3": "ADD 3",
+      "city": "MUMBAI",
+      "state": "MA",
+      "pincode": "400001",
+      "country": "INDIA",
+      "res_phone": "22721233",
+      "office_phone": "9773363994",
+      "email": emailid.text,
+      "communication_mode": "P",
+      "indian_mobile_no": mobilecontroller.text,
+      "primary_holder_kyc_type": "K",
+      "aadhar_updated": "N",
+      "paperless_flag": "P",
+      "filler_1_mobile_declaration_flag": "SE",
+      "filler_2_email_declaration_flag": "SE"
+    };
+    final data = await StorebasickycuserDetails()
+        .postStorebasickycUccdetails(updateKycUcc);
+    if (data.status == ResponseStatus.SUCCESS) {
+      print(updateKycUcc);
+
+      print("Upload method called");
+      UploadData();
+
+      // replaceLoaderWithKycBtn();
+      // _storePanAndDob();
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
+    } else {
+      replaceLoaderWithKycBtn();
+      return utils.showToast(data.message);
+    }
+    //}
   }
 
   void UploadData() async {
@@ -150,6 +518,65 @@ class _KYCMainState extends State<KYCMain> {
         _storePanAndDob();
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
+      } else {
+        replaceLoaderWithKycBtn();
+        return utils.showToast(data.message);
+      }
+    }
+  }
+
+  void UploadFatca() async {
+    globalEmailID = emailid.text;
+    final isValid = _form.currentState?.validate();
+    if (isValid!) {
+      replaceKycBtnWithLoader();
+      setTaxCode_TaxCategory(selectedTaxstatus.text);
+      setSourceCode(selectedSourceWealth.text);
+      setIncomeCode(selectedIncomeSlab.text);
+      setOccupationCode_Occupationtype(selectedOccupation.text);
+      Map<String, dynamic> updata = {
+        "pan_rp": pannumber.text,
+        "inv_name": fullname.text,
+        "tax_status": taxcode,
+        //setTaxCode_TaxCategory(selectedTaxstatus.text),
+        "data_src": "E",
+        "addr_type": "1",
+        "po_bir_inc": placeBirth.text,
+        "co_bir_inc": "IN",
+        "tax_res1": "In",
+        "tpin1": pannumber.text,
+        "id1_type": "C",
+        "srce_wealt": sourcecode,
+        //setSourceCode(selectedSourceWealth.text),
+        "inc_slab": incomecode,
+        "pep_flag": "N",
+        "occ_code": occupationcode,
+        "occ_type": occupationtype,
+        "exch_name": "B",
+        "ubo_appl": "N",
+        "sdf_flag": "N",
+        "ubo_df": "N",
+        "log_name":
+            //"23-01-2023",
+            int.parse(generateRandomNumber().toString()),
+      };
+      print(updata);
+      final data = await StorebasickycuserDetails()
+          .postStorebasickycfatcadetails(updata);
+      if (data.status == ResponseStatus.SUCCESS) {
+        print("fatca is $updata");
+
+        print("Ucc method called");
+        uploadKycUcc();
+
+        // replaceLoaderWithKycBtn();
+        // _storePanAndDob();
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => LoadingPageKRACheck()));
+
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => const KYCDigiLocker()));
       } else {
@@ -392,6 +819,377 @@ class _KYCMainState extends State<KYCMain> {
       setState(() {
         selectedTaxstatus.text = data;
       });
+    }
+  }
+
+  setTaxCode_TaxCategory(String selectedTaxstatus) {
+    switch (selectedTaxstatus) {
+      case "Individual":
+        {
+          taxcode = "01";
+          taxstatus = "Individual";
+        }
+        break;
+
+      case "On Behalf Of Minor":
+        {
+          taxcode = "02";
+          taxstatus = "On Behalf Of Minor";
+        }
+        break;
+
+      case "HUF":
+        {
+          taxcode = "03";
+          taxstatus = "HUF";
+        }
+        break;
+
+      case "Company":
+        {
+          taxcode = "04";
+          taxstatus = "Company";
+        }
+        break;
+
+      case "AOP/BOI":
+        {
+          taxcode = "05";
+          taxstatus = "AOP/BOI";
+        }
+        break;
+
+      case "Partnership Firm":
+        {
+          taxcode = "06";
+          taxstatus = "Partnership Firm";
+        }
+        break;
+
+      case "Body Corporate":
+        {
+          taxcode = "07";
+          taxstatus = "Body Corporate";
+        }
+        break;
+
+      case "Trust":
+        {
+          taxcode = "08";
+          taxstatus = "Trust";
+        }
+        break;
+
+      case "Society":
+        {
+          taxcode = "09";
+          taxstatus = "Society";
+        }
+        break;
+
+      case "Others":
+        {
+          taxcode = "10";
+          taxstatus = "Others";
+        }
+        break;
+
+      case "NRI-Others":
+        {
+          taxcode = "11";
+          taxstatus = "NRI-Others";
+        }
+        break;
+
+      case "Banks / Financial Institution":
+        {
+          taxcode = "12";
+          taxstatus = "Banks / Financial Institution";
+        }
+        break;
+
+      case "Sole Proprietorship":
+        {
+          taxcode = "13";
+          taxstatus = "Sole Proprietorship";
+        }
+        break;
+
+      case "Banks":
+        {
+          taxcode = "14";
+          taxstatus = "Banks";
+        }
+        break;
+
+      case "Association of Persons":
+        {
+          taxcode = "15";
+          taxstatus = "Association of Persons";
+        }
+        break;
+
+      case "NRI - NRE (Repatriation)":
+        {
+          taxcode = "21";
+          taxstatus = "NRI - NRE (Repatriation)";
+        }
+        break;
+
+      case "Overseas Corporate body":
+        {
+          taxcode = "22";
+          taxstatus = "Overseas Corporate body";
+        }
+        break;
+
+      case "Foreign Institutional Investor":
+        {
+          taxcode = "23";
+          taxstatus = "Foreign Institutional Investor";
+        }
+        break;
+
+      case "NRI - NRO [Non Repatriation]":
+        {
+          taxcode = "24";
+          taxstatus = "NRI - NRO [Non Repatriation]";
+        }
+        break;
+
+      case "Overseas Corporate Body-Others":
+        {
+          taxcode = "25";
+          taxstatus = "Overseas Corporate Body-Others";
+        }
+        break;
+
+      case "NRI - Minor (NRE)":
+        {
+          taxcode = "26";
+          taxstatus = "NRI - Minor (NRE)";
+        }
+        break;
+
+      default:
+        {
+          taxcode = null;
+          taxstatus = null;
+        }
+        break;
+    }
+  }
+
+  setSourceCode(String selectedSourceWealth) {
+    switch (selectedSourceWealth) {
+      case "Salary":
+        {
+          sourcecode = "01";
+        }
+        break;
+
+      case "Business Income":
+        {
+          sourcecode = "02";
+        }
+        break;
+
+      case "Gift":
+        {
+          sourcecode = "03";
+        }
+        break;
+
+      case "Ancestral Property":
+        {
+          sourcecode = "04";
+        }
+        break;
+
+      case "Rental Income":
+        {
+          sourcecode = "05";
+        }
+        break;
+
+      case "Prize Money":
+        {
+          sourcecode = "06";
+        }
+        break;
+
+      case "Royalty":
+        {
+          sourcecode = "07";
+        }
+        break;
+
+      case "Others":
+        {
+          sourcecode = "08";
+        }
+        break;
+
+      default:
+        {
+          sourcecode = null;
+        }
+        break;
+    }
+  }
+
+  setIncomeCode(String selectedIncomeSlab) {
+    switch (selectedIncomeSlab) {
+      case "Below 1 Lakh":
+        {
+          incomecode = "31";
+        }
+        break;
+
+      case "Between 1 to 5 Lacs":
+        {
+          incomecode = "32";
+        }
+        break;
+
+      case "Between 5 to 10 Lacs":
+        {
+          incomecode = "33";
+        }
+        break;
+
+      case "Between 10 to 25 Lacs":
+        {
+          incomecode = "34";
+        }
+        break;
+
+      case "25 lacs to 1 Crore":
+        {
+          incomecode = "35";
+        }
+        break;
+
+      case "Above 1 Crore":
+        {
+          incomecode = "36";
+        }
+        break;
+
+      default:
+        {
+          incomecode = null;
+        }
+        break;
+    }
+  }
+
+  setOccupationCode_Occupationtype(String selectedOccupation) {
+    switch (selectedOccupation) {
+      case "Business":
+        {
+          occupationcode = "01";
+          occupationtype = "B";
+        }
+        break;
+
+      case "Service":
+        {
+          occupationcode = "02";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Professional":
+        {
+          occupationcode = "03";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Agriculturist":
+        {
+          occupationcode = "04";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Retired":
+        {
+          occupationcode = "05";
+          occupationtype = "O";
+        }
+        break;
+
+      case "Housewife":
+        {
+          occupationcode = "06";
+          occupationtype = "O";
+        }
+        break;
+
+      case "Student":
+        {
+          occupationcode = "07";
+          occupationtype = "O";
+        }
+        break;
+
+      case "Others":
+        {
+          occupationcode = "08";
+          occupationtype = "O";
+        }
+        break;
+
+      case "Doctor":
+        {
+          occupationcode = "09";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Private Sector Service":
+        {
+          occupationcode = "41";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Public Sector Service":
+        {
+          occupationcode = "42";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Forex Dealer":
+        {
+          occupationcode = "43";
+          occupationtype = "B";
+        }
+        break;
+
+      case "Government Service":
+        {
+          occupationcode = "44";
+          occupationtype = "S";
+        }
+        break;
+
+      case "Unknown / Not Applicable":
+        {
+          occupationcode = "99";
+          occupationtype = "O";
+        }
+        break;
+
+      default:
+        {
+          occupationcode = null;
+          occupationtype = null;
+        }
+        break;
     }
   }
 
@@ -713,21 +1511,157 @@ class _KYCMainState extends State<KYCMain> {
               //   fontWeight: FontWeight.w600,
               // ),
             ),
-            CustomTextFields(
-              textCapitalization: TextCapitalization.none,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(20),
-                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
-              ],
+
+            // CustomTextFields(
+            //   textCapitalization: TextCapitalization.none,
+            //   inputFormatters: [
+            //     LengthLimitingTextInputFormatter(20),
+            //     FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+            //   ],
+            //   validator: (value) {
+            //     if (value == null || value.isEmpty) {
+            //       return "Please Enter Occupation";
+            //     } else
+            //       return null;
+            //   },
+            //   errortext: "Enter Occupation",
+            //   hint: "Enter Occupation",
+            //   controller: selectedOccupation,
+            // ),
+            CustomDropDownOptions(
+              controller: selectedOccupation,
+              ontap: () => _showOccupationPicker(),
+              hinttext: "Select Occupation",
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please Enter Occupation";
-                } else
-                  return null;
+                  return "Please Select Occupation";
+                }
+                return null;
               },
-              errortext: "Enter Occupation",
-              hint: "Enter Occupation",
-              controller: selectedOccupation,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Source of Wealth*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            CustomDropDownOptions(
+              controller: selectedSourceWealth,
+              ontap: () => _showSourceWealthPicker(),
+              hinttext: "Select Source of Wealth",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Source of Wealth";
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Place Of Birth*",
+              style: Theme.of(context).textTheme.headline2,
+              //  blackStyle(context).copyWith(
+              //   fontSize: 16.sm,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+
+
+              errortext: "Enter Place Of Birth",
+              hint: "Enter Place Of Birth",
+              controller: placeBirth,
+            ),
+            SizedBox(
+              height: 40.h,
+            ),
+            Text(
+              "Income Slab*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            CustomDropDownOptions(
+              controller: selectedIncomeSlab,
+              ontap: () => _showIncomeWealth(),
+              hinttext: "Select Income Slab",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Income Slab";
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Account Type*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            CustomDropDownOptions(
+              controller: selectedAccounttype,
+              ontap: () => _showAccountPicker(),
+              hinttext: "Select Account Type",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Account Type";
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Dividend Paymode*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            CustomDropDownOptions(
+              controller: selectedDividend,
+              ontap: () => _showDividendPicker(),
+              hinttext: "Select Dividend Paymode",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Dividend Paymode";
+                }
+                return null;
+              },
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Tax Status*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            CustomDropDownOptions(
+              hinttext: "Select Tax Status",
+              ontap: () => _showTaxstausPicker(),
+              controller: selectedTaxstatus,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Tax Status";
+                }
+                return null;
+              },
+
             ),
             // CustomDropDownOptions(
             //   controller: selectedOccupation,
@@ -913,7 +1847,18 @@ class _KYCMainState extends State<KYCMain> {
                     // ){
                     //   return utils.showToast("Please fill all fields");
                     // }
-                    UploadData();
+
+                    //uploadKycUcc();
+
+                    UploadFatca();
+                    print("tax code is $taxcode");
+                    print(taxstatus);
+                    print("source code is $sourcecode");
+                    print("income code is $incomecode");
+                    print("occupation code is $occupationcode");
+                    print("occupation type is $occupationtype");
+
+                    //UploadData();
                   },
                 ),
                 // RoundedLoadingButton(
@@ -973,20 +1918,22 @@ class _KYCMainState extends State<KYCMain> {
 }
 
 class CustomDropDownOptions extends StatelessWidget {
-  const CustomDropDownOptions({
+  CustomDropDownOptions({
     Key? key,
     required this.hinttext,
     required this.ontap,
     this.controller,
+    this.validator,
   }) : super(key: key);
 
   final String hinttext;
   final GestureTapCallback ontap;
   final TextEditingController? controller;
-
+  String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       onTap: (() => ontap()),
@@ -999,23 +1946,24 @@ class CustomDropDownOptions extends StatelessWidget {
       ),
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-          suffixIcon: IconButton(
-            icon: const Icon(
-              Icons.keyboard_arrow_down,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              ontap();
-            },
+        suffixIcon: IconButton(
+          icon: const Icon(
+            Icons.keyboard_arrow_down,
+            color: Colors.grey,
           ),
-          hintStyle: blackStyle(context).copyWith(
-              fontSize: 16.sm,
-              fontWeight: FontWeight.w400,
-              color: Get.isDarkMode
-                  ? Colors.white
-                  : Color(0xFF303030).withOpacity(0.3)),
-          //  Color(0xFF303030).withOpacity(0.3)),
-          hintText: hinttext),
+          onPressed: () {
+            ontap();
+          },
+        ),
+        hintStyle: blackStyle(context).copyWith(
+            fontSize: 16.sm,
+            fontWeight: FontWeight.w400,
+            color: Get.isDarkMode
+                ? Colors.white
+                : Color(0xFF303030).withOpacity(0.3)),
+        //  Color(0xFF303030).withOpacity(0.3)),
+        hintText: hinttext,
+      ),
     );
   }
 }

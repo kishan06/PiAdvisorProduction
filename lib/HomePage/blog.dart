@@ -14,6 +14,7 @@ import 'package:lottie/lottie.dart';
 import 'package:outline_search_bar/outline_search_bar.dart';
 import 'package:piadvisory/Common/CreateBottomBar.dart';
 import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
+import 'package:piadvisory/Common/Customfloatingbutton.dart';
 import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/NoscalingAnimation.dart';
 import 'package:piadvisory/HomePage/Blog%20Repository/blogrepo.dart';
@@ -132,25 +133,26 @@ class _BlogState extends State<Blog> {
       floatingActionButton: showFab
           ? Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: FloatingActionButton(
-                backgroundColor: Color(0xFFF78104),
-                heroTag: "tag1",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => const Mysubscription())));
-                },
-                tooltip: 'Subscribe',
-                elevation: 2.0,
-                child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
-                ),
-              ),
+              child: CustomFloatingButton(),
+              //  FloatingActionButton(
+              //   backgroundColor: Color(0xFFF78104),
+              //   heroTag: "tag1",
+              //   onPressed: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: ((context) => const Mysubscription())));
+              //   },
+              //   tooltip: 'Subscribe',
+              //   elevation: 2.0,
+              //   child: SvgPicture.asset(
+              //     "assets/images/product sans logo wh new.svg",
+              //     color: Colors.white,
+              //     fit: BoxFit.contain,
+              //     width: 28,
+              //     height: 24,
+              //   ),
+              // ),
             )
           : null,
       bottomNavigationBar:CreateBottomBar(stateBottomNav, "Bottombar", context),

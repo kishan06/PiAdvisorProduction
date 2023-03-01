@@ -55,6 +55,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
       context: context,
       builder: (context) {
         return Container(
+          height: 300,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: const OccupationPicker(),
         );

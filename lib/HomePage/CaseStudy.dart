@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CreateBottomBar.dart';
 import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
+import 'package:piadvisory/Common/Customfloatingbutton.dart';
 import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/HomePage/CaseStudyInner.dart';
 import 'package:piadvisory/SideMenu/NavDrawer.dart';
@@ -96,25 +97,26 @@ class _CaseStudyState extends State<CaseStudy> {
           Positioned(
             bottom: 22,
             right: MediaQuery.of(context).size.width * 0.43,
-            child: FloatingActionButton(
-              heroTag: "tag1",
-               backgroundColor: Color(0xFFF78104),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => const Mysubscription())));
-              },
-              tooltip: 'Subscribe',
-              elevation: 2.0,
-              child: SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
-                ),
-            ),
+            child: CustomFloatingButton(),
+            //  FloatingActionButton(
+            //   heroTag: "tag1",
+            //    backgroundColor: Color(0xFFF78104),
+            //   onPressed: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: ((context) => const Mysubscription())));
+            //   },
+            //   tooltip: 'Subscribe',
+            //   elevation: 2.0,
+            //   child: SvgPicture.asset(
+            //       "assets/images/product sans logo wh new.svg",
+            //       color: Colors.white,
+            //       fit: BoxFit.contain,
+            //       width: 28,
+            //       height: 24,
+            //     ),
+            // ),
           ),
         ],
       ),

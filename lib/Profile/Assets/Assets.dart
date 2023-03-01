@@ -928,7 +928,7 @@ class _AssetsState extends State<Assets> {
   //                               builder: (context) => FixDeposit()));
   //                     },
   //                     child: Text(
-  //                       "Fix Deposit",
+  //                       "Fixed Deposit",
   //                       style: TextStyle(fontSize: 13, color: Colors.black),
   //                     ),
   //                   ),

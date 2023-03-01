@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:piadvisory/Common/CreateBottomBar.dart';
+import 'package:piadvisory/Common/Customfloatingbutton.dart';
 import 'package:piadvisory/Common/GlobalFuntionsVariables.dart';
 import 'package:piadvisory/Common/Noscalinganimation.dart';
 import 'package:piadvisory/HomePage/UploadDocuments.dart';
@@ -229,25 +230,26 @@ class _TaxplanningState extends State<Taxplanning> {
                   //     })
                   Padding(
                 padding: const EdgeInsets.only(top: 10),
-                child: FloatingActionButton(
-                  backgroundColor: Color(0xFFF78104),
-                  heroTag: "tag1",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => const Mysubscription())));
-                  },
-                  tooltip: 'Subscribe',
-                  elevation: 2.0,
-                  child:SvgPicture.asset(
-                  "assets/images/product sans logo wh new.svg",
-                  color: Colors.white,
-                  fit: BoxFit.contain,
-                  width: 28,
-                  height: 24,
-                ),
-                ),
+                child: CustomFloatingButton(),
+                // FloatingActionButton(
+                //   backgroundColor: Color(0xFFF78104),
+                //   heroTag: "tag1",
+                //   onPressed: () {
+                //     Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //             builder: ((context) => const Mysubscription())));
+                //   },
+                //   tooltip: 'Subscribe',
+                //   elevation: 2.0,
+                //   child:SvgPicture.asset(
+                //   "assets/images/product sans logo wh new.svg",
+                //   color: Colors.white,
+                //   fit: BoxFit.contain,
+                //   width: 28,
+                //   height: 24,
+                // ),
+                // ),
               ),
               //  ),
               //  ],

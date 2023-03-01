@@ -1,8 +1,8 @@
 class ApiConstant {
-  static const String base = "https://pi.betadelivery.com/pi_advisors/";
+  static const String base = "https://app.piadvisors.in/";
 
 
-  static const String basetesting = "https://app.piadvisors.in/";
+  static const String basetesting = "https://pi.betadelivery.com/pi_advisors/";
 
   static const String loginAPI = base + 'api/loginv2';
 

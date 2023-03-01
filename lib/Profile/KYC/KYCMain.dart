@@ -1572,8 +1572,18 @@ class _KYCMainState extends State<KYCMain> {
               //   fontWeight: FontWeight.w600,
               // ),
             ),
-
-
+           CustomTextFields(
+              textCapitalization: TextCapitalization.none,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Enter Place Of Birth";
+                } else
+                  return null;
+              },
               errortext: "Enter Place Of Birth",
               hint: "Enter Place Of Birth",
               controller: placeBirth,

@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piadvisory/Common/StreamEnum.dart';
+import 'package:piadvisory/HomePage/Stock/MutualFundsTab.dart';
 import 'package:piadvisory/Profile/KYC/LoadingPageCKYCCheck.dart';
 import 'package:piadvisory/Profile/KYC/LoadingPageKRACheck.dart';
 import 'package:piadvisory/Profile/KYC/Repository/storebasickycuserdetails.dart';
@@ -47,6 +48,10 @@ class _KYCMainState extends State<KYCMain> {
   final selectedResidentialStatus = TextEditingController();
   final selectedLifeExpectancy = TextEditingController();
   final selectedgender = TextEditingController();
+  final selectedmarital = TextEditingController();
+  final selectedapplicant = TextEditingController();
+  final selectedrelationship = TextEditingController();
+  final selectedaddresstype = TextEditingController();
 
   DateTime? _selectedDate;
   late final Future? myFuture;
@@ -667,7 +672,7 @@ class _KYCMainState extends State<KYCMain> {
       context: context,
       builder: (context) {
         return Container(
-          height: 400.h,
+          height: 300.h,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: const OccupationPicker(),
         );
@@ -695,7 +700,7 @@ class _KYCMainState extends State<KYCMain> {
       context: context,
       builder: (context) {
         return Container(
-          height: 400.h,
+          height: 300.h,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: const SourceWealthPicker(),
         );
@@ -723,7 +728,7 @@ class _KYCMainState extends State<KYCMain> {
       context: context,
       builder: (context) {
         return Container(
-          height: 400.h,
+          height: 300.h,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: const IncomeSlab(),
         );
@@ -819,6 +824,119 @@ class _KYCMainState extends State<KYCMain> {
     if (data != null) {
       setState(() {
         selectedTaxstatus.text = data;
+      });
+    }
+  }
+
+  Future _showMaritalStatus() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const Marital(),
+        );
+      },
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Get.isDarkMode ? Colors.grey : Colors.white),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedmarital.text = data;
+      });
+    }
+  }
+
+  Future _showApplicantStatus() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const Applicant(),
+        );
+      },
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Get.isDarkMode ? Colors.grey : Colors.white),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedapplicant.text = data;
+      });
+    }
+  }
+
+  Future _showRelationshippicker() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const Relationship(),
+        );
+      },
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Get.isDarkMode ? Colors.grey : Colors.white),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedrelationship.text = data;
+      });
+    }
+  }
+
+  Future _showAddresspicker() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 300.h,
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const Addresstype(),
+        );
+      },
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Get.isDarkMode ? Colors.grey : Colors.white),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+
+    if (data != null) {
+      setState(() {
+        selectedaddresstype.text = data;
       });
     }
   }
@@ -1196,7 +1314,8 @@ class _KYCMainState extends State<KYCMain> {
 
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   TextEditingController fullname = TextEditingController();
-  //TextEditingController lastname = TextEditingController();
+  TextEditingController middlename = TextEditingController();
+  TextEditingController lastname = TextEditingController();
   TextEditingController emailid = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController pannumber = TextEditingController();
@@ -1204,6 +1323,8 @@ class _KYCMainState extends State<KYCMain> {
   TextEditingController agecontroller = TextEditingController();
   TextEditingController datecontroller = TextEditingController();
   TextEditingController placeBirth = TextEditingController();
+  TextEditingController fatherspousename = TextEditingController();
+  TextEditingController district = TextEditingController();
 
   setControllerValues() {
     Map<String, dynamic> userdata = Database().restoreUserDetails();
@@ -1276,7 +1397,25 @@ class _KYCMainState extends State<KYCMain> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Full Name*",
+              "Applicant Title*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            KycCustomDropDownOptions(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Applicant Name";
+                }
+                return null;
+              },
+              controller: selectedapplicant,
+              hinttext: "Select Applicant Title",
+              ontap: () => _showApplicantStatus(),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Text(
+              "First Name*",
               style: Theme.of(context).textTheme.headline2,
               //  blackStyle(context).copyWith(
               //   fontSize: 16.sm,
@@ -1291,18 +1430,126 @@ class _KYCMainState extends State<KYCMain> {
               ],
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please Enter Full Name";
+                  return "Please Enter First Name";
                 } else
                   return null;
               },
-              errortext: "Enter Full Name",
-              hint: "Enter Full Name",
+              errortext: "Enter First Name",
+              hint: "Enter First Name",
               controller: fullname,
             ),
             SizedBox(
               height: 40.h,
             ),
-
+            Text(
+              "Middle Name*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            CustomTextFields(
+              textCapitalization: TextCapitalization.none,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Enter Middle Name";
+                } else
+                  return null;
+              },
+              errortext: "Enter Middle Name",
+              hint: "Enter Middle Name",
+              controller: middlename,
+            ),
+            SizedBox(
+              height: 40.h,
+            ),
+            Text(
+              "Last Name*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            CustomTextFields(
+              textCapitalization: TextCapitalization.none,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Enter Last Name";
+                } else
+                  return null;
+              },
+              errortext: "Enter Last Name",
+              hint: "Enter Last Name",
+              controller: lastname,
+            ),
+            SizedBox(
+              height: 40.h,
+            ),
+            Text(
+              "Marital Status*",
+              style: Theme.of(context).textTheme.headline2,
+              // blackStyle(context).copyWith(
+              //   fontSize: 16.sp,
+              //   fontWeight: FontWeight.w600,
+              // ),
+            ),
+            KycCustomDropDownOptions(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Marital Status";
+                }
+                return null;
+              },
+              controller: selectedmarital,
+              hinttext: "Select Marital Status",
+              ontap: () => _showMaritalStatus(),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Relationship for KYC holder*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            KycCustomDropDownOptions(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Relationship for KYC holder";
+                }
+                return null;
+              },
+              controller: selectedrelationship,
+              hinttext: "Select Relationship for KYC holder",
+              ontap: () => _showRelationshippicker(),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Father/Spouse Name*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            CustomTextFields(
+              textCapitalization: TextCapitalization.none,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(30),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Enter Father/Spouse Name";
+                } else
+                  return null;
+              },
+              errortext: "Enter Father/Spouse Name",
+              hint: "Enter Father/Spouse Name",
+              controller: fatherspousename,
+            ),
+            SizedBox(
+              height: 40.h,
+            ),
             Text(
               "Address with Pincode*",
               style: Theme.of(context).textTheme.headline2,
@@ -1323,6 +1570,47 @@ class _KYCMainState extends State<KYCMain> {
             ),
             SizedBox(
               height: 20.h,
+            ),
+            Text(
+              "District Name*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            CustomTextFields(
+              textCapitalization: TextCapitalization.none,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Enter District Name";
+                } else
+                  return null;
+              },
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+              ],
+              errortext: "Enter District Name",
+              hint: "Enter District Name",
+              controller: district,
+            ),
+            SizedBox(
+              height: 40.h,
+            ),
+            Text(
+              "Address type of the KYC holder*",
+              style: Theme.of(context).textTheme.headline2,
+            ),
+            KycCustomDropDownOptions(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Please Select Address type of the KYC holder";
+                }
+                return null;
+              },
+              controller: selectedaddresstype,
+              hinttext: "Select Address type of the KYC holder",
+              ontap: () => _showAddresspicker(),
+            ),
+            SizedBox(
+              height: 40.h,
             ),
             Text(
               "Email ID*",
@@ -2942,7 +3230,7 @@ class _GenderState extends State<Gender> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             child: Text("Select Gender",
-                style: Theme.of(context).textTheme.headline3),
+                style: Theme.of(context).textTheme.headline2),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -2966,6 +3254,227 @@ class _GenderState extends State<Gender> {
           ),
           const SizedBox(height: 16),
         ],
+      ),
+    );
+  }
+}
+
+class Marital extends StatefulWidget {
+  const Marital({Key? key}) : super(key: key);
+
+  @override
+  State<Marital> createState() => _MaritalState();
+}
+
+class _MaritalState extends State<Marital> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: Text("Select Marital Status",
+                style: Theme.of(context).textTheme.headline2),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              children: [
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Married ");
+                  }),
+                  title: const Text("Married "),
+                ),
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Unmarried");
+                  }),
+                  title: const Text("Unmarried"),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
+class Applicant extends StatefulWidget {
+  const Applicant({Key? key}) : super(key: key);
+
+  @override
+  State<Applicant> createState() => _ApplicantState();
+}
+
+class _ApplicantState extends State<Applicant> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: Text("Select Honorific for KYC holder",
+                style: Theme.of(context).textTheme.headline2),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              children: [
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Mr ");
+                  }),
+                  title: const Text("Mr "),
+                ),
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Mrs");
+                  }),
+                  title: const Text("Mrs"),
+                ),
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Miss");
+                  }),
+                  title: const Text("Miss"),
+                ),
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Dr");
+                  }),
+                  title: const Text("Dr"),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
+class Relationship extends StatefulWidget {
+  const Relationship({Key? key}) : super(key: key);
+
+  @override
+  State<Relationship> createState() => _RelationshipState();
+}
+
+class _RelationshipState extends State<Relationship> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: Text("Select Relationship for KYC holder",
+                style: Theme.of(context).textTheme.headline2),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              children: [
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Father");
+                  }),
+                  title: const Text("Father"),
+                ),
+                ListTile(
+                  onTap: (() {
+                    Navigator.pop(context, "Spouse");
+                  }),
+                  title: const Text("Spouse"),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+}
+
+class Addresstype extends StatefulWidget {
+  const Addresstype({Key? key}) : super(key: key);
+
+  @override
+  State<Addresstype> createState() => _AddresstypeState();
+}
+
+class _AddresstypeState extends State<Addresstype> {
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              child: Text("Select Address type of the KYC holder",
+                  style: Theme.of(context).textTheme.headline2),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Residential/Business");
+                    }),
+                    title: const Text("Residential/Business"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Residential");
+                    }),
+                    title: const Text("Residential"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Business");
+                    }),
+                    title: const Text("Business"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Registered office");
+                    }),
+                    title: const Text("Registered office"),
+                  ),
+                  ListTile(
+                    onTap: (() {
+                      Navigator.pop(context, "Unspecified");
+                    }),
+                    title: const Text("Unspecified"),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }

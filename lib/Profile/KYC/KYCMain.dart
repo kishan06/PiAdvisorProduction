@@ -667,7 +667,7 @@ class _KYCMainState extends State<KYCMain> {
       context: context,
       builder: (context) {
         return Container(
-          height: 400.h,
+          height: 300.h,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: const OccupationPicker(),
         );
@@ -695,7 +695,7 @@ class _KYCMainState extends State<KYCMain> {
       context: context,
       builder: (context) {
         return Container(
-          height: 400.h,
+          height: 300.h,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: const SourceWealthPicker(),
         );
@@ -723,7 +723,7 @@ class _KYCMainState extends State<KYCMain> {
       context: context,
       builder: (context) {
         return Container(
-          height: 400.h,
+          height: 300.h,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: const IncomeSlab(),
         );

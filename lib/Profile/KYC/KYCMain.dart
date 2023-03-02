@@ -514,6 +514,7 @@ class _KYCMainState extends State<KYCMain> {
       final data =
           await StorebasickycuserDetails().postStorebasickycuserDetails(updata);
       if (data.status == ResponseStatus.SUCCESS) {
+        print(updata);
         replaceLoaderWithKycBtn();
         _storePanAndDob();
         Navigator.push(context,
@@ -1572,7 +1573,7 @@ class _KYCMainState extends State<KYCMain> {
               //   fontWeight: FontWeight.w600,
               // ),
             ),
-           CustomTextFields(
+            CustomTextFields(
               textCapitalization: TextCapitalization.none,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(20),
@@ -1671,7 +1672,6 @@ class _KYCMainState extends State<KYCMain> {
                 }
                 return null;
               },
-
             ),
             // CustomDropDownOptions(
             //   controller: selectedOccupation,
@@ -1860,15 +1860,15 @@ class _KYCMainState extends State<KYCMain> {
 
                     //uploadKycUcc();
 
-                    UploadFatca();
-                    print("tax code is $taxcode");
-                    print(taxstatus);
-                    print("source code is $sourcecode");
-                    print("income code is $incomecode");
-                    print("occupation code is $occupationcode");
-                    print("occupation type is $occupationtype");
+                    // UploadFatca();
+                    // print("tax code is $taxcode");
+                    // print(taxstatus);
+                    // print("source code is $sourcecode");
+                    // print("income code is $incomecode");
+                    // print("occupation code is $occupationcode");
+                    // print("occupation type is $occupationtype");
 
-                    //UploadData();
+                    UploadData();
                   },
                 ),
                 // RoundedLoadingButton(

@@ -11,6 +11,10 @@ import 'package:piadvisory/HomePage/blog.dart';
 import 'package:piadvisory/Login/login.dart';
 import 'package:piadvisory/SideMenu/FAQ/faq.dart';
 import 'package:piadvisory/SideMenu/PiRecommended.dart';
+import 'package:piadvisory/SideMenu/Place_order.dart';
+import 'package:piadvisory/SideMenu/Redeem.dart';
+import 'package:piadvisory/SideMenu/Redeem_Lumpsum.dart';
+import 'package:piadvisory/SideMenu/Redeem_sip.dart';
 import 'package:piadvisory/SideMenu/ReportsAndStatement.dart';
 import 'package:piadvisory/SideMenu/Subscribe/ViewSubscription.dart';
 import 'package:piadvisory/SideMenu/about.dart';
@@ -136,10 +140,8 @@ class _NavDrawerState extends State<NavDrawer> {
                     ),
                   ),
                   onTap: () => {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PiRecommended()))
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => PiRecommended()))
                   },
                 ),
               ),

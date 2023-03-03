@@ -71,6 +71,29 @@ class _MutualFundsTabState extends State<MutualFundsTab> {
   final searchController = TextEditingController();
   bool searchingStarted = false;
   List<MutualTable> filteredList = [];
+
+  Future _showbottomsheet() async {
+    FocusScope.of(context).unfocus();
+    final data = await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Container(
+          height: 300,
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: const Bottomsheet(),
+        );
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     myFocusNode = FocusNode();
@@ -247,50 +270,62 @@ class _MutualFundsTabState extends State<MutualFundsTab> {
                         SizedBox(
                           width: 3,
                         ),
-                        PopupMenuButton(
-                          //  initialValue: "1 Year",
-                          offset: const Offset(0, 50),
-                          color: Color(0xFF6b6b6b),
-                          tooltip: '',
-                          icon: Text(
-                            yearsFilter,
-                            style: blackStyle(context).copyWith(
-                                fontSize: 12.sm,
-                                color: Get.isDarkMode
-                                    ? Colors.white
-                                    : Color(0xFF303030)),
-                          ),
-                          onSelected: (value) {
-                            setState(() {
-                              yearsFilter = value.toString();
-                            });
-                          },
-                          itemBuilder: (BuildContext bc) {
-                            return [
-                              const PopupMenuItem(
-                                child: Text(
-                                  "1 Year",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                value: '1 Year',
+                        InkWell(
+                            onTap: () => _showbottomsheet(),
+                            child: Text(
+                              "1 Year",
+                              style: TextStyle(
+                                color: Color(0xFF6b6b6b),
+                                fontSize: 14,
                               ),
-                              const PopupMenuItem(
-                                child: Text(
-                                  "3 Year",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                value: '3 Year',
-                              ),
-                              const PopupMenuItem(
-                                child: Text(
-                                  "5 Year",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                value: '5 Year',
-                              )
-                            ];
-                          },
-                        ),
+                            )
+                            //Icon(Icons.more_vert_outlined)
+                            ),
+
+                        // PopupMenuButton(
+                        //   //  initialValue: "1 Year",
+                        //   offset: const Offset(0, 50),
+                        //   color: Color(0xFF6b6b6b),
+                        //   tooltip: '',
+                        //   icon: Text(
+                        //     yearsFilter,
+                        //     style: blackStyle(context).copyWith(
+                        //         fontSize: 12.sm,
+                        //         color: Get.isDarkMode
+                        //             ? Colors.white
+                        //             : Color(0xFF303030)),
+                        //   ),
+                        //   onSelected: (value) {
+                        //     setState(() {
+                        //       yearsFilter = value.toString();
+                        //     });
+                        //   },
+                        //   itemBuilder: (BuildContext bc) {
+                        //     return [
+                        //       const PopupMenuItem(
+                        //         child: Text(
+                        //           "1 Year",
+                        //           style: TextStyle(color: Colors.white),
+                        //         ),
+                        //         value: '1 Year',
+                        //       ),
+                        //       const PopupMenuItem(
+                        //         child: Text(
+                        //           "3 Year",
+                        //           style: TextStyle(color: Colors.white),
+                        //         ),
+                        //         value: '3 Year',
+                        //       ),
+                        //       const PopupMenuItem(
+                        //         child: Text(
+                        //           "5 Year",
+                        //           style: TextStyle(color: Colors.white),
+                        //         ),
+                        //         value: '5 Year',
+                        //       )
+                        //     ];
+                        //   },
+                        // ),
                       ],
                     ),
                   ),
@@ -1194,6 +1229,213 @@ class _CommonListTileState extends State<CommonListTile> {
                 fontSize: 16.sm,
                 color: Color(0xFF2CAB41),
               ),
+      ),
+    );
+  }
+}
+
+class Bottomsheet extends StatefulWidget {
+  const Bottomsheet({Key? key}) : super(key: key);
+
+  @override
+  State<Bottomsheet> createState() => _BottomsheetState();
+}
+
+class _BottomsheetState extends State<Bottomsheet> {
+  //final ScrollController _OcscrollController = ScrollController();
+  bool cancelVisible = true;
+  bool _visible = true;
+  bool modifyvisible = false;
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        // mainAxisSize: MainAxisSize.min,
+        children: [
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "AXIS Focused 25 Fund (G) ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text('Equity Focused-Fund')
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "37.2700",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "0.30 (0.80%)",
+                          style: TextStyle(color: Colors.green),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.grey,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              cancelVisible = true;
+                              modifyvisible = false;
+                              _visible = true;
+                            });
+                          },
+                          child: Container(
+                              width: 150,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 2, color: Colors.redAccent),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(1)),
+                              ),
+                              child: Center(
+                                  child: Text(
+                                "Cancel",
+                                style: TextStyle(color: Colors.redAccent),
+                              )))),
+                      Visibility(
+                        visible: _visible,
+                        child: SizedBox(
+                          width: 150,
+                          height: 35,
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.redAccent),
+                              ),
+                              onPressed: () {},
+                              child: Text("Cancel")),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 25,
+                  ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _visible = false;
+                              cancelVisible = false;
+                              modifyvisible = true;
+                            });
+                          },
+                          child: Container(
+                              width: 150,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 2, color: Colors.redAccent),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(1)),
+                              ),
+                              child: Center(
+                                  child: Text(
+                                "Modify",
+                                style: TextStyle(color: Colors.redAccent),
+                              )))),
+                      Visibility(
+                        visible: !_visible,
+                        child: SizedBox(
+                          width: 150,
+                          height: 35,
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.redAccent),
+                              ),
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              child: Text("Modify")),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Visibility(
+                  visible: cancelVisible,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 150, top: 10),
+                            child: SvgPicture.asset(
+                              //"assets/images/Group 5522.svg",
+                              "assets/images/Group 11585.svg",
+                              width: 80,
+                              height: 60,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Center(
+                      child: Text(
+                        "Are you sure you want to cancel the order?",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                        ),
+                      )
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [],
+                    )
+                    ],
+                  )
+                  )
+            ],
+          )
+        ],
       ),
     );
   }

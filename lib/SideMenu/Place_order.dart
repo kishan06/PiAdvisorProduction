@@ -36,20 +36,20 @@ class _PlaceOrderState extends State<PlaceOrder> {
         isprofile: false,
         globalkey: _key,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: showFab
-          ? Stack(
-              children: [
-                Positioned(
-                  bottom: 22,
-                  right: MediaQuery.of(context).size.width * 0.43,
-                  child: CustomFloatingButton(),
-                )
-              ],
-            )
-          : null,
-      bottomNavigationBar:
-          CreateBottomBar(stateBottomNav, "Bottombar", context),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: showFab
+      //     ? Stack(
+      //         children: [
+      //           Positioned(
+      //             bottom: 22,
+      //             right: MediaQuery.of(context).size.width * 0.43,
+      //             child: CustomFloatingButton(),
+      //           )
+      //         ],
+      //       )
+      //     : null,
+      // bottomNavigationBar:
+      //     CreateBottomBar(stateBottomNav, "Bottombar", context),
       body: _buildBody(context),
     );
   }

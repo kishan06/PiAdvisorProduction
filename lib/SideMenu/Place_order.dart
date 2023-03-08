@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:piadvisory/Common/CreateBottomBar.dart';
 import 'package:piadvisory/Common/CustomAppbarWithIcons.dart';
@@ -270,6 +271,9 @@ class _PlaceOrderState extends State<PlaceOrder> {
                             hintText: "1000",
                             border: InputBorder.none,
                           ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                         ),
                       ),
                     ),
@@ -439,6 +443,9 @@ class _PlaceOrderState extends State<PlaceOrder> {
                             hintText: "5000",
                             border: InputBorder.none,
                           ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                         ),
                       ),
                     ),

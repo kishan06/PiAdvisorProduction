@@ -362,7 +362,7 @@ class _ReedeemSipState extends State<ReedeemSip> {
                       ),
                       onPressed: () {},
                       child: Text(
-                        "Min.SIP AMount: \n 500",
+                        "Min.SIP Amount: \n 500",
                         style: TextStyle(color: Colors.black),
                       ),
                     )),

@@ -10,11 +10,13 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:outline_search_bar/outline_search_bar.dart';
 import 'package:piadvisory/HomePage/FilterMutualFunds.dart';
+import 'package:piadvisory/HomePage/Homepage.dart';
 import 'package:piadvisory/HomePage/Mutual%20Funds/MutualFundsGraph.dart';
 import 'package:piadvisory/HomePage/Stock/Model/AllMutualFundsModel.dart';
 
 import 'package:piadvisory/HomePage/Stock/Model/MutualFundRanking.dart';
 import 'package:piadvisory/HomePage/Stock/StocksRepository/MutualFundsAPImethods.dart';
+import 'package:piadvisory/SideMenu/Redeem_sip.dart';
 import 'package:piadvisory/SideMenu/Subscribe/Repository/getSubscriptionWithDetails.dart';
 import 'package:piadvisory/Utils/base_manager.dart';
 import 'package:piadvisory/Utils/textStyles.dart';
@@ -78,10 +80,14 @@ class _MutualFundsTabState extends State<MutualFundsTab> {
       isScrollControlled: true,
       context: context,
       builder: (context) {
-        return Container(
-          height: 300,
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: const Bottomsheet(),
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            //height: 318,
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: const Bottomsheet(),
+          ),
         );
       },
       shape: const RoundedRectangleBorder(
@@ -270,62 +276,62 @@ class _MutualFundsTabState extends State<MutualFundsTab> {
                         SizedBox(
                           width: 3,
                         ),
-                        InkWell(
-                            onTap: () => _showbottomsheet(),
-                            child: Text(
-                              "1 Year",
-                              style: TextStyle(
-                                color: Color(0xFF6b6b6b),
-                                fontSize: 14,
-                              ),
-                            )
-                            //Icon(Icons.more_vert_outlined)
-                            ),
+                        // InkWell(
+                        //     onTap: () => _showbottomsheet(),
+                        //     child: Text(
+                        //       "1 Year",
+                        //       style: TextStyle(
+                        //         color: Color(0xFF6b6b6b),
+                        //         fontSize: 14,
+                        //       ),
+                        //     )
+                        //     //Icon(Icons.more_vert_outlined)
+                        //     ),
 
-                        // PopupMenuButton(
-                        //   //  initialValue: "1 Year",
-                        //   offset: const Offset(0, 50),
-                        //   color: Color(0xFF6b6b6b),
-                        //   tooltip: '',
-                        //   icon: Text(
-                        //     yearsFilter,
-                        //     style: blackStyle(context).copyWith(
-                        //         fontSize: 12.sm,
-                        //         color: Get.isDarkMode
-                        //             ? Colors.white
-                        //             : Color(0xFF303030)),
-                        //   ),
-                        //   onSelected: (value) {
-                        //     setState(() {
-                        //       yearsFilter = value.toString();
-                        //     });
-                        //   },
-                        //   itemBuilder: (BuildContext bc) {
-                        //     return [
-                        //       const PopupMenuItem(
-                        //         child: Text(
-                        //           "1 Year",
-                        //           style: TextStyle(color: Colors.white),
-                        //         ),
-                        //         value: '1 Year',
-                        //       ),
-                        //       const PopupMenuItem(
-                        //         child: Text(
-                        //           "3 Year",
-                        //           style: TextStyle(color: Colors.white),
-                        //         ),
-                        //         value: '3 Year',
-                        //       ),
-                        //       const PopupMenuItem(
-                        //         child: Text(
-                        //           "5 Year",
-                        //           style: TextStyle(color: Colors.white),
-                        //         ),
-                        //         value: '5 Year',
-                        //       )
-                        //     ];
-                        //   },
-                        // ),
+                        PopupMenuButton(
+                          //  initialValue: "1 Year",
+                          offset: const Offset(0, 50),
+                          color: Color(0xFF6b6b6b),
+                          tooltip: '',
+                          icon: Text(
+                            yearsFilter,
+                            style: blackStyle(context).copyWith(
+                                fontSize: 12.sm,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Color(0xFF303030)),
+                          ),
+                          onSelected: (value) {
+                            setState(() {
+                              yearsFilter = value.toString();
+                            });
+                          },
+                          itemBuilder: (BuildContext bc) {
+                            return [
+                              const PopupMenuItem(
+                                child: Text(
+                                  "1 Year",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                value: '1 Year',
+                              ),
+                              const PopupMenuItem(
+                                child: Text(
+                                  "3 Year",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                value: '3 Year',
+                              ),
+                              const PopupMenuItem(
+                                child: Text(
+                                  "5 Year",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                value: '5 Year',
+                              )
+                            ];
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -1255,37 +1261,76 @@ class _BottomsheetState extends State<Bottomsheet> {
         children: [
           Column(
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "AXIS Focused 25 Fund (G) ",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text('Equity Focused-Fund')
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "37.2700",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "0.30 (0.80%)",
-                          style: TextStyle(color: Colors.green),
-                        )
-                      ],
-                    )
-                  ],
+              Visibility(
+                visible: cancelVisible,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "AXIS Focused 25 Fund (G) ",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text('Equity Focused-Fund')
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "37.2700",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "0.30 (0.80%)",
+                            style: TextStyle(color: Colors.green),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: modifyvisible,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "SBI Small Cap Fund (G) ",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text('Equity Small-Cap-Fund')
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "110.2881",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "-0.24 (0.22%)",
+                            style: TextStyle(color: Colors.redAccent),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Divider(
@@ -1313,15 +1358,15 @@ class _BottomsheetState extends State<Bottomsheet> {
                               width: 150,
                               height: 35,
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 2, color: Colors.redAccent),
+                                border:
+                                    Border.all(width: 2, color: Colors.grey),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(1)),
                               ),
                               child: Center(
                                   child: Text(
                                 "Cancel",
-                                style: TextStyle(color: Colors.redAccent),
+                                style: TextStyle(color: Colors.black),
                               )))),
                       Visibility(
                         visible: _visible,
@@ -1330,8 +1375,8 @@ class _BottomsheetState extends State<Bottomsheet> {
                           height: 35,
                           child: ElevatedButton(
                               style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.redAccent),
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xFFF78104)),
                               ),
                               onPressed: () {},
                               child: Text("Cancel")),
@@ -1357,15 +1402,15 @@ class _BottomsheetState extends State<Bottomsheet> {
                               width: 150,
                               height: 35,
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 2, color: Colors.redAccent),
+                                border:
+                                    Border.all(width: 2, color: Colors.grey),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(1)),
                               ),
                               child: Center(
                                   child: Text(
                                 "Modify",
-                                style: TextStyle(color: Colors.redAccent),
+                                style: TextStyle(color: Colors.black),
                               )))),
                       Visibility(
                         visible: !_visible,
@@ -1374,8 +1419,8 @@ class _BottomsheetState extends State<Bottomsheet> {
                           height: 35,
                           child: ElevatedButton(
                               style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.redAccent),
+                                backgroundColor: MaterialStateProperty.all(
+                                    Color(0xFFF78104)),
                               ),
                               onPressed: () {
                                 setState(() {});
@@ -1394,7 +1439,7 @@ class _BottomsheetState extends State<Bottomsheet> {
                       Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 150, top: 10),
+                            padding: const EdgeInsets.only(left: 150, top: 20),
                             child: SvgPicture.asset(
                               //"assets/images/Group 5522.svg",
                               "assets/images/Group 11585.svg",
@@ -1408,31 +1453,163 @@ class _BottomsheetState extends State<Bottomsheet> {
                         height: 10,
                       ),
                       Center(
-                      child: Text(
+                          child: Text(
                         "Are you sure you want to cancel the order?",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
                         ),
+                      )),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 135,
+                            height: 35,
+                            child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color(0xFFF78104)),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "Back",
+                                  style: TextStyle(color: Colors.black),
+                                )),
+                          ),
+                          SizedBox(
+                            width: 135,
+                            height: 35,
+                            child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.grey.shade400),
+                                ),
+                                onPressed: () {},
+                                child: Text(
+                                  "Cancel Order",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ),
+                        ],
                       )
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [],
-                    )
                     ],
-                  )
-                  )
+                  )),
+              Visibility(
+                  visible: modifyvisible,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                          child: Text(
+                        "Amount",
+                        style: TextStyle(fontSize: 14),
+                      )),
+                      Center(
+                        child: SizedBox(
+                          width: 80,
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                              hintText: "500",
+                              border: InputBorder.none,
+                            ),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                          ),
+                        ),
+                      ),
+                      Center(
+                          child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 2,
+                          shadowColor: Colors.grey.shade700,
+                          backgroundColor: Colors.white,
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          "Min.SIP Amount: 500.0",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ReedeemSip()));
+                            },
+                            child: Text(
+                              "More Options",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 14),
+                            ),
+                          )
+                        ],
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 135,
+                            height: 35,
+                            child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color(0xFFF78104)),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                  "Back",
+                                  style: TextStyle(color: Colors.black),
+                                )),
+                          ),
+                          SizedBox(
+                            width: 135,
+                            height: 35,
+                            child: TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color(0xFF008083)),
+                                ),
+                                onPressed: () {},
+                                child: Text(
+                                  "Submit",
+                                  style: TextStyle(color: Colors.white),
+                                )),
+                          ),
+                        ],
+                      )
+                    ],
+                  )),
             ],
           )
         ],

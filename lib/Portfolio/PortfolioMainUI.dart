@@ -132,7 +132,8 @@ class _PortfolioMainUIState extends State<PortfolioMainUI> {
           backgroundColor: Color(0xFF878787),
           key: _key,
           drawer: NavDrawer(),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           floatingActionButton: Stack(
             children: [
               Positioned(
@@ -161,7 +162,8 @@ class _PortfolioMainUIState extends State<PortfolioMainUI> {
               ),
             ],
           ),
-          bottomNavigationBar:CreateBottomBar(stateBottomNav, "Bottombardashboard", context),
+          bottomNavigationBar:
+              CreateBottomBar(stateBottomNav, "Bottombardashboard", context),
           appBar: AppBar(
             bottom: TabBar(
               indicatorColor: Color(0xFF008083),
@@ -932,7 +934,8 @@ class _PortfolioMainState extends State<PortfolioMain> {
               SizedBox(height: 6),
               OutlinedButton(
                 onPressed: () {
-                  Get.off(Broker());
+                  //Get.off(Broker());
+                  Get.to(() => Broker());
                 },
                 child: Text("Brokerage Account"),
               )

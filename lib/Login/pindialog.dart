@@ -48,6 +48,7 @@ class _PinDialogState extends State<PinDialog> {
   bool? videoonce;
   bool check = false;
   bool? _hasBioSensor;
+  bool _pinVisible = false;
   LocalAuthentication authentication = LocalAuthentication();
   FocusNode pinFocusNode = FocusNode();
 
@@ -830,51 +831,35 @@ final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
             height: 20,
           ),
           TextFormField(
+            obscureText: !_pinVisible,
+            //obscuringCharacter: "*",
             focusNode: pinFocusNode,
             controller: user_pin,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.all(20),
               hintText: 'Enter PIN',
-              // focusedBorder: const OutlineInputBorder(
-              //   borderRadius: BorderRadius.all(Radius.circular(5)),
-              //   borderSide:
-              //       BorderSide(color: Color(0xFF707070), width: 1.0),
-              // ),
-              // enabledBorder: const OutlineInputBorder(
-              //   borderRadius: BorderRadius.all(Radius.circular(5)),
-              //   borderSide:
-              //       BorderSide(color: Color(0xFF707070), width: 1.0),
-              // ),
               hintStyle: blackStyle(context).copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Get.isDarkMode
                       ? Colors.white
                       : Color(0xFF303030).withOpacity(0.3)),
-              // errorBorder: const OutlineInputBorder(
-              //   borderRadius: BorderRadius.all(Radius.circular(5)),
-              //   borderSide: BorderSide(color: Colors.red, width: 1.0),
-              // ),
-              // focusedErrorBorder: const OutlineInputBorder(
-              //   borderRadius: BorderRadius.all(Radius.circular(5)),
-              //   borderSide: BorderSide(color: Colors.red, width: 1.0),
-              // ),
               errorStyle: const TextStyle(
                 fontSize: 16.0,
               ),
-              // suffixIcon: GestureDetector(
-              //   onTap: () {
-              //     UploadPinData();
-              //   },
-              //   child: Container(
-              //     padding: EdgeInsets.only(right: 25),
-              //     width: 10,
-              //     height: 10,
-              //     child: SvgPicture.asset(
-              //       'assets/images/nextbuttonicon.svg',
-              //     ),
-              //   ),
-              // ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _pinVisible
+                  ? Icons.visibility
+                  : Icons.visibility_off,
+                  color: Get.isDarkMode? Colors.black: Colors.grey,
+                 ),
+                onPressed: (){
+                  setState(() {
+                    _pinVisible = !_pinVisible;
+                  });
+                },
+                 )
             ),
 
             maxLength: 4,

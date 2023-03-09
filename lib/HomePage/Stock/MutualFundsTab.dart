@@ -335,6 +335,7 @@ class _LargeCapState extends State<LargeCap>
     with AutomaticKeepAliveClientMixin<LargeCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
+final ScrollController _largescrollController = ScrollController();
   @override
   void dispose() {
     mutualFundController.close();
@@ -450,33 +451,39 @@ class _LargeCapState extends State<LargeCap>
           height: 10,
         ),
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table1!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num returns = num.parse(data.table1![index].returns!);
-
-              return GestureDetector(
-                  onTap: () {
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => MutualFundsGraph(
-                                  appbartitle: data.table1![index].sNAME,
-                                  schemeCode: data.table1![index].sCHEMECODE,
-                                ))));
-                  },
-                  child: CommonListTile(
-                    title: data.table1![index].sNAME!,
-                    trailing: num.parse(returns.toStringAsFixed(2)),
-                  ));
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            thickness: 8.0,
+            controller: _largescrollController,
+            child: ListView.separated(
+              controller: _largescrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table1!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num returns = num.parse(data.table1![index].returns!);
+          
+                return GestureDetector(
+                    onTap: () {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => MutualFundsGraph(
+                                    appbartitle: data.table1![index].sNAME,
+                                    schemeCode: data.table1![index].sCHEMECODE,
+                                  ))));
+                    },
+                    child: CommonListTile(
+                      title: data.table1![index].sNAME!,
+                      trailing: num.parse(returns.toStringAsFixed(2)),
+                    ));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -505,6 +512,7 @@ class _FlexiCapState extends State<FlexiCap>
     with AutomaticKeepAliveClientMixin<FlexiCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
+final ScrollController _flexiscrollController = ScrollController();
   @override
   void dispose() {
     mutualFundController.close();
@@ -618,33 +626,39 @@ class _FlexiCapState extends State<FlexiCap>
           height: 10,
         ),
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table1!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num returns = num.parse(data.table1![index].returns!);
-
-              return GestureDetector(
-                  onTap: () {
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => MutualFundsGraph(
-                                  appbartitle: data.table1![index].sNAME,
-                                  schemeCode: data.table1![index].sCHEMECODE,
-                                ))));
-                  },
-                  child: CommonListTile(
-                    title: data.table1![index].sNAME!,
-                    trailing: num.parse(returns.toStringAsFixed(2)),
-                  ));
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            thickness: 8.0,
+            controller: _flexiscrollController,
+            child: ListView.separated(
+              controller: _flexiscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table1!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num returns = num.parse(data.table1![index].returns!);
+          
+                return GestureDetector(
+                    onTap: () {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => MutualFundsGraph(
+                                    appbartitle: data.table1![index].sNAME,
+                                    schemeCode: data.table1![index].sCHEMECODE,
+                                  ))));
+                    },
+                    child: CommonListTile(
+                      title: data.table1![index].sNAME!,
+                      trailing: num.parse(returns.toStringAsFixed(2)),
+                    ));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -673,6 +687,7 @@ class _MidCapState extends State<MidCap>
     with AutomaticKeepAliveClientMixin<MidCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
+final ScrollController _midscrollController = ScrollController();
   @override
   void dispose() {
     mutualFundController.close();
@@ -787,33 +802,39 @@ class _MidCapState extends State<MidCap>
           height: 10,
         ),
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table1!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num returns = num.parse(data.table1![index].returns!);
-
-              return GestureDetector(
-                  onTap: () {
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => MutualFundsGraph(
-                                  appbartitle: data.table1![index].sNAME,
-                                  schemeCode: data.table1![index].sCHEMECODE,
-                                ))));
-                  },
-                  child: CommonListTile(
-                    title: data.table1![index].sNAME!,
-                    trailing: num.parse(returns.toStringAsFixed(2)),
-                  ));
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thickness: 8.0,
+            thumbVisibility: true,
+            controller: _midscrollController,
+            child: ListView.separated(
+              controller: _midscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table1!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num returns = num.parse(data.table1![index].returns!);
+          
+                return GestureDetector(
+                    onTap: () {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => MutualFundsGraph(
+                                    appbartitle: data.table1![index].sNAME,
+                                    schemeCode: data.table1![index].sCHEMECODE,
+                                  ))));
+                    },
+                    child: CommonListTile(
+                      title: data.table1![index].sNAME!,
+                      trailing: num.parse(returns.toStringAsFixed(2)),
+                    ));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -842,6 +863,7 @@ class _LargeAndMidCapState extends State<LargeAndMidCap>
     with AutomaticKeepAliveClientMixin<LargeAndMidCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
+final ScrollController _largescrollController = ScrollController();
   @override
   void dispose() {
     mutualFundController.close();
@@ -956,33 +978,39 @@ class _LargeAndMidCapState extends State<LargeAndMidCap>
           height: 10,
         ),
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table1!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num returns = num.parse(data.table1![index].returns!);
-
-              return GestureDetector(
-                  onTap: () {
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => MutualFundsGraph(
-                                  appbartitle: data.table1![index].sNAME,
-                                  schemeCode: data.table1![index].sCHEMECODE,
-                                ))));
-                  },
-                  child: CommonListTile(
-                    title: data.table1![index].sNAME!,
-                    trailing: num.parse(returns.toStringAsFixed(2)),
-                  ));
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thickness: 8.0,
+            thumbVisibility: true,
+            controller: _largescrollController,
+            child: ListView.separated(
+              controller: _largescrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table1!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num returns = num.parse(data.table1![index].returns!);
+          
+                return GestureDetector(
+                    onTap: () {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => MutualFundsGraph(
+                                    appbartitle: data.table1![index].sNAME,
+                                    schemeCode: data.table1![index].sCHEMECODE,
+                                  ))));
+                    },
+                    child: CommonListTile(
+                      title: data.table1![index].sNAME!,
+                      trailing: num.parse(returns.toStringAsFixed(2)),
+                    ));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -1011,6 +1039,7 @@ class _SmallCapState extends State<SmallCap>
     with AutomaticKeepAliveClientMixin<SmallCap> {
   StreamController<MutalFundRanking> mutualFundController = StreamController();
 
+final ScrollController _smallscrollController = ScrollController();
   @override
   void dispose() {
     mutualFundController.close();
@@ -1124,33 +1153,39 @@ class _SmallCapState extends State<SmallCap>
           height: 10,
         ),
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table1!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num returns = num.parse(data.table1![index].returns!);
-
-              return GestureDetector(
-                  onTap: () {
-                    SystemChannels.textInput.invokeMethod('TextInput.hide');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => MutualFundsGraph(
-                                  appbartitle: data.table1![index].sNAME,
-                                  schemeCode: data.table1![index].sCHEMECODE,
-                                ))));
-                  },
-                  child: CommonListTile(
-                    title: data.table1![index].sNAME!,
-                    trailing: num.parse(returns.toStringAsFixed(2)),
-                  ));
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thickness: 8.0,
+            thumbVisibility: true,
+            controller: _smallscrollController,
+            child: ListView.separated(
+              controller: _smallscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table1!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num returns = num.parse(data.table1![index].returns!);
+          
+                return GestureDetector(
+                    onTap: () {
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => MutualFundsGraph(
+                                    appbartitle: data.table1![index].sNAME,
+                                    schemeCode: data.table1![index].sCHEMECODE,
+                                  ))));
+                    },
+                    child: CommonListTile(
+                      title: data.table1![index].sNAME!,
+                      trailing: num.parse(returns.toStringAsFixed(2)),
+                    ));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription

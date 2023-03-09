@@ -1630,6 +1630,7 @@ class _TopGainerState extends State<TopGainer>
       StreamController();
   final searchController = TextEditingController();
   bool searchingStarted = false;
+  final ScrollController _gainerscrollController = ScrollController();
 
   @override
   void dispose() {
@@ -1724,59 +1725,65 @@ class _TopGainerState extends State<TopGainer>
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num percentageChange =
-                  num.parse(data.table![index].nETCHG! ?? "0");
-              String dateStart = data.table![index].uPDTIME!;
-              DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
-              DateTime now = inputFormat.parse(dateStart);
-              String convertedDateTime =
-                  "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
-
-              return GestureDetector(
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  searchController.clear();
-                  setState(() {
-                    searchingStarted = false;
-                  });
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => StockGraph(
-                              bseTicker: data.table![index].sYMBOL ?? '',
-                              fincode: data.table![index].fINCODE,
-                              sName: data.table![index].sNAME,
-                              mCap: data.table![index].mCAP,
-                              openPrice: data.table![index].oPENPRICE,
-                              prevClose: data.table![index].pREVCLOSE,
-                              volume: data.table![index].vOLUME,
-                              value: data.table![index].vALUE,
-                              perChange: data.table![index].pERCHG,
-                              lowPrice: data.table![index].lOWPRICE,
-                              highPrice: data.table![index].hIGHPRICE,
-                              closePriceRecvd:
-                                  data.table![index].cLOSEPRICE))));
-                },
-                child: CommonTrends(
-                  title1: data.table![index].sYMBOL!,
-                  subtitle1: convertedDateTime,
-                  title2: data.table![index].cLOSEPRICE!,
-                  subtitle2: "Vol:${data.table![index].vOLUME!}",
-                  title3: "+${percentageChange.toStringAsFixed(1)}",
-                  subtitle3: "(${data.table![index].pERCHG!} %)",
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            thickness: 8.0,
+            controller: _gainerscrollController,
+            child: ListView.separated(
+              controller: _gainerscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num percentageChange =
+                    num.parse(data.table![index].nETCHG! ?? "0");
+                String dateStart = data.table![index].uPDTIME!;
+                DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
+                DateTime now = inputFormat.parse(dateStart);
+                String convertedDateTime =
+                    "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+          
+                return GestureDetector(
+                  onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    searchController.clear();
+                    setState(() {
+                      searchingStarted = false;
+                    });
+          
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => StockGraph(
+                                bseTicker: data.table![index].sYMBOL ?? '',
+                                fincode: data.table![index].fINCODE,
+                                sName: data.table![index].sNAME,
+                                mCap: data.table![index].mCAP,
+                                openPrice: data.table![index].oPENPRICE,
+                                prevClose: data.table![index].pREVCLOSE,
+                                volume: data.table![index].vOLUME,
+                                value: data.table![index].vALUE,
+                                perChange: data.table![index].pERCHG,
+                                lowPrice: data.table![index].lOWPRICE,
+                                highPrice: data.table![index].hIGHPRICE,
+                                closePriceRecvd:
+                                    data.table![index].cLOSEPRICE))));
+                  },
+                  child: CommonTrends(
+                    title1: data.table![index].sYMBOL!,
+                    subtitle1: convertedDateTime,
+                    title2: data.table![index].cLOSEPRICE!,
+                    subtitle2: "Vol:${data.table![index].vOLUME!}",
+                    title3: "+${percentageChange.toStringAsFixed(1)}",
+                    subtitle3: "(${data.table![index].pERCHG!} %)",
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -1807,6 +1814,7 @@ class _TopLoserState extends State<TopLoser>
       StreamController();
   final searchController = TextEditingController();
   bool searchingStarted = false;
+  final ScrollController _loserscrollController = ScrollController();
 
   @override
   void dispose() {
@@ -1900,58 +1908,64 @@ class _TopLoserState extends State<TopLoser>
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num percentageChange =
-                  num.parse(data.table![index].nETCHG! ?? "0");
-              String dateStart = data.table![index].uPDTIME!;
-              DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
-              DateTime now = inputFormat.parse(dateStart);
-              String convertedDateTime =
-                  "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
-
-              return GestureDetector(
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  searchController.clear();
-                  setState(() {
-                    searchingStarted = false;
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => StockGraph(
-                              bseTicker: data.table![index].sYMBOL ?? "",
-                              fincode: data.table![index].fINCODE,
-                              sName: data.table![index].sNAME,
-                              mCap: data.table![index].mCAP,
-                              openPrice: data.table![index].oPENPRICE,
-                              prevClose: data.table![index].pREVCLOSE,
-                              volume: data.table![index].vOLUME,
-                              value: data.table![index].vALUE,
-                              perChange: data.table![index].pERCHG,
-                              lowPrice: data.table![index].lOWPRICE,
-                              highPrice: data.table![index].hIGHPRICE,
-                              closePriceRecvd:
-                                  data.table![index].cLOSEPRICE))));
-                },
-                child: CommonTrends(
-                  title1: data.table![index].sYMBOL!,
-                  subtitle1: convertedDateTime,
-                  title2: data.table![index].cLOSEPRICE!,
-                  subtitle2: "Vol:${data.table![index].vOLUME!}",
-                  title3: percentageChange.toStringAsFixed(1),
-                  subtitle3: "(${data.table![index].pERCHG!} %)",
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            thickness: 8.0,
+            controller: _loserscrollController,
+            child: ListView.separated(
+              controller: _loserscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num percentageChange =
+                    num.parse(data.table![index].nETCHG! ?? "0");
+                String dateStart = data.table![index].uPDTIME!;
+                DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
+                DateTime now = inputFormat.parse(dateStart);
+                String convertedDateTime =
+                    "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+          
+                return GestureDetector(
+                  onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    searchController.clear();
+                    setState(() {
+                      searchingStarted = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => StockGraph(
+                                bseTicker: data.table![index].sYMBOL ?? "",
+                                fincode: data.table![index].fINCODE,
+                                sName: data.table![index].sNAME,
+                                mCap: data.table![index].mCAP,
+                                openPrice: data.table![index].oPENPRICE,
+                                prevClose: data.table![index].pREVCLOSE,
+                                volume: data.table![index].vOLUME,
+                                value: data.table![index].vALUE,
+                                perChange: data.table![index].pERCHG,
+                                lowPrice: data.table![index].lOWPRICE,
+                                highPrice: data.table![index].hIGHPRICE,
+                                closePriceRecvd:
+                                    data.table![index].cLOSEPRICE))));
+                  },
+                  child: CommonTrends(
+                    title1: data.table![index].sYMBOL!,
+                    subtitle1: convertedDateTime,
+                    title2: data.table![index].cLOSEPRICE!,
+                    subtitle2: "Vol:${data.table![index].vOLUME!}",
+                    title3: percentageChange.toStringAsFixed(1),
+                    subtitle3: "(${data.table![index].pERCHG!} %)",
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -1982,6 +1996,7 @@ class _ActiveByValueState extends State<ActiveByValue>
       StreamController();
   final searchController = TextEditingController();
   bool searchingStarted = false;
+  final ScrollController _valuescrollController = ScrollController();
 
   @override
   void dispose() {
@@ -2074,56 +2089,62 @@ class _ActiveByValueState extends State<ActiveByValue>
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num percentageChange = num.parse(data.table![index].change!);
-              String dateStart = data.table![index].uPDTIME!;
-              DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
-              DateTime now = inputFormat.parse(dateStart);
-              String convertedDateTime =
-                  "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
-
-              return GestureDetector(
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  searchController.clear();
-                  setState(() {
-                    searchingStarted = false;
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => StockGraph(
-                              bseTicker: data.table![index].sYMBOL ?? "",
-                              fincode: data.table![index].fINCODE,
-                              sName: data.table![index].sNAME,
-                              mCap: data.table![index].mCAP,
-                              openPrice: data.table![index].price,
-                              prevClose: data.table![index].prevPrice,
-                              volume: data.table![index].volume,
-                              value: data.table![index].vALUE,
-                              perChange: data.table![index].perChange,
-                              lowPrice: data.table![index].low,
-                              highPrice: data.table![index].high,
-                              closePriceRecvd: data.table![index].price))));
-                },
-                child: CommonTrends(
-                  title1: data.table![index].sYMBOL!,
-                  subtitle1: convertedDateTime,
-                  title2: data.table![index].price!,
-                  subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: percentageChange.toStringAsFixed(1),
-                  subtitle3: "(${data.table![index].perChange!} %)",
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thickness: 8.0,
+            thumbVisibility: true,
+            controller: _valuescrollController,
+            child: ListView.separated(
+              controller: _valuescrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num percentageChange = num.parse(data.table![index].change!);
+                String dateStart = data.table![index].uPDTIME!;
+                DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
+                DateTime now = inputFormat.parse(dateStart);
+                String convertedDateTime =
+                    "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+          
+                return GestureDetector(
+                  onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    searchController.clear();
+                    setState(() {
+                      searchingStarted = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => StockGraph(
+                                bseTicker: data.table![index].sYMBOL ?? "",
+                                fincode: data.table![index].fINCODE,
+                                sName: data.table![index].sNAME,
+                                mCap: data.table![index].mCAP,
+                                openPrice: data.table![index].price,
+                                prevClose: data.table![index].prevPrice,
+                                volume: data.table![index].volume,
+                                value: data.table![index].vALUE,
+                                perChange: data.table![index].perChange,
+                                lowPrice: data.table![index].low,
+                                highPrice: data.table![index].high,
+                                closePriceRecvd: data.table![index].price))));
+                  },
+                  child: CommonTrends(
+                    title1: data.table![index].sYMBOL!,
+                    subtitle1: convertedDateTime,
+                    title2: data.table![index].price!,
+                    subtitle2: "Vol:${data.table![index].volume!}",
+                    title3: percentageChange.toStringAsFixed(1),
+                    subtitle3: "(${data.table![index].perChange!} %)",
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -2154,6 +2175,7 @@ class _ActiveByVolumeState extends State<ActiveByVolume>
       StreamController();
   final searchController = TextEditingController();
   bool searchingStarted = false;
+  final ScrollController _volumescrollController = ScrollController();
 
   @override
   void dispose() {
@@ -2246,56 +2268,62 @@ class _ActiveByVolumeState extends State<ActiveByVolume>
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num percentageChange = num.parse(data.table![index].change!);
-              String dateStart = data.table![index].uPDTIME!;
-              DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
-              DateTime now = inputFormat.parse(dateStart);
-              String convertedDateTime =
-                  "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
-
-              return GestureDetector(
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  searchController.clear();
-                  setState(() {
-                    searchingStarted = false;
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => StockGraph(
-                              bseTicker: data.table![index].sYMBOL ?? "",
-                              fincode: data.table![index].fINCODE,
-                              sName: data.table![index].sNAME,
-                              mCap: data.table![index].mCAP,
-                              openPrice: data.table![index].price,
-                              prevClose: data.table![index].prevPrice,
-                              volume: data.table![index].volume,
-                              value: data.table![index].vALUE,
-                              perChange: data.table![index].perChange,
-                              lowPrice: data.table![index].low,
-                              highPrice: data.table![index].high,
-                              closePriceRecvd: data.table![index].price))));
-                },
-                child: CommonTrends(
-                  title1: data.table![index].sYMBOL!,
-                  subtitle1: convertedDateTime,
-                  title2: data.table![index].price!,
-                  subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: percentageChange.toStringAsFixed(1),
-                  subtitle3: "(${data.table![index].perChange!} %)",
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            thickness: 8.0,
+            controller: _volumescrollController,
+            child: ListView.separated(
+              controller: _volumescrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num percentageChange = num.parse(data.table![index].change!);
+                String dateStart = data.table![index].uPDTIME!;
+                DateFormat inputFormat = DateFormat('dd/MM/yyyy hh:mm:ss a');
+                DateTime now = inputFormat.parse(dateStart);
+                String convertedDateTime =
+                    "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}, ${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}";
+          
+                return GestureDetector(
+                  onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    searchController.clear();
+                    setState(() {
+                      searchingStarted = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => StockGraph(
+                                bseTicker: data.table![index].sYMBOL ?? "",
+                                fincode: data.table![index].fINCODE,
+                                sName: data.table![index].sNAME,
+                                mCap: data.table![index].mCAP,
+                                openPrice: data.table![index].price,
+                                prevClose: data.table![index].prevPrice,
+                                volume: data.table![index].volume,
+                                value: data.table![index].vALUE,
+                                perChange: data.table![index].perChange,
+                                lowPrice: data.table![index].low,
+                                highPrice: data.table![index].high,
+                                closePriceRecvd: data.table![index].price))));
+                  },
+                  child: CommonTrends(
+                    title1: data.table![index].sYMBOL!,
+                    subtitle1: convertedDateTime,
+                    title2: data.table![index].price!,
+                    subtitle2: "Vol:${data.table![index].volume!}",
+                    title3: percentageChange.toStringAsFixed(1),
+                    subtitle3: "(${data.table![index].perChange!} %)",
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -2325,6 +2353,7 @@ class _Week52State extends State<Week52>
   StreamController<Week52Model> topGainerLoserController = StreamController();
   final searchController = TextEditingController();
   bool searchingStarted = false;
+  final ScrollController _highscrollController = ScrollController();
   @override
   void dispose() {
     topGainerLoserController.close();
@@ -2415,56 +2444,63 @@ class _Week52State extends State<Week52>
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num percentageChange = num.parse(data.table![index].change!);
-              String dateStart = data.table![index].uPDTIME!;
-              DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
-              DateTime now = inputFormat.parse(dateStart);
-              String convertedDateTime =
-                  "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}";
+          child: Scrollbar(
+            thickness: 8.0,
+            thumbVisibility: true,
+            controller: _highscrollController,
+            child: ListView.separated(
+              controller: _highscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num percentageChange = num.parse(data.table![index].change!);
+                String dateStart = data.table![index].uPDTIME!;
+                DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
+                DateTime now = inputFormat.parse(dateStart);
+                String convertedDateTime =
+                    "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}";
 
-              return GestureDetector(
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  searchController.clear();
-                  setState(() {
-                    searchingStarted = false;
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => StockGraph(
-                              bseTicker: data.table![index].sYMBOL ?? "",
-                              fincode: data.table![index].fINCODE,
-                              sName: data.table![index].sNAME,
-                              //  mCap: data.table![index].mCAP,
-                              openPrice: data.table![index].openPrice,
-                              // prevClose: data.table![index].prevPrice,
-                              volume: data.table![index].volume,
-                              value: data.table![index].value,
-                              perChange: data.table![index].perChange,
-                              lowPrice: data.table![index].lOWPrice,
-                              highPrice: data.table![index].highPrice,
-                              closePriceRecvd: data.table![index].lastPrice))));
-                },
-                child: CommonTrends(
-                  title1: data.table![index].sYMBOL!,
-                  subtitle1: convertedDateTime,
-                  title2: data.table![index].lastPrice!,
-                  subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: percentageChange.toStringAsFixed(1),
-                  subtitle3: "(${data.table![index].perChange!} %)",
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+                return GestureDetector(
+                  onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    searchController.clear();
+                    setState(() {
+                      searchingStarted = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => StockGraph(
+                                bseTicker: data.table![index].sYMBOL ?? "",
+                                fincode: data.table![index].fINCODE,
+                                sName: data.table![index].sNAME,
+                                //  mCap: data.table![index].mCAP,
+                                openPrice: data.table![index].openPrice,
+                                // prevClose: data.table![index].prevPrice,
+                                volume: data.table![index].volume,
+                                value: data.table![index].value,
+                                perChange: data.table![index].perChange,
+                                lowPrice: data.table![index].lOWPrice,
+                                highPrice: data.table![index].highPrice,
+                                closePriceRecvd:
+                                    data.table![index].lastPrice))));
+                  },
+                  child: CommonTrends(
+                    title1: data.table![index].sYMBOL!,
+                    subtitle1: convertedDateTime,
+                    title2: data.table![index].lastPrice!,
+                    subtitle2: "Vol:${data.table![index].volume!}",
+                    title3: percentageChange.toStringAsFixed(1),
+                    subtitle3: "(${data.table![index].perChange!} %)",
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -2494,6 +2530,7 @@ class _Week52LowState extends State<Week52Low>
   StreamController<Week52Model> topGainerLoserController = StreamController();
   final searchController = TextEditingController();
   bool searchingStarted = false;
+  final ScrollController _lowscrollController = ScrollController();
   @override
   void dispose() {
     topGainerLoserController.close();
@@ -2584,56 +2621,62 @@ class _Week52LowState extends State<Week52Low>
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num percentageChange = num.parse(data.table![index].change!);
-              String dateStart = data.table![index].uPDTIME!;
-              DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
-              DateTime now = inputFormat.parse(dateStart);
-              String convertedDateTime =
-                  "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}";
-
-              return GestureDetector(
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  searchController.clear();
-                  setState(() {
-                    searchingStarted = false;
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => StockGraph(
-                              bseTicker: data.table![index].sYMBOL ?? "",
-                              fincode: data.table![index].fINCODE,
-                              sName: data.table![index].sNAME,
-                              //  mCap: data.table![index].mCAP,
-                              openPrice: data.table![index].openPrice,
-                              // prevClose: data.table![index].prevPrice,
-                              volume: data.table![index].volume,
-                              value: data.table![index].value,
-                              perChange: data.table![index].perChange,
-                              lowPrice: data.table![index].lOWPrice,
-                              highPrice: data.table![index].highPrice,
-                              closePriceRecvd: data.table![index].lastPrice))));
-                },
-                child: CommonTrends(
-                  title1: data.table![index].sYMBOL!,
-                  subtitle1: convertedDateTime,
-                  title2: data.table![index].lastPrice!,
-                  subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: percentageChange.toStringAsFixed(1),
-                  subtitle3: "(${data.table![index].perChange!} %)",
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            thickness: 8.0,
+            controller: _lowscrollController,
+            child: ListView.separated(
+              controller: _lowscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num percentageChange = num.parse(data.table![index].change!);
+                String dateStart = data.table![index].uPDTIME!;
+                DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
+                DateTime now = inputFormat.parse(dateStart);
+                String convertedDateTime =
+                    "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}";
+          
+                return GestureDetector(
+                  onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    searchController.clear();
+                    setState(() {
+                      searchingStarted = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => StockGraph(
+                                bseTicker: data.table![index].sYMBOL ?? "",
+                                fincode: data.table![index].fINCODE,
+                                sName: data.table![index].sNAME,
+                                //  mCap: data.table![index].mCAP,
+                                openPrice: data.table![index].openPrice,
+                                // prevClose: data.table![index].prevPrice,
+                                volume: data.table![index].volume,
+                                value: data.table![index].value,
+                                perChange: data.table![index].perChange,
+                                lowPrice: data.table![index].lOWPrice,
+                                highPrice: data.table![index].highPrice,
+                                closePriceRecvd: data.table![index].lastPrice))));
+                  },
+                  child: CommonTrends(
+                    title1: data.table![index].sYMBOL!,
+                    subtitle1: convertedDateTime,
+                    title2: data.table![index].lastPrice!,
+                    subtitle2: "Vol:${data.table![index].volume!}",
+                    title3: percentageChange.toStringAsFixed(1),
+                    subtitle3: "(${data.table![index].perChange!} %)",
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -2664,7 +2707,7 @@ class _OnlyBuyersState extends State<OnlyBuyers>
       StreamController();
   final searchController = TextEditingController();
   bool searchingStarted = false;
-
+  final ScrollController _buyersscrollController = ScrollController();
   @override
   void dispose() {
     topGainerLoserController.close();
@@ -2755,56 +2798,62 @@ class _OnlyBuyersState extends State<OnlyBuyers>
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num percentageChange = num.parse(data.table![index].perChng!);
-              // String dateStart = data.table![index].uPDTIME!;
-              // DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
-              // DateTime now = inputFormat.parse(dateStart);
-              // String convertedDateTime =
-              //     "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}";
-
-              return GestureDetector(
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  searchController.clear();
-                  setState(() {
-                    searchingStarted = false;
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => StockGraph(
-                              bseTicker: data.table![index].sYMBOL ?? "",
-                              fincode: data.table![index].fINCODE,
-                              sName: data.table![index].sNAME,
-                              //  mCap: data.table![index].mCAP,
-                              // openPrice: data.table![index].openPrice,
-                              prevClose: data.table![index].prevClose,
-                              volume: data.table![index].volume,
-                              // value: data.table![index].vALUE,
-                              perChange: data.table![index].perChng,
-                              //  lowPrice: data.table![index].lOWPrice,
-                              //  highPrice: data.table![index].highPrice,
-                              closePriceRecvd: data.table![index].lastPrice))));
-                },
-                child: CommonTrends(
-                  title1: data.table![index].sYMBOL!,
-                  // subtitle1: convertedDateTime,
-                  title2: data.table![index].lastPrice!,
-                  subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: percentageChange.toStringAsFixed(1),
-                  subtitle3: "(${data.table![index].perChng!} %)",
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thickness: 8.0,
+            thumbVisibility: true,
+            controller: _buyersscrollController,
+            child: ListView.separated(
+              controller: _buyersscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num percentageChange = num.parse(data.table![index].perChng!);
+                // String dateStart = data.table![index].uPDTIME!;
+                // DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
+                // DateTime now = inputFormat.parse(dateStart);
+                // String convertedDateTime =
+                //     "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}";
+          
+                return GestureDetector(
+                  onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    searchController.clear();
+                    setState(() {
+                      searchingStarted = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => StockGraph(
+                                bseTicker: data.table![index].sYMBOL ?? "",
+                                fincode: data.table![index].fINCODE,
+                                sName: data.table![index].sNAME,
+                                //  mCap: data.table![index].mCAP,
+                                // openPrice: data.table![index].openPrice,
+                                prevClose: data.table![index].prevClose,
+                                volume: data.table![index].volume,
+                                // value: data.table![index].vALUE,
+                                perChange: data.table![index].perChng,
+                                //  lowPrice: data.table![index].lOWPrice,
+                                //  highPrice: data.table![index].highPrice,
+                                closePriceRecvd: data.table![index].lastPrice))));
+                  },
+                  child: CommonTrends(
+                    title1: data.table![index].sYMBOL!,
+                    // subtitle1: convertedDateTime,
+                    title2: data.table![index].lastPrice!,
+                    subtitle2: "Vol:${data.table![index].volume!}",
+                    title3: percentageChange.toStringAsFixed(1),
+                    subtitle3: "(${data.table![index].perChng!} %)",
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription
@@ -2835,6 +2884,7 @@ class _OnlySellersState extends State<OnlySellers>
       StreamController();
   final searchController = TextEditingController();
   bool searchingStarted = false;
+  final ScrollController _sellersscrollController = ScrollController();
 
   @override
   void dispose() {
@@ -2926,56 +2976,62 @@ class _OnlySellersState extends State<OnlySellers>
     return Column(
       children: [
         Expanded(
-          child: ListView.separated(
-            addAutomaticKeepAlives: true,
-            itemCount: data.table!.length,
-            itemBuilder: (BuildContext context, int index) {
-              num percentageChange = num.parse(data.table![index].perChng!);
-              // String dateStart = data.table![index].uPDTIME!;
-              // DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
-              // DateTime now = inputFormat.parse(dateStart);
-              // String convertedDateTime =
-              //     "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}";
-
-              return GestureDetector(
-                onTap: () {
-                  SystemChannels.textInput.invokeMethod('TextInput.hide');
-                  searchController.clear();
-                  setState(() {
-                    searchingStarted = false;
-                  });
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: ((context) => StockGraph(
-                              bseTicker: data.table![index].sYMBOL ?? "",
-                              fincode: data.table![index].fINCODE,
-                              sName: data.table![index].sNAME,
-                              //  mCap: data.table![index].mCAP,
-                              // openPrice: data.table![index].openPrice,
-                              prevClose: data.table![index].prevClose,
-                              volume: data.table![index].volume,
-                              // value: data.table![index].vALUE,
-                              perChange: data.table![index].perChng,
-                              //  lowPrice: data.table![index].lOWPrice,
-                              //  highPrice: data.table![index].highPrice,
-                              closePriceRecvd: data.table![index].lastPrice))));
-                },
-                child: CommonTrends(
-                  title1: data.table![index].sYMBOL!,
-                  // subtitle1: convertedDateTime,
-                  title2: data.table![index].lastPrice!,
-                  subtitle2: "Vol:${data.table![index].volume!}",
-                  title3: percentageChange.toStringAsFixed(1),
-                  subtitle3: "(${data.table![index].perChng!} %)",
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(
-                thickness: 1.5,
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            thickness: 8.0,
+            controller: _sellersscrollController,
+            child: ListView.separated(
+              controller: _sellersscrollController,
+              addAutomaticKeepAlives: true,
+              itemCount: data.table!.length,
+              itemBuilder: (BuildContext context, int index) {
+                num percentageChange = num.parse(data.table![index].perChng!);
+                // String dateStart = data.table![index].uPDTIME!;
+                // DateFormat inputFormat = DateFormat('dd-MMM-yyyy');
+                // DateTime now = inputFormat.parse(dateStart);
+                // String convertedDateTime =
+                //     "${DateFormat.MMM().format(now)} ${now.day.toString().padLeft(2, '0')}";
+          
+                return GestureDetector(
+                  onTap: () {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    searchController.clear();
+                    setState(() {
+                      searchingStarted = false;
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => StockGraph(
+                                bseTicker: data.table![index].sYMBOL ?? "",
+                                fincode: data.table![index].fINCODE,
+                                sName: data.table![index].sNAME,
+                                //  mCap: data.table![index].mCAP,
+                                // openPrice: data.table![index].openPrice,
+                                prevClose: data.table![index].prevClose,
+                                volume: data.table![index].volume,
+                                // value: data.table![index].vALUE,
+                                perChange: data.table![index].perChng,
+                                //  lowPrice: data.table![index].lOWPrice,
+                                //  highPrice: data.table![index].highPrice,
+                                closePriceRecvd: data.table![index].lastPrice))));
+                  },
+                  child: CommonTrends(
+                    title1: data.table![index].sYMBOL!,
+                    // subtitle1: convertedDateTime,
+                    title2: data.table![index].lastPrice!,
+                    subtitle2: "Vol:${data.table![index].volume!}",
+                    title3: percentageChange.toStringAsFixed(1),
+                    subtitle3: "(${data.table![index].perChng!} %)",
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  thickness: 1.5,
+                );
+              },
+            ),
           ),
         ),
         !userHasSubscription

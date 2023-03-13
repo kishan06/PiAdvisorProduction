@@ -46,6 +46,8 @@ class _FamilyDetailsState extends State<FamilyDetails> {
   void initState() {
     super.initState();
     setControllerValues();
+    //Storefamilydetails().generatekycdata();
+    Storefamilydetails().postgeneratedkycdetails();
   }
 
   Future _showOccupationPicker(bool isFather, bool isHusbandWife) async {
